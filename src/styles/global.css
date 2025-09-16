@@ -1,0 +1,68 @@
+@import 'tailwindcss';
+@theme {
+    --color-primary:#54ab95;
+    --color-primary-10:#69b4a0;
+    --color-primary-20:#7dbeac;
+    --color-primary-30:#90c7b7;
+    --color-primary-40:#a3d0c3;
+    --color-primary-50:#b5dacf;
+
+    --color-surface: #171717;
+    --color-surface-10:#282828;
+    --color-surface-20:#3f3f3f;
+    --color-surface-30:#575757;
+    --color-surface-40:#717171;
+    --color-surface-50:#8b8b8b;
+}
+
+*{
+    font-family: "Outfit", sans-serif;
+}
+body {
+    background-color: var(--color-surface);
+    -webkit-font-smoothing: antialiased;
+}
+
+button, a{
+    cursor: pointer;
+}
+button:disabled, a:disabled{
+    cursor: default;
+}
+
+.corner-btn {
+    @apply fixed text-[4vw] grid place-items-center bg-black/20 text-white hover:text-primary hover:backdrop-blur-xs hover:bg-black/5 focus:text-primary focus:backdrop-blur-xs focus:bg-black/5 backdrop-blur-md border-primary border transition duration-300 ease-in-out ;
+}
+.corner-btn p{
+    @apply transition duration-300 ease-in-out;
+}
+.corner-btn:hover p, .corner-btn:focus p{
+    @apply scale-120;
+}
+#bl-btn:hover p, #bl-btn:focus p {
+    @apply opacity-0;
+}
+
+#back-btn svg{
+    @apply transition duration-300 ease-in-out opacity-20;
+}
+#back-btn:hover svg {
+    @apply scale-110 fill-primary stroke-primary opacity-100;
+}
+
+:global(canvas) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    cursor: grab;
+}
+:global(canvas:active) {
+    cursor: grabbing;
+}
+body.loading {
+    overflow: hidden;
+    height: 100vh;
+}
