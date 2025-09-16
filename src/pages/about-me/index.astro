@@ -1,13 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AboutMe from '../../sections/AboutMe.svelte';
-import LoadingHero from "../../components/LoadingHero.astro";
+import LoadingScreen from "../../components/LoadingScreen";
 ---
 
 <BaseLayout title="About Me">
-    <AboutMe client:only>
-        <div slot="fallback">
-            <LoadingHero/>
-        </div>
-    </AboutMe>
+    <AboutMe client:load/>
 </BaseLayout>

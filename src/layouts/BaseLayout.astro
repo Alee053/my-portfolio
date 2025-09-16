@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import LoadingScreen from '../components/LoadingScreen.svelte';
 import Background from '../components/Background.svelte';
 
 
@@ -26,7 +27,8 @@ const { title, description = "My personal portfolio" } = Astro.props;
 </head>
 <body>
     <slot />
-    <Background client:only/>
+    <LoadingScreen client:load/>
+    <Background client:load/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" is:inline></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js" is:inline></script>
 </body>

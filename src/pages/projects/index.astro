@@ -1,14 +1,9 @@
 ---
 import Projects from '../../sections/Projects.svelte';
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import LoadingHero from "../../components/LoadingHero.astro";
 ---
 
 
 <BaseLayout title="Projects">
-    <Projects client:only>
-        <div slot="fallback">
-            <LoadingHero/>
-        </div>
-    </Projects>
+    <Projects client:load/>
 </BaseLayout>

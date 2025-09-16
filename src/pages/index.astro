@@ -1,13 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../sections/Hero.svelte';
-import LoadingHero from '../components/LoadingHero.astro';
 ---
 
 <BaseLayout title="Alejandro Castro">
-    <Hero client:only >
-        <div slot="fallback">
-            <LoadingHero />
-        </div>
-    </Hero>
+    <Hero client:load/>
 </BaseLayout>
