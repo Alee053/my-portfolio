@@ -42,15 +42,22 @@
     });
 
     function runIntroAnimation() {
-
         const intro = gsap.timeline({
             onComplete: setupScrollAnimation
         });
 
-        intro
-            .from(splitInstance.chars, {
-                delay: 0.3, opacity: 0, x: 20, duration: 1, ease: 'power2.out', stagger: { each: 0.1, from: 'left' }
-            })
+        // We also make the parent <h1> visible right away
+        gsap.set('#name', { visibility: 'visible' });
+        gsap.set('#down-arrow', { visibility: 'visible' });
+
+        intro.from(splitInstance.chars, {
+            delay: 0.2,
+            opacity: 0,
+            x: 20,
+            duration: 1,
+            ease: 'power2.out',
+            stagger: { each: 0.1, from: 'left' },
+        })
             .from('#down-arrow', { y: 100, opacity: 0, duration: 1, ease: 'power2.out' }, '-=1');
     }
 
@@ -90,10 +97,10 @@
     const handleScrollUp = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 </script>
 
-<section class="hero h-screen flex justify-center items-center shadow-inner bg-radial from-black/0 from-65% to-black relative overflow-hidden">
-    <h1 id="name" class="text-[7vw] font-bold text-white backface-hidden">Alejandro Castro</h1>
+<section transition:fade class="hero h-screen flex justify-center items-center shadow-inner bg-radial from-black/0 from-65% to-black relative overflow-hidden">
+    <h1 id="name" class="text-[7vw] font-bold text-white backface-hidden invisible">Alejandro Castro</h1>
 
-    <button id="down-arrow" on:click={handleScrollDown} class="w-full fixed bottom-0 grid place-items-center h-[10vw] lg:h-[5vw] group">
+    <button id="down-arrow" on:click={handleScrollDown} class="invisible w-full fixed bottom-0 grid place-items-center h-[10vw] lg:h-[5vw] group">
         <ArrowIcon className="stroke-white fill-white w-[5vw] transition duration-300 ease-in-out group-hover:scale-110 group-hover:fill-primary group-hover:stroke-primary" />
     </button>
 

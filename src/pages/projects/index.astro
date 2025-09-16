@@ -1,5 +1,4 @@
 ---
-import Background from '../../components/Background.svelte';
 import Projects from '../../sections/Projects.svelte';
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import LoadingHero from "../../components/LoadingHero.astro";
@@ -7,39 +6,9 @@ import LoadingHero from "../../components/LoadingHero.astro";
 
 
 <BaseLayout title="Projects">
-    <main class="relative z-10 opacity-0 transition-opacity duration-700 ease-out" id="main-content">
-        <Projects client:load/>
-        <Background client:load/>
-    </main>
-    <LoadingHero/>
+    <Projects client:only>
+        <div slot="fallback">
+            <LoadingHero/>
+        </div>
+    </Projects>
 </BaseLayout>
-<script is:inline>
-    window.addEventListener('load', () => {
-        const loadingScreen = document.getElementById('loading-screen');
-        const mainContent = document.getElementById('main-content');
-
-        const minDisplayTime = 300; // 1 second minimum display time for loading screen
-
-        const pageLoadTime = performance.now();
-
-        const hideLoadingScreen = () => {
-            if (loadingScreen) {
-                loadingScreen.style.opacity = '0';
-                loadingScreen.addEventListener('transitionend', () => {
-                    loadingScreen.remove(); // Remove from DOM after fading out
-                    document.body.classList.remove('loading'); // Allow scrolling
-                }, { once: true });
-            }
-            if (mainContent) {
-                mainContent.style.opacity = '1';
-            }
-        };
-
-        const timeElapsed = performance.now() - pageLoadTime;
-        const timeToWait = Math.max(0, minDisplayTime - timeElapsed);
-
-        setTimeout(hideLoadingScreen, timeToWait);
-    });
-
-    document.body.classList.add('loading');
-</script>
