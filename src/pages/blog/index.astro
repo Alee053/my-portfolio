@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BackButton from '../../components/subcomponents/BackButton.svelte';
+import BlogCard from '../../components/subcomponents/BlogCard.astro';
+
+
+const allPosts = await getCollection('blog');
+const selectedYear = Astro.url.searchParams.get('year');
+const filteredPosts = selectedYear
+    ? allPosts.filter(post => String(post.data.pubDate.getFullYear()) === selectedYear)
+    : allPosts;
+const sortedPosts = filteredPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const uniqueTags = [...new Set(allPosts.map(post => post.data.tags).flat())];
+const uniqueYears = [...new Set(allPosts.map(post => post.data.pubDate.getFullYear()))].sort((a,b) => b - a);
+---
+<BaseLayout title="Blog">
+    <section id="blog-index" class="w-full min-h-screen shadow-inner bg-radial from-black/0 from-65% to-black relative overflow-y-auto px-4 py-24 md:px-8">
+        <BackButton client:load />
+        <div class="container mx-auto max-w-6xl">
+            <div class="header-content text-center mb-12">
+                <h1 class="text-5xl md:text-6xl font-bold text-white">Blog</h1>
+                <p class="text-lg text-white/70 mt-2">Articles about technology, projects, and development.</p>
+            </div>
+
+            <div class="filters flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 mb-12">
+                <div class="filter-group flex items-center gap-2 flex-wrap justify-center">
+                    {uniqueTags.map(tag => (
+                            <a href={`/blog/tags/${tag}/`} class="filter-btn">{tag}</a>
+                    ))}
+                </div>
+                <div class="filter-group flex items-center gap-2 flex-wrap justify-center">
+                    {uniqueYears.map(year => (
+                            <a href={`/blog?year=${year}`} class:list={['filter-btn', { 'active': selectedYear === String(year) }]}>{year}</a>
+                    ))}
+                    {selectedYear && <a href="/blog" class="filter-btn clear">Clear</a>}
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 post-grid">
+                {sortedPosts.map(post => (
+                        <div class="post-card-wrapper">
+                            <BlogCard {post} />
+                        </div>
+                ))}
+            </div>
+        </div>
+    </section>
+</BaseLayout>
+
+<script>
+    import gsap from 'gsap';
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Animate the header and filters in
+        gsap.from('.header-content, .filters', {
+            duration: 1,
+            opacity: 0,
+            y: 30,
+            ease: 'power3.out'
+        });
+
+        // Animate the cards in with a stagger effect
+        gsap.from('.post-card-wrapper', {
+            delay: 0.2, // Start slightly after the header
+            duration: 0.8,
+            opacity: 0,
+            y: 50,
+            stagger: 0.1,
+            ease: 'power3.out'
+        });
+    });
+</script>

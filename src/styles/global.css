@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin "@tailwindcss/typography";
 @theme {
     --color-primary:#54ab95;
     --color-primary-10:#69b4a0;
@@ -65,4 +66,13 @@ button:disabled, a:disabled{
 body.loading {
     overflow: hidden;
     height: 100vh;
+}
+.filter-btn {
+    @apply block text-sm font-semibold bg-white/5 border border-white/10 text-white/80 px-4 py-1 rounded-full transition-all duration-200 hover:bg-white/10 hover:border-primary hover:text-white;
+}
+.filter-btn.active {
+    @apply bg-primary/80 border-primary text-white;
+}
+.filter-btn.clear {
+    @apply bg-red-500/20 border-red-500/50 text-red-400 hover:bg-red-500/40;
 }

@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BackButton from '../../../components/subcomponents/BackButton.svelte';
+import BlogCard from '../../../components/subcomponents/BlogCard.astro';
+
+export async function getStaticPaths() {
+    const allPosts = await getCollection('blog');
+    const uniqueTags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
+    return uniqueTags.map((tag) => {
+        return {
+            params: { tag: tag },
+            props: {},
+        };
+    });
+}
+
+const { tag } = Astro.params;
+
+const allPosts = await getCollection('blog');
+const filteredPosts = allPosts.filter(post => post.data.tags.includes(tag));
+const sortedPosts = filteredPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+<BaseLayout title={`Posts tagged with: ${tag}`}>
+    <section class="w-full min-h-screen shadow-inner bg-radial from-black/0 from-65% to-black relative overflow-y-auto px-4 py-24 md:px-8">
+        <BackButton client:load/>
+
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-5xl font-bold text-white">
+                    Posts tagged with: <span class="text-primary">{tag}</span>
+                </h1>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 post-grid">
+                {sortedPosts.map(post => (
+                        <div class="post-card-wrapper">
+                            <BlogCard {post} />
+                        </div>
+                ))}
+            </div>
+        </div>
+    </section>
+</BaseLayout>
+
+<script>
+    import gsap from 'gsap';
+
+    // This script animates the cards loading in, just like the main blog page
+    document.addEventListener('DOMContentLoaded', () => {
+        gsap.from('.post-card-wrapper', {
+            delay: 0.2,
+            duration: 0.8,
+            opacity: 0,
+            y: 50,
+            stagger: 0.1,
+            ease: 'power3.out'
+        });
+    });
+</script>

@@ -110,9 +110,9 @@
     <a id="tr-btn" href="/about-me" class="corner-btn w-[40vw] h-[60vh] top-[-100%] right-0">
         <p>About Me</p>
     </a>
-    <button id="br-btn" class="corner-btn w-[60vw] h-[40vh] bottom-0 right-[-100%]">
+    <a id="br-btn" href="/blog" class="corner-btn w-[60vw] h-[40vh] bottom-0 right-[-100%]">
         <p>Blog</p>
-    </button>
+    </a>
     <button id="bl-btn" class="corner-btn w-[40vw] h-[60vh] bottom-[-100%] left-0" on:mouseenter={() => blBtnHovered.set(true)}
             on:mouseleave={() => blBtnHovered.set(false)}
             on:focus={() => blBtnHovered.set(true)}
