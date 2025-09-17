@@ -1,4 +1,5 @@
 ---
+slug: portfolio
 title: "Forging a Digital Identity: A Systems Engineer's Journey into the Frontend"
 description: "A look behind the scenes at how I built my new portfolio, stepping out of my C++ comfort zone to tackle the creative and technical challenges of modern web development."
 pubDate: "2025-09-16"

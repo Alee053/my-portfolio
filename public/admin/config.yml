@@ -25,8 +25,9 @@ collections:
     label: "Blog Posts"
     folder: "src/content/blog"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{slug}}"
     fields:
+      - { label: "Slug (URL and Filename)", name: "slug", widget: "string" }
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Publish Date", name: "pubDate", widget: "datetime" }
       - { label: "Description", name: "description", widget: "text" }
@@ -43,10 +44,11 @@ collections:
     extension: "yaml"
     format: "yaml"
     fields:
+      - { label: "Slug (URL and Filename)", name: "slug", widget: "string" }
       - { label: "Name", name: "name", widget: "string" }
       - { label: "Subtitle", name: "subtitle", widget: "string" }
       - { label: "Year", name: "year", widget: "number" }
       - { label: "Image", name: "image", widget: "image" }
       - { label: "Link", name: "link", widget: "string" }
       - { label: "Tags", name: "tags", widget: "list" }
-      - { label: "Order", name: "order", widget: "number", required: false }
+      - { label: "Order", name: "order", widget: "number", required: false, default: 99 }
