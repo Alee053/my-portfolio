@@ -2,7 +2,8 @@
 import '../styles/global.css';
 import LoadingScreen from '../components/LoadingScreen.svelte';
 import Background from '../components/Background.svelte';
-
+import Analytics from '@vercel/analytics/astro'
+import  SpeedInsights  from "@vercel/speed-insights/astro"
 
 export interface Props {
     title: string;
@@ -26,6 +27,8 @@ const { title, description = "My personal portfolio" } = Astro.props;
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <Analytics />
+    <SpeedInsights/>
     <slot />
     <LoadingScreen client:load/>
     <Background client:load/>

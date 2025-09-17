@@ -14,7 +14,6 @@
     });
 
     const goBack = () => {
-        // This logic is already excellent and remains unchanged.
         if (history.length > 1) {
             history.back();
         } else {
