@@ -32,6 +32,8 @@ collections:
     folder: "src/content/projects"
     create: true
     slug: "{{slug}}"
+    extension: "yaml"
+    format: "yaml"
     fields:
       - { label: "Name", name: "name", widget: "string" }
       - { label: "Subtitle", name: "subtitle", widget: "string" }
