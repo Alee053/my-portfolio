@@ -1,7 +1,7 @@
 # Vercel integration for authentication
 backend:
   name: github
-  repo: "Alee053/your-repo-name" # IMPORTANT: Replace with your GitHub repo
+  repo: "Alee053/my/portfolio"
   branch: main
   site_domain: www.alecastro.dev
 
