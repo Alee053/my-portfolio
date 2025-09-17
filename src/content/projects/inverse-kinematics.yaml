@@ -1,7 +1,7 @@
 name: "Inverse Kinematics"
 subtitle: "FABRIK Algorithm Visualization"
 year: 2023
-image: "/images/projects/fabrik.gif"
+image: "https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758082013/fabrik_uqped8.gif"
 link: "https://github.com/Alee053/InverseKinematics-FABRIK"
 tags:
   - "Algorithms"

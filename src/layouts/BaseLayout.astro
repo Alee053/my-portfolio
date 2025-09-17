@@ -25,6 +25,8 @@ const { title, description = "My personal portfolio" } = Astro.props;
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" is:inline></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js" is:inline></script>
 </head>
 <body>
     <Analytics client:load />
@@ -32,7 +34,6 @@ const { title, description = "My personal portfolio" } = Astro.props;
     <slot />
     <LoadingScreen client:load/>
     <Background client:load/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" is:inline></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js" is:inline></script>
+
 </body>
 </html>

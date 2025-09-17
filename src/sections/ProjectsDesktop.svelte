@@ -134,9 +134,9 @@
 
 <section bind:this={physicsContainer} class="relative w-screen h-screen overflow-hidden ...">
     <BackButton/>
-    {#each projectPositions as pos (pos.id)}
-        {@const project = filteredProjects.find((p) => p.id === pos.id)}
-        {#if project}
+    {#each filteredProjects as project (project.id)}
+        {@const pos = projectPositions.find(p => p.id === project.id)}
+        {#if pos}
             <div class="absolute top-0 left-0 z-1 pointer-events-none">
                 <ProjectBlock
                         {project}

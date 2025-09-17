@@ -1,6 +1,8 @@
 <script>
     import ProjectBlock from '../components/subcomponents/ProjectBlock.svelte';
     import BackButton from "../components/subcomponents/BackButton.svelte";
+    import { flip } from 'svelte/animate';
+    import { fade } from 'svelte/transition';
 
     export let projectsData = [];
 
@@ -35,7 +37,10 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {#each filteredProjects as project (project.id)}
-            <div on:click={() => window.open(project.link, '_blank')}>
+            <div animate:flip={{ duration: 300 }}
+                 in:fade={{ duration: 250, delay: 150 }}
+                 out:fade={{ duration: 200 }}
+                 on:click={() => window.open(project.link, '_blank')}>
                 <ProjectBlock {project} />
             </div>
         {/each}
