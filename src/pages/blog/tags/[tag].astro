@@ -46,7 +46,6 @@ const sortedPosts = filteredPosts.sort((a, b) => b.data.pubDate.valueOf() - a.da
 <script>
     import gsap from 'gsap';
 
-    // This script animates the cards loading in, just like the main blog page
     document.addEventListener('DOMContentLoaded', () => {
         gsap.from('.post-card-wrapper', {
             delay: 0.2,

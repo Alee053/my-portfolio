@@ -1,5 +1,5 @@
 export class ProjectData{
-    constructor({id, name, subtitle,year, image, link, width, height, x, y}){
+    constructor({id, name, subtitle,year, image, link, width, height, x, y,tags}){
         this.id = id;
         this.name = name;
         this.subtitle = subtitle;
@@ -8,6 +8,7 @@ export class ProjectData{
         this.link = link;
         this.width = width;
         this.height = height;
+        this.tags = tags;
         this.x = x;
         this.y = y;
     }

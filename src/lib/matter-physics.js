@@ -14,7 +14,7 @@ export function createPhysicsSimulation(container, bodiesData, onProjectClick) {
         options: {
             width: container.clientWidth,
             height: container.clientHeight,
-            wireframes: false, // Set to true to debug physics bodies
+            wireframes: false,
             background: 'transparent'
         }
     });
@@ -24,13 +24,12 @@ export function createPhysicsSimulation(container, bodiesData, onProjectClick) {
             restitution: 0.7,
             friction: 0.05,
             density: 0.001,
-            render: { visible: false } // Bodies are invisible
+            render: { visible: false }
         });
         body.projectData = proj;
         return body;
     });
 
-    // --- Mouse and Click/Drag Logic ---
     const mouse = Mouse.create(render.canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
         mouse: mouse,
@@ -51,7 +50,7 @@ export function createPhysicsSimulation(container, bodiesData, onProjectClick) {
             Matter.Vector.sub(event.mouse.position, startDragPos)
         );
 
-        if (moveDistance < 5) { // It's a click
+        if (moveDistance < 5) {
             const clickedBody = Matter.Query.point(matterBodies, event.mouse.position)[0];
             if (clickedBody) {
                 onProjectClick(clickedBody.projectData);
@@ -60,7 +59,6 @@ export function createPhysicsSimulation(container, bodiesData, onProjectClick) {
         startDragPos = null;
     });
 
-    // Function to build responsive walls
     function buildWalls() {
         const { clientWidth, clientHeight } = container;
         World.remove(engine.world, staticBodies); // Remove old walls
@@ -74,13 +72,11 @@ export function createPhysicsSimulation(container, bodiesData, onProjectClick) {
         World.add(engine.world, staticBodies);
     }
 
-    // Initial setup
     buildWalls();
     World.add(engine.world, [...matterBodies, mouseConstraint]);
     Runner.run(runner, engine);
     Render.run(render);
 
-    // Return everything needed for the Svelte component to interact with
     return {
         engine,
         render,

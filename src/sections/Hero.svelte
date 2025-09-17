@@ -8,20 +8,15 @@
     let contactVisible = false;
     const toggleContact = () => contactVisible = !contactVisible;
 
-    // State
     let backButtonDisabled = true;
 
-    // Constants
-    const SCROLL_ANIMATION_DISTANCE = 2500;
+    let SCROLL_ANIMATION_DISTANCE;
 
-    // Declare module variables here; they will be assigned in onMount
     let SplitText, ScrollTrigger;
     let splitInstance;
 
-    // --- Lifecycle & Animations ---
-
     onMount(async () => {
-        // Dynamically import GSAP plugins for browser-only execution
+        SCROLL_ANIMATION_DISTANCE= window.innerWidth <= 768 ? 1000 : 2000;
         const modSplit = await import('gsap/SplitText');
         const modScroll = await import('gsap/ScrollTrigger');
         SplitText = modSplit.SplitText;
@@ -35,9 +30,8 @@
     });
 
     onDestroy(() => {
-        // Clean up GSAP instances to prevent memory leaks
         if (splitInstance) splitInstance.revert();
-        ScrollTrigger?.killAll(); // Use optional chaining for safety
+        ScrollTrigger?.killAll();
         unlockScroll();
     });
 
@@ -86,8 +80,6 @@
         }, '-=0.5');
     }
 
-    // --- Helpers & Event Handlers ---
-
     const lockScroll = () => { if (typeof document !== 'undefined') document.body.style.overflow = 'hidden'; };
     const unlockScroll = () => { if (typeof document !== 'undefined') document.body.style.overflow = 'auto'; };
 
@@ -96,7 +88,7 @@
 </script>
 
 <section transition:fade class="hero h-screen flex justify-center items-center shadow-inner bg-radial from-black/0 from-65% to-black relative overflow-hidden">
-    <h1 id="name" class="text-[7vw] font-bold text-white backface-hidden invisible">Alejandro Castro</h1>
+    <h1 id="name" class="text-[7vw] font-bold text-white backface-hidden invisible" translate="no">Alejandro Castro</h1>
 
     <button id="down-arrow" on:click={handleScrollDown} class="invisible w-full fixed bottom-0 grid place-items-center h-[10vw] lg:h-[5vw] group">
         <ArrowIcon className="stroke-white fill-white w-[5vw] transition duration-300 ease-in-out group-hover:scale-110 group-hover:fill-primary group-hover:stroke-primary" />

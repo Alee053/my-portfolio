@@ -1,14 +1,12 @@
 <script>
     import { onMount, onDestroy } from 'svelte';
-    // No need for 'browser' import here, onMount only runs client-side
 
-    export let options = {}; // Allow passing custom options from Astro
+    export let options = {};
 
     let vantaContainer;
     let vantaEffect;
 
     onMount(() => {
-        // Now, THREE and VANTA are expected to be globally available
         if (window.VANTA && window.VANTA.NET) {
             vantaEffect = window.VANTA.NET({
                 el: vantaContainer,
@@ -19,11 +17,11 @@
                 minWidth: 200.00,
                 scale: 1.00,
                 scaleMobile: 1.00,
-                color: 0x54ab95, // Your primary color
-                backgroundColor: 0x171717, // Your surface color
+                color: 0x54ab95,
+                backgroundColor: 0x171717,
                 points: 9.00,
                 spacing: 18.00,
-                ...options // Merge with any passed options
+                ...options
             });
         } else {
             console.warn("Vanta.js or Three.js not loaded globally. Check BaseLayout.astro.");

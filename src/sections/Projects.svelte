@@ -13,11 +13,29 @@
     let projectsData = [];
     let projectPositions = [];
 
+    let activeTag = 'All';
+    let activeYear = 'All';
+
+    let filteredProjects = [];
+    function selectionChanged() {
+        physicsInstance.destroy();
+        filterProjects()
+        initPhysics(filteredProjects);
+    }
+
+    function filterProjects() {
+        filteredProjects = projectsData.filter(p => {
+            const tagMatch = activeTag === 'All' || p.tags.includes(activeTag);
+            const yearMatch = activeYear === 'All' || p.year === activeYear;
+            return tagMatch && yearMatch;
+        });
+    }
+
     function handleProjectClick(project) {
         window.open(project.link, '_blank');
     }
 
-    onMount(() => {
+    function initPhysics(projectsToSimulate) {
         const getNonCollidingPositions = (count, width, height, blockW, blockH, padding = 20) => {
             const positions = [];
             let attempts = 0;
@@ -64,23 +82,17 @@
         };
         const screenW = window.innerWidth;
         const screenH = window.innerHeight;
-        const blockW = 220, blockH = 220;
-        const randomPositions = getNonCollidingPositions(5, screenW, screenH, blockW, blockH);
+        const blockW = 240, blockH = 240;
+        const randomPositions = getNonCollidingPositions(projectsToSimulate.length, screenW, screenH, blockW, blockH);
+        projectsToSimulate.forEach((proj, i) => {
+            proj.x = randomPositions[i].x;
+            proj.y = randomPositions[i].y;
+            proj.width = blockW;
+            proj.height = blockH;
+        });
 
-        projectsData = [
-            new ProjectData({id: 'proj1', name: 'Solar System Simulation', subtitle: '2D p5.js Physics Simulation', year:2023, image: '/images/projects/solar-system.gif',link:"https://github.com/Alee053/SolarSystem-Sim", width: blockW, height: blockH, x: randomPositions[0].x, y: randomPositions[0].y }),
-            new ProjectData({id: 'proj2', name: 'TicTacToe MiniMax', subtitle: 'MiniMax implementation for TicTacToe', year:2023, image: '/images/projects/tictactoe.gif',link:"https://github.com/Alee053/TicTacToe-MiniMax", width: blockW, height: blockH, x: randomPositions[1].x, y: randomPositions[1].y }),
-            new ProjectData({id: 'proj3', name: 'Inverse Kinematics Visualization', subtitle: 'FABRIX implementation for IK in 2D', year:2023, image: '/images/projects/fabrik.gif',link:"https://github.com/Alee053/TicTacToe-MiniMax", width: blockW, height: blockH, x: randomPositions[2].x, y: randomPositions[2].y }),
-            new ProjectData({id: 'proj4', name: 'Hanoi Towers Solver', subtitle: 'Hanoi Towers Solver and Visualization', year:2024, image: '/images/projects/hanoi.gif',link:"https://github.com/Alee053/HanoiTowers", width: blockW, height: blockH, x: randomPositions[3].x, y: randomPositions[3].y }),
-            new ProjectData({id: 'proj5', name: 'Grid Maze Solver', subtitle: 'Visualizing BFS Algorithm', year:2024, image: '/images/projects/maze.gif',link:"https://github.com/Alee053/MazeSolver", width: blockW, height: blockH, x: randomPositions[4].x, y: randomPositions[4].y }),
-        ];
-        projectPositions = projectsData.map((proj) => ({ id: proj.id, x: proj.x, y: proj.y, angle: 0 }));
-
-        // --- Physics Initialization ---
-        physicsInstance = createPhysicsSimulation(physicsContainer, projectsData, handleProjectClick);
-
+        physicsInstance = createPhysicsSimulation(physicsContainer, projectsToSimulate, handleProjectClick);
         const { engine, matterBodies, mouse } = physicsInstance;
-
         Matter.Events.on(engine, 'afterUpdate', () => {
             // Update Svelte component positions
             projectPositions = matterBodies.map((body) => ({
@@ -94,6 +106,20 @@
             const bodyUnderMouse = Matter.Query.point(matterBodies, mouse.position)[0];
             hoveredProjectId = bodyUnderMouse ? bodyUnderMouse.projectData.id : null;
         });
+    }
+
+    onMount(() => {
+        projectsData = [
+        new ProjectData({id: 'proj1', name: 'Solar System Simulation', subtitle: '2D p5.js Physics Simulation', year:2023, image: '/images/projects/solar-system.gif', link:"https://github.com/Alee053/SolarSystem-Sim", tags: ['p5.js', 'Physics'] }),
+        new ProjectData({id: 'proj2', name: 'TicTacToe MiniMax', subtitle: 'AI Opponent with MiniMax', year:2023, image: '/images/projects/tictactoe.gif', link:"https://github.com/Alee053/TicTacToe-MiniMax", tags: ['AI', 'JavaScript'] }),
+        new ProjectData({id: 'proj3', name: 'Inverse Kinematics', subtitle: 'FABRIK Algorithm Visualization', year:2023, image: '/images/projects/fabrik.gif', link:"https://github.com/Alee053/InverseKinematics-FABRIK", tags: ['Algorithms', 'p5.js'] }),
+        new ProjectData({id: 'proj4', name: 'Hanoi Towers Solver', subtitle: 'Recursive Solver Visualization', year:2024, image: '/images/projects/hanoi.gif', link:"https://github.com/Alee053/HanoiTowers", tags: ['Algorithms', 'Svelte'] }),
+        new ProjectData({id: 'proj5', name: 'Grid Maze Solver', subtitle: 'Visualizing BFS Algorithm', year:2024, image: '/images/projects/maze.gif', link:"https://github.com/Alee053/MazeSolver", tags: ['Algorithms', 'JavaScript'] }),
+        ];
+
+        initPhysics(projectsData);
+        filterProjects()
+
 
         if (typeof window !== 'undefined') {
             window.addEventListener('resize', physicsInstance.handleResize);
@@ -108,12 +134,15 @@
             physicsInstance.destroy();
         }
     });
+
+    $: uniqueTags = ['All', ...new Set(projectsData.flatMap(p => p.tags))];
+    $: uniqueYears = ['All', ...new Set(projectsData.map(p => p.year))].sort((a, b) => (b === 'All' ? -1 : a === 'All' ? 1 : b - a));
 </script>
 
-<section bind:this={physicsContainer} class="relative w-screen h-screen overflow-hidden z-0 bg-transparent">
+<section bind:this={physicsContainer} class="relative w-screen h-screen overflow-hidden ...">
     <BackButton/>
     {#each projectPositions as pos (pos.id)}
-        {@const project = projectsData.find((p) => p.id === pos.id)}
+        {@const project = filteredProjects.find((p) => p.id === pos.id)}
         {#if project}
             <div class="absolute top-0 left-0 z-1 pointer-events-none">
                 <ProjectBlock
@@ -126,4 +155,25 @@
             </div>
         {/if}
     {/each}
+
+    <div class="fixed top-4 left-1/2 -translate-x-1/2 w-[90vw] max-w-2xl z-20 p-2 rounded-2xl border-2 border-white/10 bg-black/30 backdrop-blur-lg flex flex-col md:flex-row gap-4 justify-center items-center">
+        <div class="flex flex-wrap justify-center items-center gap-2">
+            {#each uniqueTags as tag}
+                <button
+                        class="filter-btn"
+                        class:active={activeTag === tag}
+                        on:click={() => {activeTag = tag; selectionChanged()}}
+                >{tag}</button>
+            {/each}
+        </div>
+        <div class="flex flex-wrap justify-center items-center gap-2">
+            {#each uniqueYears as year}
+                <button
+                        class="filter-btn"
+                        class:active={activeYear == year}
+                        on:click={() => {activeYear = year; selectionChanged()}}
+                >{year}</button>
+            {/each}
+        </div>
+    </div>
 </section>

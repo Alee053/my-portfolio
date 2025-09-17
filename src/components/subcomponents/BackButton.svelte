@@ -4,7 +4,6 @@
 
     let visible = false;
 
-    // Make the button appear after a short delay to avoid clashing with page load animations.
     onMount(() => {
         const timer = setTimeout(() => {
             visible = true;
@@ -44,7 +43,6 @@
 {/if}
 
 <script context="module">
-    // quintOut is a nice easing function for this kind of animation.
     function quintOut(t) {
         return --t * t * t * t * t + 1;
     }

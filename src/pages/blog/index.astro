@@ -21,18 +21,18 @@ const uniqueYears = [...new Set(allPosts.map(post => post.data.pubDate.getFullYe
     <section id="blog-index" class="w-full min-h-screen shadow-inner bg-radial from-black/0 from-65% to-black relative overflow-y-auto px-4 py-24 md:px-8">
         <BackButton client:load />
         <div class="container mx-auto max-w-6xl">
-            <div class="header-content text-center mb-12">
-                <h1 class="text-5xl md:text-6xl font-bold text-white">Blog</h1>
-                <p class="text-lg text-white/70 mt-2">Articles about technology, projects, and development.</p>
+            <div class="header-content text-center mb-12 ">
+                <h1 class="text-5xl md:text-6xl font-bold text-white ">Blog</h1>
+                <p class="text-lg text-white/70 mt-2 ">Articles about technology, projects, and development.</p>
             </div>
 
-            <div class="filters flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 mb-12">
-                <div class="filter-group flex items-center gap-2 flex-wrap justify-center">
+            <div class="filters flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 mb-12 ">
+                <div class="filter-group flex items-center gap-2 flex-wrap justify-center rounded-full border-2 border-white/10 bg-black/30 backdrop-blur-lg p-2">
                     {uniqueTags.map(tag => (
                             <a href={`/blog/tags/${tag}/`} class="filter-btn">{tag}</a>
                     ))}
                 </div>
-                <div class="filter-group flex items-center gap-2 flex-wrap justify-center">
+                <div class="filter-group flex items-center gap-2 flex-wrap justify-center rounded-full border-2 border-white/10 bg-black/30 backdrop-blur-lg p-2">
                     {uniqueYears.map(year => (
                             <a href={`/blog?year=${year}`} class:list={['filter-btn', { 'active': selectedYear === String(year) }]}>{year}</a>
                     ))}
@@ -55,7 +55,6 @@ const uniqueYears = [...new Set(allPosts.map(post => post.data.pubDate.getFullYe
     import gsap from 'gsap';
 
     document.addEventListener('DOMContentLoaded', () => {
-        // Animate the header and filters in
         gsap.from('.header-content, .filters', {
             duration: 1,
             opacity: 0,
@@ -63,9 +62,8 @@ const uniqueYears = [...new Set(allPosts.map(post => post.data.pubDate.getFullYe
             ease: 'power3.out'
         });
 
-        // Animate the cards in with a stagger effect
         gsap.from('.post-card-wrapper', {
-            delay: 0.2, // Start slightly after the header
+            delay: 0.2,
             duration: 0.8,
             opacity: 0,
             y: 50,
