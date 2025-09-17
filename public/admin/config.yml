@@ -1,0 +1,41 @@
+# Vercel integration for authentication
+backend:
+  name: github
+  repo: "Alee053/your-repo-name" # IMPORTANT: Replace with your GitHub repo
+  branch: main
+  site_domain: www.alecastro.dev
+
+# Where to store uploaded media files
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+# Define your content types (collections)
+collections:
+  # Blog Posts Collection
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  # Projects Collection
+  - name: "projects"
+    label: "Projects"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Subtitle", name: "subtitle", widget: "string" }
+      - { label: "Year", name: "year", widget: "number" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Link", name: "link", widget: "string" }
+      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Order", name: "order", widget: "number", required: false }
