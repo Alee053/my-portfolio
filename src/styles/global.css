@@ -93,3 +93,52 @@ body.loading {
 .filter-btn.clear {
     @apply bg-red-500/20 border-red-500/50 text-red-400 hover:bg-red-500/40;
 }
+
+.subtitle-container {
+    -webkit-mask-image: linear-gradient(to bottom, var(--color-surface) 70%, transparent 100%);
+    mask-image: linear-gradient(to bottom, var(--color-surface) 70%, transparent 100%);
+}
+.subtitle-container:hover {
+    overflow-y: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+.subtitle-container::-webkit-scrollbar {
+    width: 4px;
+}
+.subtitle-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+.marquee-container {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+.marquee-container:before,
+.marquee-container:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2rem;
+    z-index: 1;
+}
+.marquee-container:before {
+    left: 0;
+    background: linear-gradient(to right, rgba(0,0,0,30%) 0%, transparent 100%);
+}
+.marquee-container:after {
+    right: 0;
+    background: linear-gradient(to left, rgba(0,0,0,30%) 0%, transparent 100%);
+}
+.marquee-content {
+    animation: scroll-x 15s linear infinite;
+}
+
+@keyframes scroll-x {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
