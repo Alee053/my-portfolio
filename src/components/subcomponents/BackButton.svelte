@@ -1,28 +1,52 @@
 <script>
+    import { onMount } from 'svelte';
+    import { fly } from 'svelte/transition';
+
+    let visible = false;
+
+    // Make the button appear after a short delay to avoid clashing with page load animations.
+    onMount(() => {
+        const timer = setTimeout(() => {
+            visible = true;
+        }, 300); // 300ms delay
+
+        return () => clearTimeout(timer);
+    });
+
     const goBack = () => {
-        // This safely navigates to the previous page in the session history.
+        // This logic is already excellent and remains unchanged.
         if (history.length > 1) {
             history.back();
         } else {
-            // Fallback if there's no history (e.g., opened in a new tab)
             window.location.href = '/';
         }
     };
 </script>
 
-<button id="back-btn" class="scale-0 opacity-0 xl:scale-100 xl:opacity-100 fixed top-0 left-0 h-screen w-[20vw] lg:w-[10vw] grid place-items-center hover:bg-gradient-to-r from-black/30 to-black/0 text-white z-20 border-primary rounded-none transition duration-300 ease-in-out" aria-label="Go back" on:click={goBack}>
-    <svg class="stroke-primary fill-primary transition-transform duration-500" style="transform: rotate(90deg);" width="5vw" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M5.70711 9.71069C5.31658 10.1012 5.31658 10.7344 5.70711 11.1249L10.5993 16.0123C11.3805 16.7927 12.6463 16.7924 13.4271 16.0117L18.3174 11.1213C18.708 10.7308 18.708 10.0976 18.3174 9.70708C17.9269 9.31655 17.2937 9.31655 16.9032 9.70708L12.7176 13.8927C12.3271 14.2833 11.6939 14.2832 11.3034 13.8927L7.12132 9.71069C6.7308 9.32016 6.09763 9.32016 5.70711 9.71069Z" />
-        <defs>
-            <linearGradient id="btnGradient" x1="0" y1="0" x2="24" y2="0" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#00f" stop-opacity="0" />
-                <stop stop-color="#00f" stop-opacity="1" />
-            </linearGradient>
-        </defs>
-    </svg>
-</button>
-<button id="back-btn-mobile" class="xl:scale-0 xl:opacity-0 fixed top-4 left-4 w-15 h-15 flex items-center justify-center bg-black/40 rounded-xl text-white z-20 border-primary border-2 transition duration-300 ease-in-out" aria-label="Go back" on:click={goBack}>
-    <svg class="stroke-primary fill-primary" width="24" height="24" viewBox="0 0 24 24" style="transform: rotate(90deg);">
-        <path d="M5.70711 9.71069C5.31658 10.1012 5.31658 10.7344 5.70711 11.1249L10.5993 16.0123C11.3805 16.7927 12.6463 16.7924 13.4271 16.0117L18.3174 11.1213C18.708 10.7308 18.708 10.0976 18.3174 9.70708C17.9269 9.31655 17.2937 9.31655 16.9032 9.70708L12.7176 13.8927C12.3271 14.2833 11.6939 14.2832 11.3034 13.8927L7.12132 9.71069C6.7308 9.32016 6.09763 9.32016 5.70711 9.71069Z" />
-    </svg>
-</button>
+{#if visible}
+    <button
+            transition:fly={{ y: -20, duration: 400, easing: quintOut }}
+            on:click={goBack}
+            aria-label="Go back"
+            class="group fixed top-4 left-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-black/30 backdrop-blur-lg border border-white/10 text-white transition-all duration-300 ease-in-out hover:border-primary hover:bg-primary/20 md:top-6 md:left-6 md:h-14 md:w-14"
+    >
+        <svg
+                class="h-6 w-6 stroke-white transition-all duration-300 group-hover:stroke-primary group-hover:scale-110"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+        >
+            <path d="M19 12H5"></path>
+            <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+    </button>
+{/if}
+
+<script context="module">
+    // quintOut is a nice easing function for this kind of animation.
+    function quintOut(t) {
+        return --t * t * t * t * t + 1;
+    }
+</script>

@@ -12,7 +12,7 @@ This post is a look under the hood at the technologies and ideas that brought th
 
 ### Stepping Out of the Comfort Zone
 
-Let's be clear: I don't consider myself a frontend developer. My comfort zone has always been the world of C++, data structures, and algorithmic problem-solving. My proudest achievements, like representing Bolivia at the International Olympiad in Informatics (IOI), come from a place of pure logic and performance optimization. In that world, efficiency is king, and the user interface is often a simple command line.
+Let's be clear: I don't consider myself a frontend developer. My comfort zone has always been the world of C++, data structures, and algorithmic problem-solving. In that world, efficiency is king, and the user interface is often a simple command line.
 
 The frontend felt like a different universe entirely. It’s a place where logic must shake hands with art, where performance is measured not just in clock cycles but in perceived smoothness, and where the user experience is paramount. This project, then, became a personal challenge. It was an opportunity to step out of the terminal and into the browser, to see if I could apply a systems-engineering mindset to the creative craft of web development.
 
