@@ -7,6 +7,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 import Icons from 'unplugin-icons/vite'
 
+import vercel from '@astrojs/vercel';
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [svelte()],
@@ -15,5 +17,7 @@ export default defineConfig({
     plugins: [tailwindcss(),Icons({
         compiler: 'svelte',
     }),]
-  }
+  },
+
+  adapter: vercel(),
 });
