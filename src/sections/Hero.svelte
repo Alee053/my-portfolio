@@ -2,11 +2,11 @@
     import { onMount, onDestroy } from 'svelte';
     import { gsap } from 'gsap';
     import ArrowIcon from '../components/subcomponents/ArrowIcon.svelte';
-   import Contact from "../components/subcomponents/Contact.svelte";
+    import Contact from "../components/subcomponents/Contact.svelte";
     import { fade } from 'svelte/transition';
-    import { writable } from 'svelte/store';
 
-    export const blBtnHovered = writable(false);
+    let contactVisible = false;
+    const toggleContact = () => contactVisible = !contactVisible;
 
     // State
     let backButtonDisabled = true;
@@ -46,17 +46,15 @@
             onComplete: setupScrollAnimation
         });
 
-        // We also make the parent <h1> visible right away
         gsap.set('#name', { visibility: 'visible' });
         gsap.set('#down-arrow', { visibility: 'visible' });
 
         intro.from(splitInstance.chars, {
-            delay: 0.2,
             opacity: 0,
             x: 20,
             duration: 1,
             ease: 'power2.out',
-            stagger: { each: 0.1, from: 'left' },
+            stagger: { each: 0.07, from: 'left' },
         })
             .from('#down-arrow', { y: 100, opacity: 0, duration: 1, ease: 'power2.out' }, '-=1');
     }
@@ -113,15 +111,18 @@
     <a id="br-btn" href="/blog" class="corner-btn w-[60vw] h-[40vh] bottom-0 right-[-100%]">
         <p>Blog</p>
     </a>
-    <button id="bl-btn" class="corner-btn w-[40vw] h-[60vh] bottom-[-100%] left-0" on:mouseenter={() => blBtnHovered.set(true)}
-            on:mouseleave={() => blBtnHovered.set(false)}
-            on:focus={() => blBtnHovered.set(true)}
-            on:blur={() => blBtnHovered.set(false)}>
-        {#if $blBtnHovered}
+    <button
+            id="bl-btn"
+            class="corner-btn relative w-[40vw] h-[60vh] bottom-[-100%] left-0"
+            class:is-active={contactVisible}
+            on:click={toggleContact}
+    >
+        <div class="contact-label absolute inset-0 grid place-items-center">
+            <p>Contact</p>
+        </div>
+        <div class="contact-details absolute inset-0 grid place-items-center">
             <Contact/>
-        {:else}
-            <p transition:fade >Contact</p>
-        {/if}
+        </div>
     </button>
 
     <button id="center-btn" on:click={handleScrollUp} disabled={backButtonDisabled} class="corner-btn group top-[40vh] left-[40vw] w-[20vw] h-[20vh] opacity-0 disabled:cursor-default">

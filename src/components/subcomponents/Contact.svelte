@@ -11,7 +11,7 @@
     ];
 </script>
 
-<button transition:fade  id="contact" class="absolute flex flex-wrap  gap-6 justify-center items-center w-full h-full ">
+<div transition:fade id="contact" class="flex flex-wrap gap-6 justify-center items-center w-full h-full">
     {#each contacts as contact}
         <a
                 class="flex items-center gap-2 text-white text-xl xl:text-3xl border-b-2 border-transparent hover:border-primary hover:text-primary focus:border-primary focus:text-primary transition-colors"
@@ -23,4 +23,4 @@
             <span>{contact.name}</span>
         </a>
     {/each}
-</button>
+</div>

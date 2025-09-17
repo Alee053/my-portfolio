@@ -40,8 +40,21 @@ button:disabled, a:disabled{
 .corner-btn:hover p, .corner-btn:focus p{
     @apply scale-120;
 }
-#bl-btn:hover p, #bl-btn:focus p {
-    @apply opacity-0;
+#bl-btn .contact-details,
+#bl-btn.is-active .contact-label {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#bl-btn.is-active .contact-details,
+#bl-btn .contact-label {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#bl-btn .contact-details,
+#bl-btn .contact-label {
+    transition: opacity 0.3s ease-in-out;
 }
 
 #back-btn svg{
