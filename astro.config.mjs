@@ -11,13 +11,15 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [svelte()],
-
-  vite: {
-    plugins: [tailwindcss(),Icons({
-        compiler: 'svelte',
-    }),]
-  },
+    integrations: [svelte()],
+    image: {
+        domains: ["res.cloudinary.com"],
+    },
+    vite: {
+        plugins: [tailwindcss(),Icons({
+            compiler: 'svelte',
+        }),]
+      },
 
   adapter: vercel(),
 });

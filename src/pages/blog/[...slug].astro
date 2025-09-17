@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BackButton from '../../components/subcomponents/BackButton.svelte';
 import TableOfContents from '../../components/subcomponents/TableOfContents.astro';
@@ -32,7 +33,7 @@ const { Content,headings } = await post.render();
                     </div>
                 </header>
 
-                {post.data.heroImage && <img src={post.data.heroImage} alt="" class="w-full rounded-lg aspect-video object-cover mb-12 border border-white/10"/>}
+                {post.data.heroImage && <Image src={post.data.heroImage} width={900} height={450} alt="" class="w-full rounded-lg aspect-video object-cover mb-12 border border-white/10"/>}
 
                 <div class="prose prose-lg prose-invert max-w-none prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-strong:text-white/90 prose-blockquote:border-l-primary prose-code:bg-white/10 prose-code:p-1 prose-code:rounded">
                     <Content />
