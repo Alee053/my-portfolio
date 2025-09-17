@@ -2,7 +2,7 @@
 title: "Forging a Digital Identity: A Systems Engineer's Journey into the Frontend"
 description: "A look behind the scenes at how I built my new portfolio, stepping out of my C++ comfort zone to tackle the creative and technical challenges of modern web development."
 pubDate: "2025-09-16"
-heroImage: "https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758081997/hero_fhl6aj.png"
+heroImage: "https://res.cloudinary.com/dwhzvvrmu/image/upload/f_auto,q_auto/v1758081997/hero_fhl6aj.png"
 tags: ["astro", "svelte", "gsap", "webdev", "portfolio", "learning"]
 ---
 

@@ -1,7 +1,7 @@
 name: "Grid Maze Solver"
 subtitle: "Visualizing BFS Algorithm"
 year: 2024
-image: "https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758082020/maze_dr9ael.gif"
+image: "https://res.cloudinary.com/dwhzvvrmu/image/upload/f_auto,q_auto/v1758082020/maze_dr9ael.gif"
 link: "https://github.com/Alee053/MazeSolver"
 tags:
   - "Algorithms"
