@@ -3,7 +3,6 @@ backend:
   name: github
   repo: Alee053/my-portfolio
   branch: main
-  site_domain: www.alecastro.dev
   auth_type: implicit
   app_id: Ov23liRlJJr1fAjEfvel
 
