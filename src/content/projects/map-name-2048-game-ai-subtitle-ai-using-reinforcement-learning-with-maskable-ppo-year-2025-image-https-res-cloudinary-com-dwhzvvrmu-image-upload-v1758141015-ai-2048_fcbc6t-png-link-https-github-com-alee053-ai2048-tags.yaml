@@ -1,0 +1,12 @@
+name: 2048 Game AI
+subtitle: AI using Reinforcement Learning with Maskable PPO
+year: 2025
+image: https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758141015/ai-2048_fcbc6t.png
+link: https://github.com/Alee053/AI2048
+tags:
+  - AI
+  - WIP
+  - C++
+  - Python
+  - Algorithms
+order: ""
