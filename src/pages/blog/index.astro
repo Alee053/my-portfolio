@@ -4,9 +4,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import BackButton from '../../components/subcomponents/BackButton.svelte';
 import BlogCard from '../../components/subcomponents/BlogCard.astro';
 
+export const prerender = false
 
 const allPosts = await getCollection('blog');
-const selectedYear = Astro.url.searchParams.get('year');
+const url = Astro.url;
+const params = new URLSearchParams(url.search);
+const selectedYear = params.get('year');
 const filteredPosts = selectedYear
     ? allPosts.filter(post => String(post.data.pubDate.getFullYear()) === selectedYear)
     : allPosts;

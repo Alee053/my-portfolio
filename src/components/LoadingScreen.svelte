@@ -4,10 +4,19 @@
 
     let isLoading = true;
 
+    const hideLoader = () => {
+        isLoading = false;
+    };
+
     onMount(() => {
-        window.addEventListener('load', () => {
-            isLoading = false;
-        });
+        if (document.readyState === 'interactive' || document.readyState === 'complete') {
+            hideLoader();
+        } else {
+            document.addEventListener('DOMContentLoaded', hideLoader, { once: true });
+        }
+        return () => {
+            document.removeEventListener('DOMContentLoaded', hideLoader);
+        };
     });
 </script>
 
