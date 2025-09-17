@@ -7,9 +7,17 @@ backend:
   base_url: https://www.alecastro.dev
   auth_endpoint: oauth
 
+display_url: "https://www.alecastro.dev"
+logo_url: "https://res.cloudinary.com/dwhzvvrmu/image/upload/f_auto,q_auto/v1758136024/logo_yvmxub.png"
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
+
+media_library:
+  name: cloudinary
+  config:
+    cloud_name: dwhzvvrmu
+    api_key: 189752686927554
 
 collections:
   # Blog Posts Collection
