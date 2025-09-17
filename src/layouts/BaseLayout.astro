@@ -27,8 +27,8 @@ const { title, description = "My personal portfolio" } = Astro.props;
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <Analytics />
-    <SpeedInsights/>
+    <Analytics client:load />
+    <SpeedInsights client:load />
     <slot />
     <LoadingScreen client:load/>
     <Background client:load/>

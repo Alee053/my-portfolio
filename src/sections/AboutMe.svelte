@@ -27,21 +27,6 @@
             delay: 0.8,
             ease: 'power2.out'
         });
-        gsap.from('.back-btn', {
-            duration: 0.6,
-            opacity: 0,
-            x: -40,
-            ease: 'power2.out'
-        });
-        gsap.to('.back-btn svg', {
-            duration: 1,
-            background: 'linear-gradient(to right, #00f 0%, #00f 100%)',
-            delay: 0.7,
-            opacity:1,
-            onStart: () => {
-                document.querySelector('.back-btn svg path').setAttribute('fill', 'url(#btnGradient)');
-            }
-        });
     });
 </script>
 <section id="about-me" class="invisible w-full h-screen shadow-inner bg-radial from-black/0  from-65% to-black relative overflow-hidden grid place-items-center">
