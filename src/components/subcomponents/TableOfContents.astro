@@ -1,0 +1,20 @@
+---
+const { headings } = Astro.props;
+
+const filteredHeadings = headings.filter(heading => heading.depth > 1 && heading.depth < 4);
+---
+<nav class="toc-container p-6 rounded-xl border-2 border-white/10 bg-black/30 backdrop-blur-lg">
+    <h2 class="text-xl font-bold text-white mb-4">On This Page</h2>
+    <ul class="space-y-2">
+        {filteredHeadings.map(heading => (
+                <li
+                        class="text-white/70 hover:text-primary transition-colors"
+                        style={{ marginLeft: `${(heading.depth - 2) * 1}rem` }}
+                >
+                    <a href={`#${heading.slug}`}>
+                        {heading.text}
+                    </a>
+                </li>
+        ))}
+    </ul>
+</nav>

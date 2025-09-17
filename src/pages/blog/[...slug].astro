@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BackButton from '../../components/subcomponents/BackButton.svelte';
+import TableOfContents from '../../components/subcomponents/TableOfContents.astro';
 
 export async function getStaticPaths() {
     const allPosts = await getCollection('blog');
@@ -12,31 +13,37 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+const { Content,headings } = await post.render();
 ---
 <BaseLayout title={post.data.title} description={post.data.description}>
-    <section id="blog-post" class="w-full min-h-screen shadow-inner bg-radial from-black/0 from-65% to-black relative overflow-y-auto px-4 py-24 md:px-8 grid place-items-start justify-center">
+    <section id="blog-post" class=" w-full min-h-screen shadow-inner bg-radial from-black/0 from-65% to-black relative overflow-y-auto py-24 grid place-items-start justify-center">
         <BackButton client:load />
+        <div class="container mx-auto max-w-8xl grid grid-cols-1 lg:grid-cols-4 gap-4 ">
+            <article class=" lg:col-span-3 w-full max-w-4xl p-6 rounded-2xl border-2 border-white/10 bg-black/30 backdrop-blur-lg">
+                <header class="text-center mb-12">
+                    <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">{post.data.title}</h1>
+                    <p class="text-white/70 mt-4">
+                        {post.data.pubDate.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </p>
+                    <div class="flex flex-wrap gap-2 justify-center mt-4">
+                        {post.data.tags.map(tag => (
+                                <a href={`/blog/tags/${tag}/`} class="text-sm bg-white/10 text-primary font-semibold px-3 py-1 rounded-full">{tag}</a>
+                        ))}
+                    </div>
+                </header>
 
-        <article class="w-full max-w-4xl">
-            <header class="text-center mb-12">
-                <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">{post.data.title}</h1>
-                <p class="text-white/70 mt-4">
-                    {post.data.pubDate.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })}
-                </p>
-                <div class="flex flex-wrap gap-2 justify-center mt-4">
-                    {post.data.tags.map(tag => (
-                            <a href={`/blog/tags/${tag}/`} class="text-sm bg-white/10 text-primary font-semibold px-3 py-1 rounded-full">{tag}</a>
-                    ))}
+                {post.data.heroImage && <img src={post.data.heroImage} alt="" class="w-full rounded-lg aspect-video object-cover mb-12 border border-white/10"/>}
+
+                <div class="prose prose-lg prose-invert max-w-none prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-strong:text-white/90 prose-blockquote:border-l-primary prose-code:bg-white/10 prose-code:p-1 prose-code:rounded">
+                    <Content />
                 </div>
-            </header>
-
-            {post.data.heroImage && <img src={post.data.heroImage} alt="" class="w-full rounded-lg aspect-video object-cover mb-12 border border-white/10"/>}
-
-            <div class="prose prose-lg prose-invert max-w-none prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-strong:text-white/90 prose-blockquote:border-l-primary prose-code:bg-white/10 prose-code:p-1 prose-code:rounded">
-                <Content />
-            </div>
-        </article>
+            </article>
+            <aside class="hidden lg:block">
+                <div class="sticky top-24">
+                    <TableOfContents {headings} />
+                </div>
+            </aside>
+        </div>
     </section>
 </BaseLayout>
 
@@ -44,8 +51,6 @@ const { Content } = await post.render();
     import gsap from 'gsap';
 
     document.addEventListener('DOMContentLoaded', () => {
-        // This script is now robust. It animates the children of the article.
-        // If it fails, the article is still visible by default.
         gsap.from('article > *', {
             delay: 0.2,
             duration: 1,

@@ -83,7 +83,7 @@
 
         tl.to('#center-btn', {
             opacity: 1, duration: 0.5, onStart: () => (backButtonDisabled = false), onReverseComplete: () => (backButtonDisabled = true)
-        });
+        }, '-=0.5');
     }
 
     // --- Helpers & Event Handlers ---

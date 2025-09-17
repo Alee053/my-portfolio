@@ -16,6 +16,10 @@
     --color-surface-50:#8b8b8b;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 *{
     font-family: "Outfit", sans-serif;
 }
