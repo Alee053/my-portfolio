@@ -1,8 +1,22 @@
 ---
 import Projects from '../../sections/Projects.svelte';
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from 'astro:content';
+
+export const prerender = false
+
+const projectEntries = await getCollection('projects');
+
+console.log(projectEntries);
+const projectsData = projectEntries
+    .map(entry => ({
+        id: entry.id,
+        ...entry.data
+    }))
+    .sort((a, b) => (a.order || 99) - (b.order || 99)); // Sort by the order field
+
 ---
 
 <BaseLayout title="Projects">
-    <Projects client:load/>
+    <Projects projectsData={projectsData} client:load/>
 </BaseLayout>

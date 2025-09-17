@@ -1,7 +1,8 @@
 <script>
-    import { projectsData } from '../lib/projects-data.js';
     import ProjectBlock from '../components/subcomponents/ProjectBlock.svelte';
     import BackButton from "../components/subcomponents/BackButton.svelte";
+
+    export let projectsData = [];
 
     let activeTag = 'All';
     let activeYear = 'All';

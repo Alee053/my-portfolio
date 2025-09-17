@@ -3,6 +3,8 @@
     import ProjectsDesktop from '../sections/ProjectsDesktop.svelte';
     import ProjectsMobile from '../sections/ProjectsMobile.svelte';
 
+    export let projectsData=[];
+
     let isDesktop = true;
     let loaded = false;
     onMount(() => {
@@ -13,8 +15,8 @@
 
 {#if loaded}
     {#if isDesktop}
-        <ProjectsDesktop />
+        <ProjectsDesktop projectsData={projectsData} />
     {:else}
-        <ProjectsMobile />
+        <ProjectsMobile projectsData={projectsData} />
     {/if}
 {/if}

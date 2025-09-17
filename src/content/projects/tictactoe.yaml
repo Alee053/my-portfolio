@@ -1,0 +1,9 @@
+name: "TicTacToe MiniMax"
+subtitle: "AI Opponent with MiniMax"
+year: 2023
+image: "/images/projects/tictactoe.gif"
+link: "https://github.com/Alee053/TicTacToe-MiniMax"
+tags:
+  - "AI"
+  - "JavaScript"
+order: 2

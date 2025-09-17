@@ -1,0 +1,9 @@
+name: "Hanoi Towers Solver"
+subtitle: "Recursive Solver Visualization"
+year: 2024
+image: "/images/projects/hanoi.gif"
+link: "https://github.com/Alee0S3/HanoiTowers"
+tags:
+  - "Algorithms"
+  - "Svelte"
+order: 4

@@ -2,15 +2,15 @@
     import { onMount, onDestroy } from 'svelte';
     import { createPhysicsSimulation } from '../lib/matter-physics.js';
     import ProjectBlock from '../components/subcomponents/ProjectBlock.svelte';
-    import { projectsData as allProjectsData } from '../lib/projects-data.js';
     import Matter from 'matter-js';
     import BackButton from "../components/subcomponents/BackButton.svelte";
+
+    export let projectsData = [];
 
     let physicsContainer;
     let physicsInstance;
     let hoveredProjectId = null;
 
-    let projectsData = [];
     let projectPositions = [];
 
     let activeTag = 'All';
@@ -109,7 +109,6 @@
     }
 
     onMount(() => {
-        projectsData = allProjectsData;
 
         initPhysics(projectsData);
         filterProjects()

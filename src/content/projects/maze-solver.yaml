@@ -1,0 +1,9 @@
+name: "Grid Maze Solver"
+subtitle: "Visualizing BFS Algorithm"
+year: 2024
+image: "/images/projects/maze.gif"
+link: "https://github.com/Alee053/MazeSolver"
+tags:
+  - "Algorithms"
+  - "JavaScript"
+order: 5

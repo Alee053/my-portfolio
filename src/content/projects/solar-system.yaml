@@ -1,0 +1,9 @@
+name: "Solar System Simulation"
+subtitle: "2D p5.js Physics Simulation"
+year: 2023
+image: "/images/projects/solar-system.gif"
+link: "https://github.com/Alee053/SolarSystem-Sim"
+tags:
+  - "p5.js"
+  - "Physics"
+order: 1
