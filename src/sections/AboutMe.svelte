@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import gsap from 'gsap';
     import BackButton from "../components/subcomponents/BackButton.svelte";
+    import {optimizeCloudinaryImage} from "../lib/cloudinary.js";
 
 
     onMount(() => {
@@ -32,7 +33,7 @@
 <section id="about-me" class="invisible w-full h-screen shadow-inner bg-radial from-black/0  from-65% to-black relative overflow-hidden grid place-items-center">
     <BackButton/>
     <div class="about-container w-[80vw] xl:w-[60vw] border-primary border-2  rounded-2xl bg-black/30 backdrop-blur-lg p-6 flex flex-col lg:flex-row items-center lg:items-start gap-6 lg:gap-12 overflow-hidden">
-        <img alt="" src="https://res.cloudinary.com/dwhzvvrmu/image/upload/f_auto,q_auto/v1758082045/profile_pabqul.jpg" class="profile-img w-40 h-40 lg:w-48 lg:h-48 rounded-full object-cover border-4 border-primary flex-shrink-0"/>
+        <img alt="" src={optimizeCloudinaryImage("https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758082045/profile_pabqul.jpg")} class="profile-img w-40 h-40 lg:w-48 lg:h-48 rounded-full object-cover border-4 border-primary flex-shrink-0"/>
         <div class="about-text text-white text-center lg:text-left space-y-4">
             <h2 class="text-3xl font-bold">About Me</h2>
             <p class="text:md xl:text-lg leading-relaxed">

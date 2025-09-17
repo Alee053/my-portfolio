@@ -2,7 +2,7 @@ slug: hanoi
 name: "Hanoi Towers Solver"
 subtitle: "Recursive Solver Visualization"
 year: 2024
-image: "https://res.cloudinary.com/dwhzvvrmu/image/upload/f_auto,q_auto/v1758082015/hanoi_fvv13z.gif"
+image: "https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758082015/hanoi_fvv13z.gif"
 link: "https://github.com/Alee0S3/HanoiTowers"
 tags:
   - "Algorithms"

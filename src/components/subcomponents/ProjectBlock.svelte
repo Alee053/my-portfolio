@@ -1,5 +1,6 @@
 <script>
     import { fade } from 'svelte/transition';
+    import { optimizeCloudinaryImage } from '../../lib/cloudinary.js';
     export let project;
     export let x = null;
     export let y = null;
@@ -27,7 +28,7 @@
     {#if project.image}
         <div class="w-full h-3/5 flex-shrink-0">
             <img
-                    src={project.image}
+                    src={optimizeCloudinaryImage(project.image)}
                     alt={project.name}
                     class="w-full h-full object-cover rounded-lg"
             />

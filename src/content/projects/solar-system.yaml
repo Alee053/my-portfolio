@@ -2,7 +2,7 @@ slug: solar-system
 name: "Solar System Simulation"
 subtitle: "2D p5.js Physics Simulation"
 year: 2023
-image: "https://res.cloudinary.com/dwhzvvrmu/image/upload/f_auto,q_auto/v1758082019/solar-system_d3uecm.gif"
+image: "https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758082019/solar-system_d3uecm.gif"
 link: "https://github.com/Alee053/SolarSystem-Sim"
 tags:
   - "p5.js"
