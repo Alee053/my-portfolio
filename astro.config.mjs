@@ -9,9 +9,11 @@ import Icons from 'unplugin-icons/vite'
 
 import vercel from '@astrojs/vercel';
 
+import decapCmsOauth from 'astro-decap-cms-oauth';
+
 // https://astro.build/config
 export default defineConfig({
-    integrations: [svelte()],
+    integrations: [svelte(), decapCmsOauth()],
     image: {
         domains: ["res.cloudinary.com"],
     },

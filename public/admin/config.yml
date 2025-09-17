@@ -3,8 +3,10 @@ backend:
   name: github
   repo: Alee053/my-portfolio
   branch: main
-  auth_type: implicit
-  app_id: Ov23liRlJJr1fAjEfvel
+  site_domain: alecastro.dev
+  base_url: https://www.alecastro.dev
+  auth_endpoint: oauth
+
 
 # Where to store uploaded media files
 media_folder: "public/images/uploads"

@@ -16,6 +16,7 @@
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "astro": "^5.13.7",
+    "astro-decap-cms-oauth": "^0.5.1",
     "gsap": "^3.13.0",
     "matter-js": "^0.20.0",
     "svelte": "^5.38.10",
