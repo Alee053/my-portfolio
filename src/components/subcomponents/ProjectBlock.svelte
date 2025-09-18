@@ -10,21 +10,17 @@
     export let angle = null;
     export let isHovered = false;
 
-    // --- Element Bindings ---
     let subtitleContainer;
     let marqueeContainer;
     let marqueeContent;
     let firstTagSet;
 
-    // --- State ---
     let isTagOverflowing = false;
     let isSubtitleOverflowing = false;
 
-    // --- Animations ---
     let scrollTween;
     let marqueeTween;
 
-    // --- Logic ---
     const checkOverflows = () => {
         if (marqueeContent && marqueeContainer) {
             isTagOverflowing = marqueeContent.scrollWidth > marqueeContainer.clientWidth;
@@ -35,7 +31,6 @@
     };
 
     onMount(() => {
-        // Delay helps ensure fonts are rendered before taking measurements
         const timer = setTimeout(checkOverflows, 150);
         window.addEventListener('resize', checkOverflows);
 
@@ -45,9 +40,7 @@
         };
     });
 
-    // --- Reactive Animations ---
     $: {
-        // Subtitle scroll animation, now only runs if it's actually overflowing
         if (subtitleContainer) {
             if (isHovered && isSubtitleOverflowing) {
                 scrollTween = gsap.to(subtitleContainer, {
@@ -60,7 +53,6 @@
             }
         }
 
-        // Tag marquee animation
         if (isTagOverflowing && firstTagSet) {
             const firstTagSetWidth = firstTagSet.clientWidth;
             if (firstTagSetWidth > 0) {
@@ -77,7 +69,7 @@
         }
     }
 
-    $: transformStyle = (x !== null && y !== null) ? `transform: translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotateZ(${angle}rad); width: ${project.width}px; height: ${project.height}px;` : '';
+    $: transformStyle = (x !== null && y !== null) ? `transform: translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotateZ(${angle}rad); width: ${project.width}px; height: ${project.height}px;` : 'height: 350px';
 </script>
 
 <div
@@ -85,12 +77,10 @@
         class:absolute={x !== null}
         class="flex flex-col overflow-hidden p-4 bg-black/30 backdrop-blur-md border-2 rounded-xl transition-all duration-200 ease-out shadow-lg select-none"
         class:cursor-grab={x !== null}
-        class:cursor-pointer={x === null}
         class:border-primary={!isHovered}
         class:border-white={isHovered}
         class:shadow-[0_0_20px_theme(colors.primary)]={isHovered}
         class:backdrop-brightness-110={isHovered}
-        class:hover:scale-105={x === null}
         style={transformStyle}
 >
     <div class="w-full flex-grow min-h-0 mb-2">
