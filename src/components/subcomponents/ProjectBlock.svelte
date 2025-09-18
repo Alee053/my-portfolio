@@ -1,4 +1,5 @@
 <script>
+    import { onMount, onDestroy } from 'svelte';
     import { fade } from 'svelte/transition';
     import { optimizeCloudinaryImage } from '../../lib/cloudinary.js';
     import { gsap } from 'gsap';
@@ -11,26 +12,57 @@
 
     let subtitleContainer;
     let scrollTween;
+    let marqueeContainer;
+    let marqueeContent;
+    let isOverflowing = false;
+
+    let firstTagSet;
+    let firstTagSetWidth = 0;
+    let marqueeTween;
+
+    const checkOverflow = () => {
+        if (!marqueeContent || !marqueeContainer) return;
+
+        if (marqueeContent.scrollWidth > marqueeContainer.clientWidth) {
+            isOverflowing = true;
+        } else {
+            isOverflowing = false;
+        }
+    };
+
+    onMount(() => {
+        checkOverflow();
+        window.addEventListener('resize', checkOverflow);
+    });
+
+    onDestroy(() => {
+        window.removeEventListener('resize', checkOverflow);
+    });
 
     $: if (subtitleContainer) {
         if (isHovered) {
             scrollTween = gsap.to(subtitleContainer, {
                 scrollTop: subtitleContainer.scrollHeight - subtitleContainer.clientHeight,
-                duration: 2,
-                ease: "power1.inOut",
-                yoyo: true,
-                repeat: -1,
-                repeatDelay: 1
+                duration: 2, ease: "power1.inOut", yoyo: true, repeat: -1, repeatDelay: 1
             });
         } else {
             scrollTween?.kill();
-            gsap.to(subtitleContainer, {
-                scrollTop: 0,
-                duration: 0.3,
-                ease: "power2.out"
-            });
+            gsap.to(subtitleContainer, { scrollTop: 0, duration: 0.3, ease: "power2.out" });
         }
     }
+
+    $: if (isOverflowing && firstTagSetWidth > 0) {
+        marqueeTween = gsap.to(marqueeContent, {
+            x: -firstTagSetWidth-8,
+            duration: 10,
+            ease: 'none',
+            repeat: -1,
+        });
+    } else {
+        marqueeTween?.kill();
+        gsap.set(marqueeContent, { x: 0 });
+    }
+
 
     $: transformStyle = (x !== null && y !== null)
         ? `transform: translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotateZ(${angle}rad); width: ${project.width}px; height: ${project.height}px;`
@@ -74,15 +106,27 @@
         </div>
     </div>
 
-    <div class="w-full flex-shrink-0 marquee-container">
-        <div class="marquee-content flex gap-2">
+    <div bind:this={marqueeContainer} class="w-full flex-shrink-0 mt-2 marquee-container">
+        <div
+                bind:this={marqueeContent}
+                class="marquee-content flex gap-2"
+                class:justify-center={!isOverflowing}
+                class:scrolling={isOverflowing}
+        >
             {#if project.tags}
-                {#each project.tags as tag}
-                    <span class="flex-shrink-0 text-xs bg-white/10 text-primary font-semibold px-2 py-1 rounded-full">{tag}</span>
-                {/each}
-                {#each project.tags as tag}
-                    <span class="flex-shrink-0 text-xs bg-white/10 text-primary font-semibold px-2 py-1 rounded-full">{tag}</span>
-                {/each}
+                <span bind:clientWidth={firstTagSetWidth} class="flex gap-2 flex-shrink-0">
+                    {#each project.tags as tag}
+                        <span class="flex-shrink-0 text-xs bg-white/10 text-primary font-semibold px-2 py-1 rounded-full">{tag}</span>
+                    {/each}
+                </span>
+
+                {#if isOverflowing}
+                    <span class="flex gap-2 flex-shrink-0">
+                        {#each project.tags as tag}
+                            <span class="flex-shrink-0 text-xs bg-white/10 text-primary font-semibold px-2 py-1 rounded-full">{tag}</span>
+                        {/each}
+                    </span>
+                {/if}
             {/if}
         </div>
     </div>

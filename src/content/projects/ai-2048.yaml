@@ -1,6 +1,6 @@
 slug: ai-2048
 name: 2048 Game AI
-subtitle: AI using Maskable PPO
+subtitle: AI using Maskable PPO to play 2048 game with high score achievement (> 40000)
 year: 2025
 image: https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758141015/ai-2048_fcbc6t.png
 link: https://github.com/Alee053/AI2048
@@ -8,4 +8,5 @@ tags:
   - AI
   - C++
   - Python
+  - Reinforcement Learning
 order: 1
