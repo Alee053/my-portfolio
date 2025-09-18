@@ -10,63 +10,74 @@
     export let angle = null;
     export let isHovered = false;
 
+    // --- Element Bindings ---
     let subtitleContainer;
-    let scrollTween;
     let marqueeContainer;
     let marqueeContent;
-    let isOverflowing = false;
-
     let firstTagSet;
-    let firstTagSetWidth = 0;
+
+    // --- State ---
+    let isTagOverflowing = false;
+    let isSubtitleOverflowing = false;
+
+    // --- Animations ---
+    let scrollTween;
     let marqueeTween;
 
-    const checkOverflow = () => {
-        if (!marqueeContent || !marqueeContainer) return;
-
-        if (marqueeContent.scrollWidth > marqueeContainer.clientWidth) {
-            isOverflowing = true;
-        } else {
-            isOverflowing = false;
+    // --- Logic ---
+    const checkOverflows = () => {
+        if (marqueeContent && marqueeContainer) {
+            isTagOverflowing = marqueeContent.scrollWidth > marqueeContainer.clientWidth;
+        }
+        if (subtitleContainer) {
+            isSubtitleOverflowing = subtitleContainer.scrollHeight > subtitleContainer.clientHeight;
         }
     };
 
     onMount(() => {
-        checkOverflow();
-        window.addEventListener('resize', checkOverflow);
+        // Delay helps ensure fonts are rendered before taking measurements
+        const timer = setTimeout(checkOverflows, 150);
+        window.addEventListener('resize', checkOverflows);
+
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('resize', checkOverflows);
+        };
     });
 
-    onDestroy(() => {
-        window.removeEventListener('resize', checkOverflow);
-    });
+    // --- Reactive Animations ---
+    $: {
+        // Subtitle scroll animation, now only runs if it's actually overflowing
+        if (subtitleContainer) {
+            if (isHovered && isSubtitleOverflowing) {
+                scrollTween = gsap.to(subtitleContainer, {
+                    scrollTop: subtitleContainer.scrollHeight - subtitleContainer.clientHeight,
+                    duration: 2, ease: "power1.inOut", yoyo: true, repeat: -1, repeatDelay: 1
+                });
+            } else {
+                scrollTween?.kill();
+                gsap.to(subtitleContainer, { scrollTop: 0, duration: 0.3, ease: "power2.out" });
+            }
+        }
 
-    $: if (subtitleContainer) {
-        if (isHovered) {
-            scrollTween = gsap.to(subtitleContainer, {
-                scrollTop: subtitleContainer.scrollHeight - subtitleContainer.clientHeight,
-                duration: 2, ease: "power1.inOut", yoyo: true, repeat: -1, repeatDelay: 1
-            });
+        // Tag marquee animation
+        if (isTagOverflowing && firstTagSet) {
+            const firstTagSetWidth = firstTagSet.clientWidth;
+            if (firstTagSetWidth > 0) {
+                marqueeTween = gsap.to(marqueeContent, {
+                    x: -(firstTagSetWidth + 8), // +8 for the gap
+                    duration: 10,
+                    ease: 'none',
+                    repeat: -1,
+                });
+            }
         } else {
-            scrollTween?.kill();
-            gsap.to(subtitleContainer, { scrollTop: 0, duration: 0.3, ease: "power2.out" });
+            marqueeTween?.kill();
+            gsap.set(marqueeContent, { x: 0 });
         }
     }
 
-    $: if (isOverflowing && firstTagSetWidth > 0) {
-        marqueeTween = gsap.to(marqueeContent, {
-            x: -firstTagSetWidth-8,
-            duration: 10,
-            ease: 'none',
-            repeat: -1,
-        });
-    } else {
-        marqueeTween?.kill();
-        gsap.set(marqueeContent, { x: 0 });
-    }
-
-
-    $: transformStyle = (x !== null && y !== null)
-        ? `transform: translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotateZ(${angle}rad); width: ${project.width}px; height: ${project.height}px;`
-        : '';
+    $: transformStyle = (x !== null && y !== null) ? `transform: translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotateZ(${angle}rad); width: ${project.width}px; height: ${project.height}px;` : '';
 </script>
 
 <div
@@ -82,47 +93,43 @@
         class:hover:scale-105={x === null}
         style={transformStyle}
 >
-    {#if project.image}
-        <div class="w-full h-2/5 flex-shrink-0">
+    <div class="w-full flex-grow min-h-0 mb-2">
+        {#if project.image}
             <img
                     src={optimizeCloudinaryImage(project.image)}
                     alt={project.name}
                     class="w-full h-full object-cover rounded-lg"
             />
-        </div>
-    {/if}
+        {/if}
+    </div>
 
-    <div class="flex flex-col text-center flex-grow min-h-0 h-3/5 py-2 gap-[2px]">
-        <h3 class="text-white font-bold text-lg leading-tight">
+    <div class="flex flex-col text-center flex-shrink-0 gap-1">
+        <h3 class="text-white font-bold text-lg leading-tight truncate">
             {project.name}
         </h3>
-        <div
-                bind:this={subtitleContainer}
-                class="subtitle-container relative overflow-y-auto h-full py-1 grid place-items-center"
-        >
-            <p class="text-gray-400 text-sm text-center">
+        <div bind:this={subtitleContainer} class="relative max-h-[4rem] overflow-y-auto">
+            <p class="text-gray-400 text-sm text-center p-1">
                 {project.subtitle}
             </p>
         </div>
     </div>
 
-    <div bind:this={marqueeContainer} class="w-full flex-shrink-0 mt-2 marquee-container">
+    <div bind:this={marqueeContainer} class="w-full h-min flex-shrink-0 mt-auto pt-2 marquee-container">
         <div
                 bind:this={marqueeContent}
                 class="marquee-content flex gap-2"
-                class:justify-center={!isOverflowing}
-                class:scrolling={isOverflowing}
+                class:justify-center={!isTagOverflowing}
         >
             {#if project.tags}
-                <span bind:clientWidth={firstTagSetWidth} class="flex gap-2 flex-shrink-0">
+                <span bind:this={firstTagSet} class="flex gap-2 flex-shrink-0">
                     {#each project.tags as tag}
                         <span class="flex-shrink-0 text-xs bg-white/10 text-primary font-semibold px-2 py-1 rounded-full">{tag}</span>
                     {/each}
                 </span>
 
-                {#if isOverflowing}
+                {#if isTagOverflowing}
                     <span class="flex gap-2 flex-shrink-0">
-                        {#each project.tags as tag}
+                         {#each project.tags as tag}
                             <span class="flex-shrink-0 text-xs bg-white/10 text-primary font-semibold px-2 py-1 rounded-full">{tag}</span>
                         {/each}
                     </span>
@@ -131,4 +138,3 @@
         </div>
     </div>
 </div>
-

@@ -46,7 +46,6 @@
                 let placed = false;
                 for (let i = 0; i <= positions.length; i++) {
                     if (i === positions.length) {
-                        // No collision, place at (x, y)
                         positions.push({ x, y });
                         placed = true;
                         break;
@@ -56,21 +55,18 @@
                         Math.abs(pos.x - x) < blockW + padding &&
                         Math.abs(pos.y - y) < blockH + padding
                     ) {
-                        // Try to place side by side
                         const sideX = pos.x + blockW + padding;
                         if (sideX + blockW / 2 + padding < width) {
                             positions.push({ x: sideX, y: pos.y });
                             placed = true;
                             break;
                         }
-                        // Try to place below
                         const belowY = pos.y + blockH + padding;
                         if (belowY + blockH / 2 + padding < height) {
                             positions.push({ x: pos.x, y: belowY });
                             placed = true;
                             break;
                         }
-                        // If not enough space, try to nest inside (overlap)
                         positions.push({ x: pos.x, y: pos.y });
                         placed = true;
                         break;
@@ -82,7 +78,7 @@
         };
         const screenW = window.innerWidth;
         const screenH = window.innerHeight;
-        const blockW = 240, blockH = 240;
+        const blockW = 250, blockH = 250;
         const randomPositions = getNonCollidingPositions(projectsToSimulate.length, screenW, screenH, blockW, blockH);
         projectsToSimulate.forEach((proj, i) => {
             proj.x = randomPositions[i].x;
