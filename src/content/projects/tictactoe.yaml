@@ -1,10 +1,12 @@
 slug: tictactoe
 name: "TicTacToe MiniMax"
-subtitle: "AI Opponent with MiniMax"
+subtitle: "AI Opponent with MiniMax Algorithm"
 year: 2023
 image: "https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758082021/tictactoe_p1kxql.gif"
 link: "https://github.com/Alee053/TicTacToe-MiniMax"
 tags:
-  - "AI"
   - "JavaScript"
+  - "Algorithms"
+  - "p5.js"
+  - "AI/ML"
 order: 3
