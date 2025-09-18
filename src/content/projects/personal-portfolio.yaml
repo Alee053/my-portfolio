@@ -1,0 +1,12 @@
+slug: "personal-portfolio"
+name: "Interactive Personal Portfolio"
+subtitle: "A deep dive into modern web architecture, combining a static-first approach with a physics engine, complex animations, and a Git-based headless CMS."
+year: 2025
+image: "https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758081997/hero_fhl6aj.png"
+link: "https://github.com/Alee053/my-portfolio"
+tags:
+  - "Astro"
+  - "Svelte"
+  - "Physics"
+  - "JavaScript"
+order: 0
