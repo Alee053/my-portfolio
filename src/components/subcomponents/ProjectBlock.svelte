@@ -97,7 +97,7 @@
         <h3 class="text-white font-bold text-lg leading-tight truncate">
             {project.name}
         </h3>
-        <div bind:this={subtitleContainer} class="relative max-h-[4rem] overflow-y-auto">
+        <div bind:this={subtitleContainer} class="relative max-h-[4rem] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <p class="text-gray-400 text-sm text-center p-1">
                 {project.subtitle}
             </p>
