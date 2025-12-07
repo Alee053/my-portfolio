@@ -37,7 +37,7 @@
         <div class="about-text text-white text-center lg:text-left space-y-4">
             <h2 class="text-3xl font-bold">About Me</h2>
             <p class="text:md xl:text-lg leading-relaxed">
-                I'm a Software Engineering student with a passion for technology, innovation, and sports. I've had the opportunity to represent my country in international competitions and have excelled academically throughout my school years. I am constantly seeking challenges that allow me to grow professionally and contribute to technological development. I am interested in collaborating on innovative projects that drive change and progress.
+                I'm a Computer Science student with a passion for technology, innovation, and sports. I've had the opportunity to represent my country in international competitions and have excelled academically throughout my school years. I am constantly seeking challenges that allow me to grow professionally and contribute to technological development. I am interested in collaborating on innovative projects that drive change and progress.
             </p>
         </div>
     </div>
