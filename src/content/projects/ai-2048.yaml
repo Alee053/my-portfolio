@@ -1,6 +1,7 @@
 slug: ai-2048
-name: 2048 Game AI
-subtitle: AI for the 2048 game using Maskable PPO and Expectimax Search
+name: "AI 2048: Hybrid RL + Expectimax Search"
+subtitle: "Cracking 2048: A Hybrid Approach using PPO, C++ Expectimax, and
+  Bayesian Optimization"
 year: 2025
 image: https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758141015/ai-2048_fcbc6t.png
 link: https://github.com/Alee053/AI2048
