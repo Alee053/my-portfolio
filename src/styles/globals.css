@@ -6,8 +6,11 @@
   --color-brutalist-bg-line: #323232;
   --color-brutalist-text: #CCCCCC;
   --color-brutalist-accent: #13ecaf;
+  --color-brutalist-decoration: #4a4a4a;
   --font-sans: "Space Grotesk", monospace;
   --font-mono: "Liberation Mono", "Courier New", monospace;
+  --z-layer-decoration: 1;
+  --z-layer-content: 2;
 }
 
 html {
@@ -48,4 +51,21 @@ html {
 
 * {
   border-radius: 0 !important;
+}
+
+.decoration-label {
+  color: var(--color-brutalist-line);
+  opacity: 0.5;
+  cursor: default;
+  user-select: none;
+}
+
+.interactive-link {
+  color: var(--color-brutalist-line);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.interactive-link:hover {
+  color: white;
 }

@@ -12,7 +12,7 @@
             <SectionLabel number="03" label="RECENT_BLOGS" />
             <h2 class="text-4xl font-light uppercase tracking-widest">Blogs</h2>
         </div>
-        <a href="/blogs" class="text-xs font-mono text-brutalist-line hover:text-white transition-colors">[VIEW ALL]</a>
+        <a href="/blogs" class="text-xs font-mono text-brutalist-accent hover:text-white transition-colors cursor-pointer">[VIEW ALL]</a>
     </div>
     <div class="border-t border-brutalist-line">
         {#each blogs as blog, index}
