@@ -9,6 +9,11 @@
   --font-mono: "Liberation Mono", "Courier New", monospace;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+
 .blueprint-grid {
   background-image: 
     linear-gradient(to right, #444444 1px, transparent 1px),
