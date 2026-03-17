@@ -1,10 +1,12 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @theme {
   --color-brutalist-bg: #111111;
   --color-brutalist-line: #444444;
   --color-brutalist-text: #CCCCCC;
   --color-brutalist-accent: #135bec;
   --font-sans: "Space Grotesk", monospace;
+  --font-mono: "Liberation Mono", "Courier New", monospace;
 }
 
 .blueprint-grid {
