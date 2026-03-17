@@ -44,7 +44,7 @@
     }
 </script>
 
-<section class="mt-32 pb-40">
+<section class="pb-40">
     <div class="mb-12">
         <div class="text-[10px] font-mono text-brutalist-line mb-2">[SEC // BLOGS BROWSER]</div>
         <h2 class="text-4xl font-light uppercase tracking-widest">Blogs</h2>
