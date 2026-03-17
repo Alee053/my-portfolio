@@ -1,6 +1,6 @@
 <script>
-    import ProjectBlock from '../components/subcomponents/ProjectBlock.svelte';
-    import BackButton from "../components/subcomponents/BackButton.svelte";
+    import ProjectBlock from '../../components/v1/subcomponents/ProjectBlock.svelte';
+    import BackButton from "../../components/v1/subcomponents/BackButton.svelte";
     import { flip } from 'svelte/animate';
     import { fade } from 'svelte/transition';
 

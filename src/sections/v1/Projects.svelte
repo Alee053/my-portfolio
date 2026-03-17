@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
-    import ProjectsDesktop from '../sections/ProjectsDesktop.svelte';
-    import ProjectsMobile from '../sections/ProjectsMobile.svelte';
+    import ProjectsDesktop from './ProjectsDesktop.svelte';
+    import ProjectsMobile from './ProjectsMobile.svelte';
 
     export let projectsData=[];
 

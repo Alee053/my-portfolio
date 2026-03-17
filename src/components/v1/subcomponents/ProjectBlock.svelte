@@ -1,7 +1,7 @@
 <script>
     import { onMount, onDestroy } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { optimizeCloudinaryImage } from '../../lib/cloudinary.js';
+    import { optimizeCloudinaryImage } from '../../../lib/cloudinary.js';
     import { gsap } from 'gsap';
 
     export let project;

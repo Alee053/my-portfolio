@@ -1,9 +1,9 @@
 <script>
     import { onMount, onDestroy } from 'svelte';
-    import { createPhysicsSimulation } from '../lib/matter-physics.js';
-    import ProjectBlock from '../components/subcomponents/ProjectBlock.svelte';
+    import { createPhysicsSimulation } from '../../lib/matter-physics.js';
+    import ProjectBlock from '../../components/v1/subcomponents/ProjectBlock.svelte';
     import Matter from 'matter-js';
-    import BackButton from "../components/subcomponents/BackButton.svelte";
+    import BackButton from "../../components/v1/subcomponents/BackButton.svelte";
 
     export let projectsData = [];
 

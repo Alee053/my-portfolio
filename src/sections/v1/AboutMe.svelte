@@ -1,8 +1,8 @@
 <script>
     import { onMount } from 'svelte';
     import gsap from 'gsap';
-    import BackButton from "../components/subcomponents/BackButton.svelte";
-    import {optimizeCloudinaryImage} from "../lib/cloudinary.js";
+    import BackButton from "../../components/v1/subcomponents/BackButton.svelte";
+    import {optimizeCloudinaryImage} from "../../lib/cloudinary.js";
 
 
     onMount(() => {

@@ -1,8 +1,8 @@
 <script>
     import { onMount, onDestroy } from 'svelte';
     import { gsap } from 'gsap';
-    import ArrowIcon from '../components/subcomponents/ArrowIcon.svelte';
-    import Contact from "../components/subcomponents/Contact.svelte";
+    import ArrowIcon from '../../components/v1/subcomponents/ArrowIcon.svelte';
+    import Contact from "../../components/v1/subcomponents/Contact.svelte";
     import { fade } from 'svelte/transition';
 
     let contactVisible = false;
@@ -94,7 +94,7 @@
         <ArrowIcon className="stroke-white fill-white w-[5vw] transition duration-300 ease-in-out group-hover:scale-110 group-hover:fill-primary group-hover:stroke-primary" />
     </button>
 
-    <a id="tl-btn" href="/projects" class="corner-btn w-[60vw] h-[40vh] top-0 left-[-100%]">
+    <a id="tl-btn" href="/src/sections/v1/Projects" class="corner-btn w-[60vw] h-[40vh] top-0 left-[-100%]">
         <p>Projects</p>
     </a>
     <a id="tr-btn" href="/about-me" class="corner-btn w-[40vw] h-[60vh] top-[-100%] right-0">
