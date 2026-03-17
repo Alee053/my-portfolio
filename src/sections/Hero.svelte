@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import { gsap } from 'gsap';
-    import SectionLabel from '../../components/v2/subcomponents/SectionLabel.svelte';
+    import SectionLabel from '../components/subcomponents/SectionLabel.svelte';
 
     onMount(() => {
         const heroName = document.querySelector('[data-hero="name"]');

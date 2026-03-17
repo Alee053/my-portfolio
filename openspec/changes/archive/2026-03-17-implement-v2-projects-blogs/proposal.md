@@ -25,7 +25,7 @@ None - This is adding new functionality without changing existing spec requireme
 
 ## Impact
 
-- New files: `src/components/v2/ProjectsBrowser.svelte`, `src/components/v2/BlogsBrowser.svelte`, `src/components/v2/BlogPostViewer.svelte` (or similar)
-- Modified files: `src/pages/v2/projects.astro`, `src/pages/v2/blogs.astro`, potentially `src/pages/v2/blog/[slug].astro`
+- New files: `src/components/ProjectsBrowser.svelte`, `src/components/BlogsBrowser.svelte`, `src/components/BlogPostViewer.svelte` (or similar)
+- Modified files: `src/pages/projects.astro`, `src/pages/blogs.astro`, potentially `src/pages/blog/[slug].astro`
 - Dependencies: Existing v2 components (SectionLabel, BlogRow, ProjectRow)
 - Affected systems: V2 page routing, component structure

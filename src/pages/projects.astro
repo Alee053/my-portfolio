@@ -1,6 +1,6 @@
 ---
-import Layout from '../../layouts/V2Layout.astro';
-import ProjectsBrowser from '../../components/v2/ProjectsBrowser.svelte';
+import Layout from '../layouts/BaseLayout.astro';
+import ProjectsBrowser from '../components/ProjectsBrowser.svelte';
 import { getCollection } from 'astro:content';
 
 const projectsData = (await getCollection('projects')).map(project => ({

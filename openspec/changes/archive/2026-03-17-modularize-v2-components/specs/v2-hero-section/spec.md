@@ -1,7 +1,7 @@
 ## ADDED Requirements
 
 ### Requirement: Hero section component exists
-The system SHALL provide a Hero.svelte component in src/sections/v2/ that renders the hero section with brutalist styling.
+The system SHALL provide a Hero.svelte component in src/sections/ that renders the hero section with brutalist styling.
 
 #### Scenario: Hero renders with correct structure
 - **WHEN** the Hero component is mounted
@@ -19,5 +19,5 @@ The Hero component SHALL be imported and used by index.astro instead of inline m
 
 #### Scenario: Hero is imported in page
 - **WHEN** index.astro renders
-- **THEN** it SHALL import Hero from "../../sections/v2/Hero.svelte"
+- **THEN** it SHALL import Hero from "../../sections/Hero.svelte"
 - **AND** the Hero component SHALL render in the correct position within the layout

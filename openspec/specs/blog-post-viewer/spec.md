@@ -23,7 +23,7 @@ The system SHALL include a back button to return to the blogs browser.
 
 #### Scenario: Navigate back to blogs
 - **WHEN** user clicks the "BACK TO BROWSER" button
-- **THEN** the browser navigates to /v2/blogs
+- **THEN** the browser navigates to /blogs
 - **AND** the button is styled consistently with v2 aesthetic
 
 ### Requirement: Blog post viewer maintains v2 brutalist aesthetic

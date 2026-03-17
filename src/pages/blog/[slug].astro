@@ -1,5 +1,5 @@
 ---
-import Layout from '../../../layouts/V2Layout.astro';
+import Layout from '../../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 
@@ -61,7 +61,7 @@ const { Content } = await post.render();
     
     <div class="p-8 border-t border-brutalist-line">
         <a 
-            href="/v2/blogs" 
+            href="/blogs"
             class="group inline-flex items-center gap-2 px-4 py-2 border border-brutalist-line hover:bg-brutalist-accent hover:text-black hover:border-brutalist-accent transition-colors text-sm font-mono uppercase tracking-wider"
         >
             ← [BACK TO BROWSER]

@@ -1,6 +1,6 @@
 ---
-import Layout from '../../layouts/V2Layout.astro';
-import BlogsBrowser from '../../components/v2/BlogsBrowser.svelte';
+import Layout from '../../layouts/BaseLayout.astro';
+import BlogsBrowser from '../components/BlogsBrowser.svelte';
 import { getCollection } from 'astro:content';
 
 const blogsData = (await getCollection('blog')).map(blog => ({

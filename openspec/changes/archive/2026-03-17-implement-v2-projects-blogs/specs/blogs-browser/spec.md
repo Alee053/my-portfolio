@@ -64,7 +64,7 @@ The system SHALL allow users to click on a blog post to view its full content.
 #### Scenario: Navigate to blog post
 - **WHEN** user clicks on a blog post row
 - **THEN** the browser navigates to the blog post viewer page
-- **AND** the URL follows the pattern /v2/blog/[slug]
+- **AND** the URL follows the pattern /blog/[slug]
 - **AND** the row provides visual feedback on hover
 
 ### Requirement: Blogs browser displays read time estimate

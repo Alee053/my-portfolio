@@ -1,9 +1,9 @@
 ---
-import Layout from '../../layouts/V2Layout.astro';
+import Layout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import Hero from '../../sections/v2/Hero.svelte';
-import Projects from '../../sections/v2/Projects.svelte';
-import Blogs from '../../sections/v2/Blogs.svelte';
+import Hero from '../sections/Hero.svelte';
+import Projects from '../sections/Projects.svelte';
+import Blogs from '../sections/Blogs.svelte';
 
 const projects = (await getCollection('projects')).slice(0, 3);
 const blogs = (await getCollection('blog')).sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()).slice(0, 3);

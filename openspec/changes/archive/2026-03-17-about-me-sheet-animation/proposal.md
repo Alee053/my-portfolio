@@ -1,6 +1,6 @@
 ## Why
 
-The v2 portfolio page has an About Me sheet in V2Layout.astro with GSAP animations, but neither the hero text animation nor the About Me sheet functionality works. The hero section lacks entrance animation, and the "About Me" button doesn't trigger the sheet because the toggleAboutModal function is scoped inside an ES module script block and isn't accessible from inline onclick handlers.
+The v2 portfolio page has an About Me sheet in BaseLayout.astro with GSAP animations, but neither the hero text animation nor the About Me sheet functionality works. The hero section lacks entrance animation, and the "About Me" button doesn't trigger the sheet because the toggleAboutModal function is scoped inside an ES module script block and isn't accessible from inline onclick handlers.
 
 ## What Changes
 
@@ -19,5 +19,5 @@ The v2 portfolio page has an About Me sheet in V2Layout.astro with GSAP animatio
 
 ## Impact
 
-- File: `src/pages/v2/index.astro` - Add hero animation
-- File: `src/layouts/V2Layout.astro` - Fix global function exposure for modal toggle
+- File: `src/pages/index.astro` - Add hero animation
+- File: `src/layouts/BaseLayout.astro` - Fix global function exposure for modal toggle

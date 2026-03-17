@@ -1,6 +1,6 @@
 <script>
-    import SectionLabel from '../../components/v2/subcomponents/SectionLabel.svelte';
-    import BlogRow from '../../components/v2/subcomponents/BlogRow.svelte';
+    import SectionLabel from '../components/subcomponents/SectionLabel.svelte';
+    import BlogRow from '../components/subcomponents/BlogRow.svelte';
 
     export let blogs = [];
 </script>
@@ -12,7 +12,7 @@
             <SectionLabel number="03" label="RECENT_BLOGS" />
             <h2 class="text-4xl font-light uppercase tracking-widest">Blogs</h2>
         </div>
-        <a href="/v2/blogs" class="text-xs font-mono text-brutalist-line hover:text-white transition-colors">[VIEW ALL]</a>
+        <a href="/blogs" class="text-xs font-mono text-brutalist-line hover:text-white transition-colors">[VIEW ALL]</a>
     </div>
     <div class="border-t border-brutalist-line">
         {#each blogs as blog, index}

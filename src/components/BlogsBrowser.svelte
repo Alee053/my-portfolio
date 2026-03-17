@@ -98,7 +98,7 @@
         {:else}
             {#each filteredBlogs as blog, index}
                 <a 
-                    href="/v2/blog/{blog.slug}"
+                    href="/blog/{blog.slug}"
                     class="grid grid-cols-12 py-8 border-b border-dashed border-brutalist-line hover:bg-zinc-900/30 transition-colors cursor-pointer block"
                 >
                     <div class="col-span-2 font-mono text-[10px] text-zinc-500">

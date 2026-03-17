@@ -25,9 +25,9 @@ The V2 portfolio restyle is complete but has usability and visual issues: the fi
 ## Impact
 
 - **Modified Files**: 
-  - `src/layouts/V2Layout.astro` - background grid positioning
-  - `src/layouts/V2Layout.astro` - About Me modal animation
-  - `src/pages/v2/index.astro` - add blogs section
+  - `src/layouts/BaseLayout.astro` - background grid positioning
+  - `src/layouts/BaseLayout.astro` - About Me modal animation
+  - `src/pages/index.astro` - add blogs section
   - Any files related to Current Projects data loading
 - **Dependencies**: GSAP (already installed), no new dependencies needed
 - **Affects**: V2 portfolio pages only

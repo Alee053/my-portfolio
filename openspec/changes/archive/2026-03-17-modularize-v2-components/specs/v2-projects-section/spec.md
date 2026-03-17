@@ -1,14 +1,14 @@
 ## ADDED Requirements
 
 ### Requirement: Projects section component exists
-The system SHALL provide a Projects.svelte component in src/sections/v2/ that renders the projects teaser with brutalist styling.
+The system SHALL provide a Projects.svelte component in src/sections/ that renders the projects teaser with brutalist styling.
 
 #### Scenario: Projects renders with correct structure
 - **WHEN** the Projects component is mounted with projects data
 - **THEN** it SHALL display up to 3 projects in a grid layout
 - **AND** each project SHALL show index number, name, subtitle, and tags
 - **AND** it SHALL include the section label "[SEC 02 // RECENT_WORK]"
-- **AND** it SHALL include a "[VIEW ALL]" link to /v2/projects
+- **AND** it SHALL include a "[VIEW ALL]" link to /projects
 
 #### Scenario: Projects section handles empty data
 - **WHEN** the Projects component receives an empty projects array

@@ -1,27 +1,27 @@
 ## 1. Projects Browser Component
 
-- [x] 1.1 Create ProjectsBrowser.svelte component in src/components/v2/
+- [x] 1.1 Create ProjectsBrowser.svelte component in src/components/
 - [x] 1.2 Implement project list rendering with proper styling
 - [x] 1.3 Add search input with reactive filtering logic
 - [x] 1.4 Implement tag extraction and filter button display
 - [x] 1.5 Add tag toggle functionality with AND logic for multi-select
 - [x] 1.6 Style components to match v2 brutalist aesthetic
-- [x] 1.7 Update src/pages/v2/projects.astro to use ProjectsBrowser component
+- [x] 1.7 Update src/pages/projects.astro to use ProjectsBrowser component
 
 ## 2. Blogs Browser Component
 
-- [x] 2.1 Create BlogsBrowser.svelte component in src/components/v2/
+- [x] 2.1 Create BlogsBrowser.svelte component in src/components/
 - [x] 2.2 Implement blog list rendering with proper styling
 - [x] 2.3 Add search input with reactive filtering logic
 - [x] 2.4 Implement tag extraction and filter button display
 - [x] 2.5 Add tag toggle functionality with AND logic for multi-select
 - [x] 2.6 Display publication date and read time for each blog post
 - [x] 2.7 Style components to match v2 brutalist aesthetic
-- [x] 2.8 Update src/pages/v2/blogs.astro to use BlogsBrowser component
+- [x] 2.8 Update src/pages/blogs.astro to use BlogsBrowser component
 
 ## 3. Blog Post Viewer Enhancement
 
-- [x] 3.1 Review and enhance src/pages/v2/blog/[slug].astro layout
+- [x] 3.1 Review and enhance src/pages/blog/[slug].astro layout
 - [x] 3.2 Ensure markdown content renders properly with prose classes
 - [x] 3.3 Add proper section label "[SEC // BLOG VIEWER]"
 - [x] 3.4 Verify hero image and inline image rendering

@@ -4,7 +4,7 @@
 The projects browser SHALL fetch all entries from 'projects' content collection and display them in a paginated or scrollable list matching landing teaser style but full list.
 
 #### Scenario: Full List on Load
-- **WHEN** user visits `/v2/projects`
+- **WHEN** user visits `/projects`
 - **THEN** renders all projects in grid layout: number, title, desc, tags badges.
 
 ### Requirement: Tag-based Filtering

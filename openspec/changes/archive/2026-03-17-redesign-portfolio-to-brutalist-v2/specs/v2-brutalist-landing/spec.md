@@ -4,14 +4,14 @@
 The v2 landing page SHALL display a prominent hero section featuring the owner's name in oversized bold typography and a professional subtitle, accented with a left border line.
 
 #### Scenario: Hero on Page Load
-- **WHEN** user navigates to `/v2/`
+- **WHEN** user navigates to `/`
 - **THEN** hero renders with \"ALEJANDRO CASTRO\" in 7xl-9xl font, subtitle \"AI RESEARCHER & SYSTEM ARCHITECT...\", left #444 border.
 
 ### Requirement: Recent Projects Teaser
 The landing SHALL fetch and display the first 3 entries from the 'projects' content collection as a teaser list with sequential numbering, title, description, and inline tags.
 
 #### Scenario: Teaser List Rendering
-- **WHEN** `/v2/` loads
+- **WHEN** `/` loads
 - **THEN** displays projects in 12-column grid (col1: number, col7: title/desc, col4: tags); hover: bg-zinc-900/50.
 
 ### Requirement: Header Navigation

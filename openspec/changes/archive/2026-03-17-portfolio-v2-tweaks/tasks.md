@@ -1,13 +1,13 @@
 ## 1. Background Grid - Make Scrollable
 
-- [x] 1.1 Change grid positioning from `fixed` to `absolute` in V2Layout.astro
+- [x] 1.1 Change grid positioning from `fixed` to `absolute` in BaseLayout.astro
 - [x] 1.2 Ensure grid container is relative and matches main content height
 - [x] 1.3 Test grid alignment across scroll positions
 - [x] 1.4 Verify grid covers full content area
 
 ## 2. About Me Modal - Add GSAP Animation
 
-- [x] 2.1 Replace `hidden` class toggle with GSAP animation in V2Layout.astro
+- [x] 2.1 Replace `hidden` class toggle with GSAP animation in BaseLayout.astro
 - [x] 2.2 Implement slide-in from right animation (x: "100%" → x: "0%")
 - [x] 2.3 Use `power3.out` easing for consistency with other animations
 - [x] 2.4 Add reverse animation for closing the modal

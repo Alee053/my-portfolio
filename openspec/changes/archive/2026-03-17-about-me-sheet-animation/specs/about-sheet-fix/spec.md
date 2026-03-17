@@ -1,7 +1,7 @@
 ## ADDED Requirements
 
 ### Requirement: About Me sheet toggle works
-The About Me sheet in V2Layout.astro SHALL toggle open/closed when the user clicks the "[ABOUT ME]" nav link.
+The About Me sheet in BaseLayout.astro SHALL toggle open/closed when the user clicks the "[ABOUT ME]" nav link.
 
 #### Scenario: Clicking About Me opens the sheet
 - **WHEN** the user clicks the "[ABOUT ME]" link in the navigation

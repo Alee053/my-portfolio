@@ -4,7 +4,7 @@
 The v2 index page SHALL display a staggered entrance animation for hero text elements (name and subtitle) when the page loads.
 
 #### Scenario: Hero animation plays on page load
-- **WHEN** the user navigates to /v2/
+- **WHEN** the user navigates to /
 - **THEN** the hero text elements (h1 name, subtitle paragraph) SHALL animate in with a staggered fade-in and slide-up effect
 - **AND** the animation SHALL complete within 1 second total
 
@@ -18,7 +18,7 @@ The v2 index page SHALL display a staggered entrance animation for hero text ele
   - stagger: 0.1 seconds between elements
 
 ### Requirement: Animation targets correct elements
-The hero animation SHALL target the following elements in src/pages/v2/index.astro:
+The hero animation SHALL target the following elements in src/pages/index.astro:
 - The h1 element containing "ALEJANDRO CASTRO"
 - The subtitle p element with the bio text
 

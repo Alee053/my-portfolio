@@ -4,7 +4,7 @@
 The blogs browser SHALL fetch all entries from 'blog' content collection and display in list format similar to projects.
 
 #### Scenario: Blogs List on Load
-- **WHEN** `/v2/blogs` loads
+- **WHEN** `/blogs` loads
 - **THEN** shows all blogs with number, title, excerpt (first para?), tags.
 
 ### Requirement: Tag Filtering for Blogs
@@ -22,7 +22,7 @@ Search SHALL filter blogs by title, excerpt/tags.
 - **THEN** filters matching blogs.
 
 ### Requirement: Internal Navigation on Click
-Clicking blog item SHALL navigate to `/v2/blog/[slug]` .
+Clicking blog item SHALL navigate to `/blog/[slug]` .
 
 #### Scenario: Blog Click
 - **WHEN** clicks item

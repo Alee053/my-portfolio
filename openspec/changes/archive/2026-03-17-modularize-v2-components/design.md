@@ -1,6 +1,6 @@
 ## Context
 
-The v2 portfolio homepage (`src/pages/v2/index.astro`) currently contains all HTML markup inline within a single 93-line file. This mirrors the initial state of v1 before it was modularized into separate section and component files. The v1 architecture now uses:
+The v2 portfolio homepage (`src/pages/index.astro`) currently contains all HTML markup inline within a single 93-line file. This mirrors the initial state of v1 before it was modularized into separate section and component files. The v1 architecture now uses:
 
 - `src/sections/v1/` - Page-level sections (Hero, Projects, AboutMe, etc.)
 - `src/components/v1/` - Reusable components (Background, LoadingScreen)
@@ -12,7 +12,7 @@ V2 needs the same organizational structure for maintainability, reusability, and
 
 **Goals:**
 - Extract all inline sections from index.astro into separate `.svelte` section components
-- Create `src/components/v2/` directory structure mirroring v1
+- Create `src/components/` directory structure mirroring v1
 - Create reusable subcomponents for repeated UI patterns (section labels, project rows, blog rows)
 - Maintain identical visual and functional behavior after refactoring
 - Enable future reuse of v2 components across other pages
@@ -20,7 +20,7 @@ V2 needs the same organizational structure for maintainability, reusability, and
 **Non-Goals:**
 - No changes to styling, animations, or visual behavior
 - No changes to data fetching or content structure
-- No changes to the V2Layout wrapper
+- No changes to the BaseLayout wrapper
 
 ## Decisions
 

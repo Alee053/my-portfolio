@@ -4,7 +4,7 @@
 The V2 homepage SHALL display a "Recent Blogs" section that shows the latest blog posts from the blog collection.
 
 #### Scenario: Blogs section displays on homepage
-- **WHEN** the user visits the V2 homepage (/v2/)
+- **WHEN** the user visits the V2 homepage (/)
 - **THEN** a "Blogs" section is visible below the Projects section
 
 #### Scenario: Shows most recent blogs

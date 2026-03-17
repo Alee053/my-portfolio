@@ -1,6 +1,6 @@
 ## Context
 
-Current portfolio is Astro-based with Tailwind, using Decap CMS (via astro-decap-cms-oauth) for content management. v1 pages exist (e.g., blog/project logic to discover). New v2/ in src/pages/v2/ must be isolated. Reference UI: v2-ideas/landing-main/code.html (Tailwind brutalist theme, Space Grotesk font, grid bg, mono labels).
+Current portfolio is Astro-based with Tailwind, using Decap CMS (via astro-decap-cms-oauth) for content management. v1 pages exist (e.g., blog/project logic to discover). New v2/ in src/pages/ must be isolated. Reference UI: v2-ideas/landing-main/code.html (Tailwind brutalist theme, Space Grotesk font, grid bg, mono labels).
 
 ## Goals / Non-Goals
 
@@ -19,7 +19,7 @@ Current portfolio is Astro-based with Tailwind, using Decap CMS (via astro-decap
 
 ## Decisions
 
-- **Framework/Structure**: Astro pages (`src/pages/v2/index.astro`, `projects.astro`, `blogs.astro`, `blog/[slug].astro`). Reuse v1 CMS fetch logic (likely getStaticPaths/getCollection).
+- **Framework/Structure**: Astro pages (`src/pages/index.astro`, `projects.astro`, `blogs.astro`, `blog/[slug].astro`). Reuse v1 CMS fetch logic (likely getStaticPaths/getCollection).
 - **Styling**: Scoped Tailwind config from reference (brutalist colors, Space Grotesk). Grid bg, dashed borders, mono labels via CSS classes.
 - **Data Fetch**: getCollection('projects'/'blogs') from Decap CMS. Assume fields: title, description, tags[], slug, github (projects), body (blogs).
 - **Filtering/Search**: Client-side JS (Array.filter/includes) on JSON data. Search: title/desc, filter: tags.
