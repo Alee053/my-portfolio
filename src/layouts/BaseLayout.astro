@@ -24,7 +24,7 @@ import ContactModal from '../components/ContactModal.svelte';
   <div class="absolute top-1/3 left-0 w-full solid-line-h z-0"></div>
   
   <!-- Navbar -->
-  <Navbar client:load currentPath={Astro.url.pathname} />
+  <Navbar client:load />
   
   <main class="relative z-10 min-h-screen pt-32 px-8 pb-20" style="min-height: 100vh;">
     <slot />
