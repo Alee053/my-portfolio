@@ -2,6 +2,7 @@
 import Layout from '../../layouts/V2Layout.astro';
 import { getCollection } from 'astro:content';
 const projects = (await getCollection('projects')).slice(0, 3);
+const blogs = (await getCollection('blog')).sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()).slice(0, 3);
 ---
 <Layout title="Alejandro Castro">
     <section>
@@ -28,18 +29,15 @@ const projects = (await getCollection('projects')).slice(0, 3);
                 <div class="text-[10px] font-mono text-brutalist-line mb-2">[SEC 02 // RECENT_WORK]</div>
                 <h2 class="text-4xl font-light uppercase tracking-widest">Projects</h2>
             </div>
-            <div class="flex items-center border border-brutalist-line px-3 py-1 bg-black">
-                <span class="text-[10px] font-mono mr-4">SEARCH:</span>
-                <input class="bg-transparent border-none focus:ring-0 text-sm p-0 w-32 font-mono uppercase" placeholder="_" type="text"/>
-            </div>
+            <a href="/v2/projects" class="text-xs font-mono text-brutalist-line hover:text-white transition-colors">[VIEW ALL]</a>
         </div>
         <div class="border-t border-brutalist-line">
             {projects.map((project, index) => (
                     <div class="grid grid-cols-12 py-6 border-b border-dashed border-brutalist-line group hover:bg-zinc-900/50 transition-colors cursor-crosshair">
                         <div class="col-span-1 font-mono text-xs text-brutalist-line">{String(index + 1).padStart(2, '0')}.</div>
                         <div class="col-span-7">
-                            <h3 class="text-xl font-bold uppercase">{project.data.title}</h3>
-                            <p class="text-xs font-mono text-zinc-500 mt-1">{project.data.description || ''}</p>
+                            <h3 class="text-xl font-bold uppercase">{project.data.name}</h3>
+                            <p class="text-xs font-mono text-zinc-500 mt-1">{project.data.subtitle || ''}</p>
                         </div>
                         <div class="col-span-4 text-right font-mono text-[10px]">
                             {project.data.tags?.map((tag) => (
@@ -50,4 +48,27 @@ const projects = (await getCollection('projects')).slice(0, 3);
             ))}
         </div>
     </section>
+    <!-- Recent Blogs Teaser -->
+    {blogs.length > 0 && (
+    <section class="mt-20 pb-20">
+        <div class="flex justify-between items-end mb-12">
+            <div>
+                <div class="text-[10px] font-mono text-brutalist-line mb-2">[SEC 03 // RECENT_BLOGS]</div>
+                <h2 class="text-4xl font-light uppercase tracking-widest">Blogs</h2>
+            </div>
+            <a href="/v2/blogs" class="text-xs font-mono text-brutalist-line hover:text-white transition-colors">[VIEW ALL]</a>
+        </div>
+        <div class="border-t border-brutalist-line">
+            {blogs.map((blog, index) => (
+                    <div class="grid grid-cols-12 py-6 border-b border-dashed border-brutalist-line group hover:bg-zinc-900/50 transition-colors cursor-pointer" onclick={`window.location.href='/v2/blog/${blog.slug}'`}>
+                        <div class="col-span-2 font-mono text-[10px] text-zinc-500">{new Date(blog.data.pubDate).toISOString().slice(0,10)}</div>
+                        <div class="col-span-10">
+                            <h3 class="text-lg font-bold uppercase group-hover:text-brutalist-accent transition-colors">{blog.data.title}</h3>
+                            <p class="text-xs font-mono text-zinc-400 mt-1 max-w-2xl">{blog.data.description?.slice(0, 100)}...</p>
+                        </div>
+                    </div>
+            ))}
+        </div>
+    </section>
+    )}
 </Layout>
