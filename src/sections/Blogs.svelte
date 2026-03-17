@@ -6,7 +6,7 @@
 </script>
 
 {#if blogs.length > 0}
-<section class="mt-20 pb-20">
+<section class="pb-20">
     <div class="flex justify-between items-end mb-12">
         <div>
             <SectionLabel number="03" label="RECENT_BLOGS" />
