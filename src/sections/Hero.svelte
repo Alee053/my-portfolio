@@ -19,7 +19,7 @@
     });
 </script>
 
-<section>
+<section id="hero-section">
     <SectionLabel number="01" label="HERO" />
     <div class="border-l-4 border-brutalist-line pl-8">
         <h1 class="text-7xl md:text-9xl font-bold tracking-tighter leading-none mb-4 uppercase font-sans" data-hero="name">

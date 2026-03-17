@@ -1,5 +1,7 @@
 ---
 import '../styles/globals.css';
+import Navbar from '../components/Navbar.svelte';
+import ContactModal from '../components/ContactModal.svelte';
 ---
 
 <!DOCTYPE html>
@@ -20,19 +22,10 @@ import '../styles/globals.css';
   <!-- Arbitrary lines - scroll with content -->
   <div class="absolute top-0 left-1/2 h-full solid-line-v z-0" style="min-height: 100vh;"></div>
   <div class="absolute top-1/3 left-0 w-full solid-line-h z-0"></div>
-  <!-- Header -->
-  <header class="sticky top-0 z-20 flex justify-between items-start p-8 border-b border-brutalist-line bg-brutalist-bg/80 backdrop-blur-sm">
-    <div class="text-[10px] font-mono tracking-widest uppercase" data-purpose="technical-annotation">
-      [REF: AC-2026-BRUTALIST] <br/>
-      TS: 2026.03.17_04:30
-    </div>
-    <nav class="flex gap-6 font-mono text-sm">
-      <a class="hover:text-white transition-colors" href="/">[HOME]</a>
-      <a class="hover:text-white transition-colors underline decoration-brutalist-accent cursor-pointer" onclick="toggleAboutModal(); return false;" href="javascript:void(0)">[ABOUT ME]</a>
-      <a class="hover:text-white transition-colors" href="/projects">[PROJECTS]</a>
-      <a class="hover:text-white transition-colors" href="/blogs">[BLOGS]</a>
-    </nav>
-  </header>
+  
+  <!-- Navbar -->
+  <Navbar client:load currentPath={Astro.url.pathname} />
+  
   <main class="relative z-10 min-h-screen pt-32 px-8 pb-20" style="min-height: 100vh;">
     <slot />
   </main>
@@ -88,32 +81,47 @@ import '../styles/globals.css';
       </button>
     </div>
   </aside>
+  
+  <!-- Contact Modal -->
+  <ContactModal client:only githubUrl="https://github.com/alejandrocastrodev" linkedInUrl="https://linkedin.com/in/alejandrocastrodev" email="alex@alejandrocastro.dev" />
+  
   <script>
     import { gsap } from 'gsap';
     
-    let isModalOpen = false;
+    let isAboutModalOpen = false;
+    let contactModalComponent = null;
     
     function toggleAboutModal() {
       const modal = document.getElementById('about-modal');
       
-      if (!isModalOpen) {
+      if (!isAboutModalOpen) {
         gsap.to(modal, {
           x: '0%',
           duration: 0.5,
           ease: 'power3.out'
         });
-        isModalOpen = true;
+        isAboutModalOpen = true;
       } else {
         gsap.to(modal, {
           x: '100%',
           duration: 0.4,
           ease: 'power3.in'
         });
-        isModalOpen = false;
+        isAboutModalOpen = false;
       }
     }
     
+    function toggleContactModal() {
+      // The ContactModal component will handle its own toggle via exported methods
+      // We dispatch a custom event that the component can listen to
+      const event = new CustomEvent('toggle-contact-modal');
+      document.dispatchEvent(event);
+    }
+    
+    // @ts-ignore
     window.toggleAboutModal = toggleAboutModal;
+    // @ts-ignore
+    window.toggleContactModal = toggleContactModal;
   </script>
 </body>
 </html>
