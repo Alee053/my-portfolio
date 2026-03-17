@@ -1,6 +1,8 @@
 ---
 import Layout from '../../layouts/V2Layout.astro';
+import ProjectsBrowser from '../../components/v2/ProjectsBrowser.svelte';
 import { getCollection } from 'astro:content';
+
 const projectsData = (await getCollection('projects')).map(project => ({
     title: project.data.name,
     subtitle: project.data.subtitle || '',
@@ -8,90 +10,7 @@ const projectsData = (await getCollection('projects')).map(project => ({
     link: project.data.link || ''
 }));
 ---
+
 <Layout title="Projects">
-    <div class="mb-12">
-        <div class="text-[10px] font-mono text-brutalist-line mb-2">[SEC // PROJECTS BROWSER]</div>
-        <h2 class="text-4xl font-light uppercase tracking-widest mb-12">Projects</h2>
-    </div>
-    <div class="flex items-center border border-brutalist-line px-3 py-1 bg-black mb-12 w-fit">
-        <span class="text-[10px] font-mono mr-4">SEARCH:</span>
-        <input id="search-input" class="bg-transparent border-none focus:ring-0 text-sm p-0 flex-1 font-mono uppercase" placeholder="_" type="text"/>
-    </div>
-    <div id="filter-tags" class="mb-12 flex flex-wrap gap-2"></div>
-    <div class="border-t border-brutalist-line">
-        <div id="projects-list">
-            <!-- Projects will be rendered here -->
-        </div>
-    </div>
+    <ProjectsBrowser projects={projectsData} client:load />
 </Layout>
-<script is:inline>
-    window.projects = {JSON.stringify(projectsData)};
-    let filteredProjects = [...window.projects];
-    let activeTags = [];
-    const uniqueTags = [...new Set(window.projects.flatMap(p => p.tags))].sort();
-    function renderProjects() {
-        const list = document.getElementById('projects-list');
-        list.innerHTML = '';
-        filteredProjects.forEach((project, index) => {
-            const div = document.createElement('div');
-            div.className = 'grid grid-cols-12 py-6 border-b border-dashed border-brutalist-line group hover:bg-zinc-900/50 transition-colors cursor-crosshair';
-            div.style.cursor = 'crosshair';
-            div.onclick = () => window.open(project.link, '_blank');
-            div.innerHTML = `
-        <div class="col-span-1 font-mono text-xs text-brutalist-line">${(index + 1).toString().padStart(2, '0')}.</div>
-                <div class="col-span-7">
-                          <h3 class="text-xl font-bold uppercase">${project.title}</h3>
-                                    <p class="text-xs font-mono text-zinc-500 mt-1">${project.subtitle}</p>
-                                            </div>
-                                                    <div class="col-span-4 text-right font-mono text-[10px]">
-${project.tags.map(tag => `<span class="px-2 py-0.5 border border-brutalist-line">[${tag.toUpperCase()}]</span>`).join('')}
-        </div>
-              `;
-            list.appendChild(div);
-        });
-    }
-    function renderTags() {
-        const container = document.getElementById('filter-tags');
-        container.innerHTML = '';
-        uniqueTags.forEach(tag => {
-            const btn = document.createElement('button');
-            const isActive = activeTags.includes(tag);
-            btn.className = isActive
-                ? 'px-2 py-1 bg-brutalist-accent text-black text-xs font-mono uppercase tracking-wider border-0 hover:opacity-90'
-                : 'px-2 py-1 border border-brutalist-line text-brutalist-line text-xs font-mono uppercase tracking-wider hover:text-white hover:border-brutalist-accent transition-colors';
-            btn.innerHTML = `[${tag.toUpperCase()}]`;
-            btn.onclick = (e) => {
-                e.stopPropagation();
-                toggleTag(tag);
-            };
-            container.appendChild(btn);
-        });
-    }
-    function toggleTag(tag) {
-        const index = activeTags.indexOf(tag);
-        if (index > -1) {
-            activeTags.splice(index, 1);
-        } else {
-            activeTags.push(tag);
-        }
-        filterProjects();
-        renderTags();
-    }
-    function filterProjects() {
-        const query = document.getElementById('search-input').value.toLowerCase();
-        filteredProjects = window.projects.filter(project => {
-            const matchesSearch = project.title.toLowerCase().includes(query) ||
-                project.subtitle.toLowerCase().includes(query) ||
-                project.tags.some(tag => tag.toLowerCase().includes(query));
-            const matchesTags = activeTags.length === 0 || activeTags.every(t => project.tags.includes(t));
-            return matchesSearch && matchesTags;
-        });
-        renderProjects();
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-        const searchInput = document.getElementById('search-input');
-        searchInput.addEventListener('input', filterProjects);
-        renderTags();
-        renderProjects();
-    });
-</script>
