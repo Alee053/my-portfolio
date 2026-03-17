@@ -2,7 +2,8 @@
 @plugin "@tailwindcss/typography";
 @theme {
   --color-brutalist-bg: #111111;
-  --color-brutalist-line: #444444;
+  --color-brutalist-line: #5e5e5e;
+  --color-brutalist-bg-line: #323232;
   --color-brutalist-text: #CCCCCC;
   --color-brutalist-accent: #13ecaf;
   --font-sans: "Space Grotesk", monospace;
@@ -16,21 +17,21 @@ html {
 
 .blueprint-grid {
   background-image: 
-    linear-gradient(to right, #444444 1px, transparent 1px),
-    linear-gradient(to bottom, #444444 1px, transparent 1px);
+    linear-gradient(to right, var(--color-brutalist-bg-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-brutalist-bg-line) 1px, transparent 1px);
   background-size: 100px 100px;
 }
 
 .dashed-line {
-  border-top: 1px dashed #444444;
+  border-top: 1px dashed var(--color-brutalist-bg-line);
 }
 
 .solid-line-v {
-  border-left: 1px solid #444444;
+  border-left: 1px solid var(--color-brutalist-bg-line);
 }
 
 .solid-line-h {
-  border-top: 1px solid #444444;
+  border-top: 1px solid var(--color-brutalist-bg-line);
 }
 
 ::-webkit-scrollbar {
@@ -42,7 +43,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #444444;
+  background: var(--color-brutalist-bg-line);
 }
 
 * {
