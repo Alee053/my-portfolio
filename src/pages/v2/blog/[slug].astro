@@ -1,0 +1,37 @@
+---
+import Layout from '../../../layouts/V2Layout.astro';
+import { getCollection } from 'astro:content';
+export async function getStaticPaths() {
+    const blogs = await getCollection('blog');
+    return blogs.map((blog) => ({
+        params: { slug: blog.slug },
+        props: { post: blog },
+    }));
+}
+const { post } = Astro.props;
+---
+<Layout title={post.data.title}>
+    <section class="p-8 border-b border-brutalist-line">
+        <div class="mb-4 text-[10px] font-mono text-brutalist-line">[SEC // BLOG VIEWER]</div>
+        <div class="mb-4 text-xs font-bold text-brutalist-accent uppercase">
+            [SYSTEM_LOG: POST_LOADED]
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold text-brutalist-text leading-none tracking-tighter mb-6 uppercase">
+            {post.data.title}
+        </h1>
+        <div class="flex flex-wrap gap-4 text-xs text-brutalist-line font-mono border-t border-brutalist-line pt-4 pb-8">
+            <span>[{new Date(post.data.pubDate || post.data.date).toLocaleDateString('en-CA')}]</span>
+            {post.data.tags?.map((tag) => (
+                    <span class="px-2 py-0.5 border border-brutalist-line uppercase">[ {tag} ]</span>
+            ))}
+        </div>
+    </section>
+    <article class="p-8 prose prose-invert max-w-none">
+        <post.body />
+    </article>
+    <div class="p-8 border-t border-brutalist-line">
+        <a href="/v2/blogs" class="group inline-flex items-center gap-2 px-4 py-2 border border-brutalist-line hover:bg-brutalist-accent hover:text-black hover:border-brutalist-accent transition-colors text-sm font-mono uppercase tracking-wider">
+            ← [BACK TO BROWSER]
+        </a>
+    </div>
+</Layout>

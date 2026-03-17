@@ -1,0 +1,97 @@
+---
+import Layout from '../../layouts/V2Layout.astro';
+import { getCollection } from 'astro:content';
+const blogsData = (await getCollection('blog')).map(blog => ({
+    title: blog.data.title,
+    description: blog.data.description || '',
+    tags: blog.data.tags || [],
+    slug: blog.slug,
+    pubDate: blog.data.pubDate
+}));
+---
+<Layout title="Blogs">
+    <div class="mb-12">
+        <div class="text-[10px] font-mono text-brutalist-line mb-2">[SEC // BLOGS BROWSER]</div>
+        <h2 class="text-4xl font-light uppercase tracking-widest mb-12">Blogs</h2>
+    </div>
+    <div class="flex items-center border border-brutalist-line px-3 py-1 bg-black mb-12 w-fit">
+        <span class="text-[10px] font-mono mr-4">SEARCH:</span>
+        <input id="search-input" class="bg-transparent border-none focus:ring-0 text-sm p-0 flex-1 font-mono uppercase" placeholder="_" type="text"/>
+    </div>
+    <div id="filter-tags" class="mb-12 flex flex-wrap gap-2"></div>
+    <div class="border-t border-brutalist-line">
+        <div id="blogs-list">
+            <!-- Blogs will be rendered here -->
+        </div>
+    </div>
+</Layout>
+<script is:inline>
+    window.blogs = {JSON.stringify(blogsData)};
+    let filteredBlogs = [...window.blogs];
+    let activeTags = [];
+    const uniqueTags = [...new Set(window.blogs.flatMap(p => p.tags))].sort();
+    function renderBlogs() {
+        const list = document.getElementById('blogs-list');
+        list.innerHTML = '';
+        filteredBlogs.forEach((blog, index) => {
+            const div = document.createElement('div');
+            div.className = 'grid grid-cols-12 py-8 border-b border-dashed border-brutalist-line hover:bg-zinc-900/30 transition-colors cursor-pointer';
+            div.onclick = () => window.location.href = `/v2/blog/${blog.slug}`;
+            div.innerHTML = `
+        <div class="col-span-2 font-mono text-[10px] text-zinc-500">${new Date(blog.pubDate).toISOString().slice(0,10)}</div>
+                <div class="col-span-10">
+                          <h3 class="text-lg font-bold uppercase hover:underline">${blog.title}</h3>
+                                    <p class="text-xs font-mono text-zinc-400 mt-2 max-w-3xl leading-relaxed italic">${blog.description.slice(0,150)}...</p>
+                                              <div class="mt-4 flex gap-4 text-[10px] font-mono text-brutalist-line uppercase">
+                                                          Read Time: 5min // <a class="text-white hover:text-brutalist-accent">[OPEN_FILE]</a>
+                                                                    </div>
+                                                                            </div>
+                                                                                  `;
+            list.appendChild(div);
+        });
+    }
+    function renderTags() {
+        const container = document.getElementById('filter-tags');
+        container.innerHTML = '';
+        uniqueTags.forEach(tag => {
+            const btn = document.createElement('button');
+            const isActive = activeTags.includes(tag);
+            btn.className = isActive
+                ? 'px-2 py-1 bg-brutalist-accent text-black text-xs font-mono uppercase tracking-wider border-0 hover:opacity-90'
+                : 'px-2 py-1 border border-brutalist-line text-brutalist-line text-xs font-mono uppercase tracking-wider hover:text-white hover:border-brutalist-accent transition-colors';
+            btn.innerHTML = `[${tag.toUpperCase()}]`;
+            btn.onclick = (e) => {
+                e.stopPropagation();
+                toggleTag(tag);
+            };
+            container.appendChild(btn);
+        });
+    }
+    function toggleTag(tag) {
+        const index = activeTags.indexOf(tag);
+        if (index > -1) {
+            activeTags.splice(index, 1);
+        } else {
+            activeTags.push(tag);
+        }
+        filterBlogs();
+        renderTags();
+    }
+    function filterBlogs() {
+        const query = document.getElementById('search-input').value.toLowerCase();
+        filteredBlogs = window.blogs.filter(blog => {
+            const matchesSearch = blog.title.toLowerCase().includes(query) ||
+                blog.description.toLowerCase().includes(query) ||
+                blog.tags.some(tag => tag.toLowerCase().includes(query));
+            const matchesTags = activeTags.length === 0 || activeTags.every(t => blog.tags.includes(t));
+            return matchesSearch && matchesTags;
+        });
+        renderBlogs();
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('input', filterBlogs);
+        renderTags();
+        renderBlogs();
+    });
+</script>
