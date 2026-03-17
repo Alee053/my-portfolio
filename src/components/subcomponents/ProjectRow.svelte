@@ -12,7 +12,7 @@
     <div class="col-span-4 text-right font-mono text-[10px]">
         {#if project.data.tags}
             {#each project.data.tags as tag}
-                <span class="px-2 py-0.5 border border-brutalist-line ml-2">[ {tag.toUpperCase()} ]</span>
+                <span class="px-2 py-0.5 border border-brutalist-line group-hover:border-brutalist-accent ml-2">[ {tag.toUpperCase()} ]</span>
             {/each}
         {/if}
     </div>

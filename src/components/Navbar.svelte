@@ -24,10 +24,10 @@
         <LiveTimestamp />
     </div>
     <nav class="flex gap-6 font-mono text-sm">
-        <a class="hover:text-white transition-colors" href="/">[HOME]</a>
-        <button class="hover:text-white transition-colors cursor-pointer bg-transparent border-none font-mono text-sm p-0" on:click={handleAboutClick}>[ABOUT ME]</button>
-        <a class="hover:text-white transition-colors" href="/projects">[PROJECTS]</a>
-        <a class="hover:text-white transition-colors" href="/blogs">[BLOGS]</a>
-        <button class="hover:text-white transition-colors cursor-pointer bg-transparent border-none font-mono text-sm p-0" on:click={handleContactClick}>[CONTACT]</button>
+        <a class="hover:text-brutalist-accent transition-colors" href="/">[HOME]</a>
+        <button class="hover:text-brutalist-accent transition-colors cursor-pointer bg-transparent border-none font-mono text-sm p-0" on:click={handleAboutClick}>[ABOUT ME]</button>
+        <a class="hover:text-brutalist-accent transition-colors" href="/projects">[PROJECTS]</a>
+        <a class="hover:text-brutalist-accent transition-colors" href="/blogs">[BLOGS]</a>
+        <button class="hover:text-brutalist-accent transition-colors cursor-pointer bg-transparent border-none font-mono text-sm p-0" on:click={handleContactClick}>[CONTACT]</button>
     </nav>
 </header>
