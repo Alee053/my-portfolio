@@ -1,0 +1,32 @@
+## Why
+
+The v2 index.astro page contains all section markup inline (93 lines), making it difficult to maintain, test, and reuse components. Following the established v1 architecture with separate components/ and sections/ directories will improve code organization, enable component reusability, and maintain consistency across portfolio versions.
+
+## What Changes
+
+- Extract Hero section from index.astro into `sections/v2/Hero.svelte`
+- Extract Projects teaser section into `sections/v2/Projects.svelte`
+- Extract Blogs teaser section into `sections/v2/Blogs.svelte`
+- Create `components/v2/` directory structure matching v1 pattern (`Background.svelte`, `LoadingScreen.svelte`, `subcomponents/`)
+- Extract reusable UI elements (section labels, project/blog cards) into subcomponents
+- Refactor index.astro to import and use modular section components
+
+## Capabilities
+
+### New Capabilities
+
+- `v2-hero-section`: Modular Hero section component for v2 portfolio homepage
+- `v2-projects-section`: Modular Projects teaser section component
+- `v2-blogs-section`: Modular Blogs teaser section component
+- `v2-components-structure`: V2 components directory structure with reusable subcomponents
+
+### Modified Capabilities
+
+None - this is a structural reorganization, no behavioral changes.
+
+## Impact
+
+- Files modified: `src/pages/v2/index.astro` (simplified to import sections)
+- Files created: `src/sections/v2/{Hero,Projects,Blogs}.svelte`
+- Directories created: `src/components/v2/`, `src/components/v2/subcomponents/`
+- No breaking changes to public API or page functionality
