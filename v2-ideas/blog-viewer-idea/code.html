@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#111111",
+                        "neutral-gray": "#444444",
+                        "text-dim": "#CCCCCC",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "0px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #111111;
+            color: #CCCCCC;
+        }
+        .grid-line-v {
+            width: 1px;
+            background-color: #444444;
+        }
+        .grid-line-h {
+            height: 1px;
+            background-color: #444444;
+        }
+        .brutalist-border {
+            border: 1px solid #444444;
+        }
+    </style>
+</head>
+<body class="font-mono bg-background-dark text-text-dim selection:bg-primary selection:text-white">
+<div class="relative min-h-screen w-full flex flex-col items-center">
+<!-- Top Navigation Bar -->
+<header class="w-full max-w-5xl border-x border-b border-neutral-gray flex items-center justify-between px-6 py-4 bg-background-dark">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">terminal</span>
+<h2 class="text-sm font-bold tracking-tighter text-white">
+                    [BLOG_VIEWER // 01]
+                </h2>
+</div>
+<a class="group flex items-center gap-2 px-4 py-2 border border-neutral-gray hover:bg-primary hover:border-primary hover:text-white transition-colors text-xs font-bold" href="#">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+                [BACK TO INDEX]
+            </a>
+</header>
+<main class="w-full max-w-5xl border-x border-neutral-gray flex-grow flex flex-col">
+<!-- Article Header Section -->
+<section class="p-8 border-b border-neutral-gray">
+<div class="mb-4 text-xs text-primary font-bold">
+                    [SYSTEM_LOG: POST_LOADED]
+                </div>
+<h1 class="text-4xl md:text-5xl font-bold text-white leading-none tracking-tighter mb-6 uppercase">
+                    DECONSTRUCTING NEURAL-ODE BRIDGE
+                </h1>
+<div class="flex flex-wrap gap-4 text-xs text-neutral-gray font-bold border-t border-neutral-gray pt-4">
+<span>[DATE: 2024.11.05]</span>
+<span class="text-neutral-gray/50">|</span>
+<span>[TAGS: ML | RESEARCH | DYNAMICS]</span>
+<span class="text-neutral-gray/50">|</span>
+<span class="text-primary">[STATUS: ARCHIVED]</span>
+</div>
+</section>
+<!-- Featured Image / Technical Diagram Placeholder -->
+<section class="w-full aspect-[21/9] border-b border-neutral-gray relative overflow-hidden bg-neutral-900">
+<div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(#444444 1px, transparent 1px); background-size: 20px 20px;"></div>
+<div class="w-full h-full bg-center bg-no-repeat bg-cover" data-alt="Abstract mathematical visualization of neural networks connections" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBXXBTQ0VAg4zpmxFJcSywH6r4D0I457-EmbeOLG-Ezyl9LaImd6x_uu7sEeiboYYx3mRhq7tM5uWQ26Jo8TgBoPCD6F1mQlJnzv-hQvlybq-aT4e13dQ686TRi57s2-qpw-N7csEvwkLu45PPDsOPIvvrKp2jJ4GHXz9O1u5wDjilPwuV3RnLgI8j6NoIP_B8xwAJ_NHgE-Nkb4QYClCC3qToneRRnR5YjeSXPyAfAY00YGGcfGh9WNWVhfMPV1QjRYhrtDwERSOs');"></div>
+<div class="absolute bottom-4 left-4 bg-background-dark/80 px-2 py-1 text-[10px] border border-neutral-gray text-white">
+                    FIG_01: LATENT_SPACE_PROJECTION.EXE
+                </div>
+</section>
+<!-- Content Area -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-0">
+<!-- Main Reading Column -->
+<div class="md:col-span-8 p-8 border-r border-neutral-gray">
+<article class="space-y-6 text-sm leading-relaxed text-justify">
+<p>
+                            The integration of Neural Ordinary Differential Equations (ODEs) represents a paradigm shift in continuous-depth models. By bridging the gap between discrete residual networks and continuous dynamical systems, we achieve higher parameter efficiency and natural handling of irregularly sampled data.
+                        </p>
+<p>
+                            In this framework, instead of specifying a discrete sequence of hidden layers:
+                            <br/>
+<span class="text-primary font-bold">h_{t+1} = h_t + f(h_t, θ_t)</span>
+</p>
+<p>
+                            We define the derivative of the hidden state using a neural network:
+                            <br/>
+<span class="text-primary font-bold">dh(t)/dt = f(h(t), t, θ)</span>
+</p>
+<!-- ASCII Diagram Block -->
+<div class="my-8 p-6 bg-neutral-900 border border-neutral-gray overflow-x-auto">
+<pre class="text-[10px] leading-none text-primary">+-----------+       +-----------+       +-----------+
+|  INPUT X  | ----&gt; |  ODE SOLV | ----&gt; | OUTPUT Y  |
++-----------+       +-----------+       +-----------+
+                          ^
+                          |
+                  +-------+-------+
+                  |  f(h, t, θ)   |
+                  |  NEURAL NET   |
+                  +---------------+
+                            </pre>
+<p class="mt-4 text-[10px] text-neutral-gray text-center italic uppercase tracking-widest">Architecture: Continuous Flow Pipeline</p>
+</div>
+<p>
+                            The solver evaluates the function <span class="text-white">f</span> at multiple time steps to compute the final state. This allows for a flexible trade-off between computation time and accuracy at inference time. During training, the adjoint sensitivity method enables backpropagation through the ODE solver without storing intermediate activations, leading to constant memory cost as a function of depth.
+                        </p>
+<div class="p-6 border-l-4 border-primary bg-primary/5 italic">
+                            "The mapping between discrete layers and continuous dynamics is not merely a mathematical curiosity; it is the blueprint for the next generation of adaptive architectures."
+                        </div>
+<p>
+                            Research into the stability of these systems suggests that adding a diffusion term (SDEs) can further improve robustness against adversarial perturbations.
+                        </p>
+</article>
+</div>
+<!-- Sidebar / Meta Info -->
+<div class="md:col-span-4 bg-background-dark/50 p-8 space-y-8">
+<div>
+<h3 class="text-xs font-bold text-white mb-4 uppercase border-b border-neutral-gray pb-2">[CONNECTED_NODES]</h3>
+<ul class="space-y-3">
+<li>
+<a class="text-xs hover:text-primary flex items-start gap-2" href="#">
+<span class="material-symbols-outlined text-sm">link</span>
+                                    LATENT_DIFFUSION_MODELS.MD
+                                </a>
+</li>
+<li>
+<a class="text-xs hover:text-primary flex items-start gap-2" href="#">
+<span class="material-symbols-outlined text-sm">link</span>
+                                    STOCHASTIC_GRADIENT_FLOW.MD
+                                </a>
+</li>
+<li>
+<a class="text-xs hover:text-primary flex items-start gap-2" href="#">
+<span class="material-symbols-outlined text-sm">link</span>
+                                    TOPOLOGY_OF_NETWORKS.PDF
+                                </a>
+</li>
+</ul>
+</div>
+<div>
+<h3 class="text-xs font-bold text-white mb-4 uppercase border-b border-neutral-gray pb-2">[REFERENCES]</h3>
+<div class="text-[10px] text-neutral-gray space-y-4">
+<p>[01] Chen, T. Q., et al. (2018). "Neural Ordinary Differential Equations." NeurIPS.</p>
+<p>[02] Dupont, E., et al. (2019). "Augmented Neural ODEs." NeurIPS.</p>
+</div>
+</div>
+<div class="pt-8">
+<div class="border border-dashed border-neutral-gray p-4 text-center">
+<p class="text-[10px] text-neutral-gray uppercase">End of transmission</p>
+<p class="text-[10px] text-primary">EOF_0x2311</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Footer -->
+<footer class="w-full max-w-5xl border-x border-t border-neutral-gray px-6 py-8 bg-background-dark flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="text-[10px] text-neutral-gray uppercase tracking-widest">
+                © 2024 ALEJANDRO CASTRO // SYSTEM_CORE_V2
+            </div>
+<div class="flex gap-6">
+<a class="text-xs hover:text-primary font-bold" href="#">[TERMINAL]</a>
+<a class="text-xs hover:text-primary font-bold" href="#">[ROOT]</a>
+<a class="text-xs hover:text-primary font-bold" href="#">[ENCRYPTED]</a>
+</div>
+</footer>
+<!-- Decorative UI Elements -->
+<div class="fixed top-0 left-0 h-full w-px bg-neutral-gray/20 hidden xl:block" style="left: calc(50% - 512px);"></div>
+<div class="fixed top-0 right-0 h-full w-px bg-neutral-gray/20 hidden xl:block" style="right: calc(50% - 512px);"></div>
+</div>
+</body></html>
