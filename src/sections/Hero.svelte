@@ -34,11 +34,11 @@
                     duration: 0.1,
                     stagger: 0.1,
                     ease: 'none',
-                })
+                }, '>')
                 .to(cursor, {
                     opacity: 1,
                     duration: 0,
-                }, '>')
+                }, '+=0')
                 .to(heroSubtitle.querySelectorAll('.char'), {
                     opacity: 1,
                     duration: 0.01,
