@@ -20,7 +20,7 @@
 
 <header class="sticky top-0 z-20 flex justify-between items-start p-8 border-b border-brutalist-line bg-brutalist-bg/80 backdrop-blur-sm">
     <div class="text-[10px] font-mono tracking-widest uppercase" data-purpose="technical-annotation">
-        [REF: AC-2026-BRUTALIST] <br/>
+        [REF: AC-2026-MINIMAL] <br/>
         <LiveTimestamp />
     </div>
     <nav class="flex gap-6 font-mono text-sm">
