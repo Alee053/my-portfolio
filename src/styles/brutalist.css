@@ -1,4 +1,11 @@
-/* Brutalist grid blueprint, lines, scrollbar hide */
+@import "tailwindcss";
+@theme {
+  --color-brutalist-bg: #111111;
+  --color-brutalist-line: #444444;
+  --color-brutalist-text: #CCCCCC;
+  --color-brutalist-accent: #135bec;
+  --font-sans: "Space Grotesk", monospace;
+}
 
 .blueprint-grid {
   background-image: 
@@ -19,7 +26,6 @@
   border-top: 1px solid #444444;
 }
 
-/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 4px;
 }
