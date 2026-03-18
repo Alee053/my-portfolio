@@ -5,10 +5,8 @@ const blogCollection = defineCollection({
         title: z.string(),
         description: z.string(),
         date: z.coerce.date(),
-        status: z.string().default('[STATUS: ARCHIVED]'),
-        fig_01: z.string().optional(),
+        tags: z.array(z.string()),
         repo_url: z.string().url().optional(),
-        tags: z.array(z.string())
     }),
 });
 const projectsCollection = defineCollection({
@@ -17,12 +15,11 @@ const projectsCollection = defineCollection({
         name: z.string(),
         subtitle: z.string(),
         year: z.number(),
-        image: z.string(),
-        link: z.string().url(),
-        tags: z.array(z.string()),
-        order: z.number().optional(),
+        repo_url: z.string().url().optional(),
         blog_slug: z.string().optional(),
         demo_url: z.string().url().optional(),
+        tags: z.array(z.string()),
+        order: z.number().optional(),
     }),
 });
 
