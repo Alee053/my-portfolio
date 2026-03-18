@@ -61,7 +61,7 @@
             <span class="name-first">ALEJANDRO</span><br>
             <span class="name-last">CASTRO</span>
         </h1>
-        <p class="description max-w-lg font-mono text-sm leading-relaxed text-justify text-zinc-500" data-hero="subtitle">
+        <p class="description max-w-lg font-mono text-sm leading-relaxed text-left text-zinc-500" data-hero="subtitle">
             AI RESEARCHER & SYSTEMS ENGINEERING STUDENT. FOCUSING ON REINFORCEMENT LEARNING, ALGORITHMS, AND SEARCH-BASED PLANNING.
         </p>
     </div>
