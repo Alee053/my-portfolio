@@ -45,14 +45,9 @@ import AboutModal from '../components/AboutModal.svelte';
   <AboutModal client:only/>
   
   <!-- Contact Modal -->
-  <ContactModal client:only githubUrl="https://github.com/alejandrocastrodev" linkedInUrl="https://linkedin.com/in/alejandrocastrodev" email="alex@alejandrocastro.dev" />
+  <ContactModal client:only githubUrl="https://github.com/Alee053" linkedInUrl="https://www.linkedin.com/in/alejandrocastroalvarez/" email="alejandro@alecastro.dev" />
   
   <script>
-    import { gsap } from 'gsap';
-    
-    let isAboutModalOpen = false;
-    let contactModalComponent = null;
-    
     function toggleAboutModal() {
       document.dispatchEvent(new CustomEvent('close-toggle-contact-modal'));
       document.dispatchEvent(new CustomEvent('toggle-about-modal'));
