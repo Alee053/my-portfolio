@@ -1,22 +1,33 @@
 <script>
+    import BlogRow from './subcomponents/BlogRow.svelte';
+    
     export let blogs = [];
     
     let searchQuery = '';
     let activeTags = [];
+    let sortDirection = 'desc';
     
     $: uniqueTags = [...new Set(blogs.flatMap(b => b.tags || []))].sort();
     
-    $: filteredBlogs = blogs.filter(blog => {
-        const matchesSearch = !searchQuery || 
-            blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            (blog.description || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-            (blog.tags || []).some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-        
-        const matchesTags = activeTags.length === 0 || 
-            activeTags.every(tag => (blog.tags || []).includes(tag));
-        
-        return matchesSearch && matchesTags;
-    });
+    $: filteredBlogs = blogs
+        .filter(blog => {
+            const matchesSearch = !searchQuery || 
+                blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                (blog.description || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+                (blog.tags || []).some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+            
+            const matchesTags = activeTags.length === 0 || 
+                activeTags.every(tag => (blog.tags || []).includes(tag));
+            
+            return matchesSearch && matchesTags;
+        })
+        .sort((a, b) => {
+            const dateA = new Date(a.pubDate).getTime();
+            const dateB = new Date(b.pubDate).getTime();
+            return sortDirection === 'desc' ? dateB - dateA : dateA - dateB;
+        });
+    
+    $: activeFilterCount = activeTags.length + (searchQuery ? 1 : 0);
     
     function toggleTag(tag) {
         const index = activeTags.indexOf(tag);
@@ -32,15 +43,8 @@
         activeTags = [];
     }
     
-    function formatDate(date) {
-        return new Date(date).toISOString().slice(0, 10);
-    }
-    
-    function calculateReadTime(description) {
-        if (!description) return 5;
-        const wordsPerMinute = 200;
-        const wordCount = description.split(/\s+/).length;
-        return Math.max(1, Math.ceil(wordCount / wordsPerMinute));
+    function toggleSort() {
+        sortDirection = sortDirection === 'desc' ? 'asc' : 'desc';
     }
 </script>
 
@@ -50,34 +54,43 @@
         <h2 class="text-4xl font-light uppercase tracking-widest">Blogs</h2>
     </div>
     
-    <div class="mb-8 flex flex-wrap gap-4 items-start">
+    <div class="mb-8 flex flex-wrap gap-4 items-center">
         <div class="flex items-center border border-brutalist-line px-3 py-1 bg-black">
             <span class="text-[10px] font-mono mr-4">SEARCH:</span>
             <input 
                 type="text" 
                 bind:value={searchQuery}
-                class="bg-transparent border-none focus:ring-0 text-sm p-0 flex-1 font-mono uppercase min-w-[200px]" 
+                class="bg-transparent border-none focus:ring-0 focus:outline-none text-sm p-0 flex-1 font-mono uppercase min-w-[200px] text-white" 
                 placeholder="_"
             />
         </div>
         
-        {#if activeTags.length > 0 || searchQuery}
+        <button
+            on:click={toggleSort}
+            class="px-3 py-1 border border-brutalist-line text-xs font-mono uppercase tracking-wider hover:text-white hover:border-brutalist-accent transition-colors {sortDirection === 'desc' ? 'text-brutalist-accent border-brutalist-accent' : 'text-brutalist-line'}"
+        >
+            DATE {sortDirection === 'desc' ? '↓' : '↑'}
+        </button>
+        
+        {#if activeFilterCount > 0}
+            <span class="text-[10px] font-mono text-brutalist-accent">[{activeFilterCount}_ACTIVE]</span>
             <button 
                 on:click={clearFilters}
                 class="px-3 py-1 border border-brutalist-accent text-brutalist-accent text-xs font-mono uppercase tracking-wider hover:bg-brutalist-accent hover:text-black transition-colors"
             >
-                [CLEAR_FILTERS]
+                [CLEAR]
             </button>
         {/if}
     </div>
     
     {#if uniqueTags.length > 0}
-        <div class="mb-12 flex flex-wrap gap-2">
+        <div class="mb-8 flex flex-wrap gap-2 items-center">
+            <span class="text-[10px] font-mono text-brutalist-line mr-2">FILTER:</span>
             {#each uniqueTags as tag}
                 <button
                     on:click={() => toggleTag(tag)}
                     class="px-2 py-1 text-xs font-mono uppercase tracking-wider transition-colors {activeTags.includes(tag) 
-                        ? 'bg-brutalist-accent text-black border-0 hover:opacity-90' 
+                        ? 'bg-brutalist-accent text-black hover:opacity-90' 
                         : 'border border-brutalist-line text-brutalist-line hover:text-white hover:border-brutalist-accent'}"
                 >
                     [{tag}]
@@ -96,26 +109,8 @@
                 {/if}
             </div>
         {:else}
-            {#each filteredBlogs as blog, index}
-                <a 
-                    href="/blog/{blog.slug}"
-                    class="grid grid-cols-12 py-8 border-b border-dashed border-brutalist-line hover:bg-zinc-900/30 transition-colors cursor-pointer block"
-                >
-                    <div class="col-span-2 font-mono text-[10px] text-zinc-500">
-                        {formatDate(blog.pubDate)}
-                    </div>
-                    <div class="col-span-10">
-                        <h3 class="text-lg font-bold uppercase hover:underline">{blog.title}</h3>
-                        <p class="text-xs font-mono text-zinc-400 mt-2 max-w-3xl leading-relaxed italic">
-                            {blog.description ? blog.description.slice(0, 150) : ''}...
-                        </p>
-                        <div class="mt-4 flex gap-4 text-[10px] font-mono text-brutalist-line uppercase">
-                            <span>Read Time: {calculateReadTime(blog.description)}min</span>
-                            <span>//</span>
-                            <span class="text-white hover:text-brutalist-accent">[OPEN_FILE]</span>
-                        </div>
-                    </div>
-                </a>
+            {#each filteredBlogs as blog, index (blog.slug)}
+                <BlogRow {blog} {index} />
             {/each}
         {/if}
     </div>
