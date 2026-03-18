@@ -54,13 +54,13 @@ import AboutModal from '../components/AboutModal.svelte';
     let contactModalComponent = null;
     
     function toggleAboutModal() {
-      const event = new CustomEvent('toggle-about-modal');
-      document.dispatchEvent(event);
+      document.dispatchEvent(new CustomEvent('close-toggle-contact-modal'));
+      document.dispatchEvent(new CustomEvent('toggle-about-modal'));
     }
     
     function toggleContactModal() {
-      const event = new CustomEvent('toggle-contact-modal');
-      document.dispatchEvent(event);
+      document.dispatchEvent(new CustomEvent('close-toggle-about-modal'));
+      document.dispatchEvent(new CustomEvent('toggle-contact-modal'));
     }
     
     // @ts-ignore

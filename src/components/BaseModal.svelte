@@ -15,6 +15,12 @@
         toggle();
     }
 
+    function handleCloseEvent() {
+        if (isOpen) {
+            close();
+        }
+    }
+
     function handleBackdropClick() {
         if (isOpen) {
             close();
@@ -87,11 +93,13 @@
             gsap.set(backdrop, { opacity: 0 });
         }
         document.addEventListener(eventName, handleToggleEvent);
+        document.addEventListener(`close-${eventName}`, handleCloseEvent);
         document.addEventListener('keydown', handleKeydown);
     });
 
     onDestroy(() => {
         document.removeEventListener(eventName, handleToggleEvent);
+        document.removeEventListener(`close-${eventName}`, handleCloseEvent);
         document.removeEventListener('keydown', handleKeydown);
         document.body.style.overflow = '';
     });
