@@ -113,7 +113,7 @@
     style="opacity: 0; pointer-events: none;">
 </div>
 
-<aside bind:this={modal} class="fixed top-20 right-0 w-full h-full md:w-1/3 bg-brutalist-bg border-l border-brutalist-line  z-50 p-10 flex flex-col shadow-2xl">
+<aside bind:this={modal} class="fixed top-20 right-0 w-full h-[calc(100vh-5rem)] md:w-1/3 bg-brutalist-bg border-l border-brutalist-line  z-50 p-10 flex flex-col shadow-2xl">
     <div class="flex justify-between items-center mb-10">
         <div class="text-[10px] font-mono">{title}</div>
         <button class="text-sm text-brutalist-line hover:text-brutalist-accent cursor-pointer font-mono transition-colors duration-150" on:click={close}>[X]</button>
