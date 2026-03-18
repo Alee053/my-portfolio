@@ -15,21 +15,21 @@
     </p>
 
     <div class="space-y-6 mt-8">
-        <a href={githubUrl} target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 text-brutalist-text hover:text-white transition-colors group">
+        <a href={githubUrl} target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 text-brutalist-text hover:text-brutalist-accent transition-colors group">
             <span class="text-brutalist-line">[GITHUB]</span>
-            <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-white transition-colors"></span>
+            <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-brutalist-accent transition-colors"></span>
             <span class="text-xs">OPEN ↗</span>
         </a>
 
-        <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 text-brutalist-text hover:text-white transition-colors group">
+        <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 text-brutalist-text hover:text-brutalist-accent transition-colors group">
             <span class="text-brutalist-line">[LINKEDIN]</span>
-            <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-white transition-colors"></span>
+            <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-brutalist-accent transition-colors"></span>
             <span class="text-xs">OPEN ↗</span>
         </a>
 
-        <a href="mailto:{email}" class="flex items-center gap-4 text-brutalist-text hover:text-white transition-colors group">
+        <a href="mailto:{email}" class="flex items-center gap-4 text-brutalist-text hover:text-brutalist-accent transition-colors group">
             <span class="text-brutalist-line">[EMAIL]</span>
-            <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-white transition-colors"></span>
+            <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-brutalist-accent transition-colors"></span>
             <span class="text-xs">SEND ↗</span>
         </a>
     </div>

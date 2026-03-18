@@ -39,6 +39,7 @@
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px dashed #333333;
+    scroll-margin-top: 160px;
 }
 
 .article-content h3 {
@@ -47,6 +48,7 @@
     margin-bottom: 0.75rem;
     padding-bottom: 0.25rem;
     border-bottom: 1px dashed #333333;
+    scroll-margin-top: 160px;
 }
 
 /* Body Paragraphs */
@@ -56,13 +58,13 @@
 
 /* Links */
 .article-content a {
-    color: #FF5500;
+    color: #13ecaf;
     text-decoration: underline;
     text-underline-offset: 2px;
 }
 
 .article-content a:hover {
-    color: #FF7A33;
+    color: #34f7c3;
 }
 
 /* Images - Sharp edges, bordered */
@@ -77,7 +79,7 @@
 .article-content blockquote {
     font-style: italic;
     color: #888888;
-    border-left: 2px solid #FF5500;
+    border-left: 2px solid #13ecaf;
     padding: 0.5rem 1rem;
     margin: 1.5rem 0;
     border-radius: 0;

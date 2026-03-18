@@ -12,6 +12,6 @@ const blogsData = (await getCollection('blog')).map(blog => ({
 }));
 ---
 
-<Layout title="Blogs">
+<Layout title="BLOGS">
     <BlogsBrowser blogs={blogsData} client:load />
 </Layout>
