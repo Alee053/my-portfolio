@@ -1,11 +1,9 @@
-slug: hanoi
 name: "Hanoi Towers Solver"
 subtitle: "Recursive Solver Visualization for N number of Disks"
 year: 2024
-image: "https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758082015/hanoi_fvv13z.gif"
-link: "https://github.com/Alee053/HanoiTowers"
+repo_url: https://github.com/Alee053/HanoiTowers
 tags:
-  - "JavaScript"
-  - "Algorithms"
-  - "p5.js"
+  - JavaScript
+  - Algorithms
+  - p5.js
 order: 6

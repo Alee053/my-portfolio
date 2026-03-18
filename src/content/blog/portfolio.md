@@ -16,7 +16,7 @@ To be honest, I'm not mainly a frontend developer. I am most comfortable with C+
 Frontend development felt like a totally different world. It's where code meets design, and where the user's experience is the most important goal. So, this project was a big challenge for me. I wanted to see if I could use my engineering mindset to build something creative for the browser.
 
 ### The Tools I Chose
-
+[config.ts](../config.ts)
 I needed the right tools to build a site that was both very fast and very interactive.
 
 Here is what I chose:

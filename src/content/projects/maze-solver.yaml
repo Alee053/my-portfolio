@@ -1,11 +1,9 @@
-slug: maze-solver
 name: "Grid Maze Solver"
 subtitle: "Visualizing BFS Algorithm in a Grid Editable Maze"
 year: 2023
-image: "https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758082020/maze_dr9ael.gif"
-link: "https://github.com/Alee053/MazeSolver"
+repo_url: https://github.com/Alee053/MazeSolver
 tags:
-  - "JavaScript"
-  - "Algorithms"
-  - "p5.js"
+  - JavaScript
+  - Algorithms
+  - p5.js
 order: 5

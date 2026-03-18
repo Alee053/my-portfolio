@@ -12,7 +12,7 @@
     $: filteredProjects = projects
         .filter(project => {
             const matchesSearch = !searchQuery || 
-                project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 (project.subtitle || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
                 (project.tags || []).some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
             
@@ -23,9 +23,9 @@
         })
         .sort((a, b) => {
             if (sortDirection === 'asc') {
-                return a.title.localeCompare(b.title);
+                return a.name.localeCompare(b.name);
             } else {
-                return b.title.localeCompare(a.title);
+                return b.name.localeCompare(a.name);
             }
         });
     
@@ -111,7 +111,7 @@
                 {/if}
             </div>
         {:else}
-            {#each filteredProjects as project, index (project.title)}
+            {#each filteredProjects as project, index (project.name)}
                 <ProjectRow {project} {index} />
             {/each}
         {/if}

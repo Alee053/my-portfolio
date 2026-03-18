@@ -2,16 +2,15 @@
     export let project;
     export let index;
     
-    $: name = project.data?.name || project.name || project.title;
+    $: name = project.data?.name || project.name;
     $: subtitle = project.data?.subtitle || project.subtitle || '';
     $: tags = project.data?.tags || project.tags || [];
-    $: github_url = project.data?.link || project.github_url || project.link || '';
-    $: slug = project.slug;
+    $: repo_url = project.data?.repo_url || project.repo_url || '';
     $: blog_slug = project.data?.blog_slug || project.blog_slug || '';
     $: demo_url = project.data?.demo_url || project.demo_url || '';
     
-    $: hasLinks = github_url || blog_slug || demo_url;
-    $: primaryAction = github_url ? 'github' : (demo_url ? 'demo' : (slug ? 'project' : null));
+    $: hasLinks = repo_url || blog_slug || demo_url;
+    $: primaryAction = repo_url ? 'github' : (demo_url ? 'demo' : null);
     
     let hoveredBtn = null;
     let rowHovered = false;
@@ -21,12 +20,10 @@
     $: demoHighlighted = primaryAction === 'demo' && primaryHighlighted;
     
     function handleClick() {
-        if (github_url) {
-            window.open(github_url, '_blank');
+        if (repo_url) {
+            window.open(repo_url, '_blank');
         } else if (demo_url) {
             window.open(demo_url, '_blank');
-        } else if (slug) {
-            window.location.href = `/projects/${slug}`;
         }
     }
     
@@ -65,9 +62,9 @@
         </div>
         {#if hasLinks}
             <div class="flex flex-wrap justify-end gap-2 font-mono text-[10px]">
-                {#if github_url}
+                {#if repo_url}
                     <a 
-                        href={github_url} 
+                        href={repo_url} 
                         target="_blank" 
                         rel="noopener noreferrer"
                         onclick={stopPropagation}
@@ -102,13 +99,6 @@
                         LIVE_DEMO ↗
                     </a>
                 {/if}
-            </div>
-        {/if}
-        {#if !hasLinks && slug}
-            <div class="flex justify-end font-mono text-[10px]">
-                <span class="px-2 py-1 bg-brutalist-line/20 text-brutalist-accent {primaryHighlighted ? 'bg-brutalist-accent text-black' : ''} transition-colors">
-                    VIEW PROJECT
-                </span>
             </div>
         {/if}
     </div>
