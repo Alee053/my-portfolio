@@ -42,16 +42,16 @@
 
         gsap.to(backdrop, {
             opacity: 1,
-            duration: 0.3,
-            ease: 'power2.out',
+            duration: 0.15,
+            ease: 'none',
             onStart: () => {
                 backdrop.style.pointerEvents = 'auto';
             }
         });
         gsap.to(modal, {
             x: '0%',
-            duration: 0.5,
-            ease: 'power3.out'
+            duration: 0.2,
+            ease: 'none'
         });
         isOpen = true;
         dispatch('open');
@@ -64,16 +64,16 @@
 
         gsap.to(backdrop, {
             opacity: 0,
-            duration: 0.3,
-            ease: 'power2.in',
+            duration: 0.15,
+            ease: 'none',
             onComplete: () => {
                 backdrop.style.pointerEvents = 'none';
             }
         });
         gsap.to(modal, {
             x: '100%',
-            duration: 0.4,
-            ease: 'power3.in'
+            duration: 0.2,
+            ease: 'none'
         });
         isOpen = false;
         dispatch('close');
