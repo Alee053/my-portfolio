@@ -5,7 +5,7 @@
     
     let searchQuery = '';
     let activeTags = [];
-    let sortDirection = 'asc';
+    let sortMode = 'featured';
     
     $: uniqueTags = [...new Set(projects.flatMap(p => p.tags || []))].sort();
     
@@ -22,7 +22,9 @@
             return matchesSearch && matchesTags;
         })
         .sort((a, b) => {
-            if (sortDirection === 'asc') {
+            if (sortMode === 'featured') {
+                return (a.order ?? 999) - (b.order ?? 999);
+            } else if (sortMode === 'az') {
                 return a.name.localeCompare(b.name);
             } else {
                 return b.name.localeCompare(a.name);
@@ -45,9 +47,21 @@
         activeTags = [];
     }
     
-    function toggleSort() {
-        sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    function cycleSort() {
+        if (sortMode === 'featured') {
+            sortMode = 'az';
+        } else if (sortMode === 'az') {
+            sortMode = 'za';
+        } else {
+            sortMode = 'featured';
+        }
     }
+    
+    const sortLabels = {
+        featured: 'FEATURED',
+        az: 'A-Z',
+        za: 'Z-A'
+    };
 </script>
 
 <section class="pb-40">
@@ -68,10 +82,10 @@
         </div>
         
         <button
-            on:click={toggleSort}
-            class="px-3 py-1 border border-brutalist-line text-xs font-mono uppercase tracking-wider hover:text-white hover:border-brutalist-accent transition-colors {sortDirection === 'asc' ? 'text-brutalist-accent border-brutalist-accent' : 'text-brutalist-line'}"
+            on:click={cycleSort}
+            class="px-3 py-1 border border-brutalist-line text-xs font-mono uppercase tracking-wider hover:text-white hover:border-brutalist-accent transition-colors {sortMode !== 'featured' ? 'text-brutalist-line' : 'text-brutalist-accent border-brutalist-accent'}"
         >
-            TITLE {sortDirection === 'asc' ? 'A-Z' : 'Z-A'}
+            {sortLabels[sortMode]}
         </button>
         
         {#if activeFilterCount > 0}

@@ -3,15 +3,18 @@ import Layout from '../layouts/BaseLayout.astro';
 import ProjectsBrowser from '../components/ProjectsBrowser.svelte';
 import { getCollection } from 'astro:content';
 
-const projectsData = (await getCollection('projects')).map(project => ({
-    id: project.id,
-    name: project.data.name,
-    subtitle: project.data.subtitle || '',
-    tags: project.data.tags || [],
-    repo_url: project.data.repo_url || '',
-    blog_slug: project.data.blog_slug || '',
-    demo_url: project.data.demo_url || ''
-}));
+const projectsData = (await getCollection('projects'))
+    .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+    .map((project, index) => ({
+        id: project.id,
+        name: project.data.name,
+        subtitle: project.data.subtitle || '',
+        tags: project.data.tags || [],
+        repo_url: project.data.repo_url || '',
+        blog_slug: project.data.blog_slug || '',
+        demo_url: project.data.demo_url || '',
+        order: project.data.order ?? 999
+    }));
 ---
 
 <Layout title="PROJECTS">
