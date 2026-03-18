@@ -47,8 +47,8 @@
     </div>
 
     <div class="mt-10">
-        <div class="text-[10px] text-brutalist-line mb-4">[AWARDS]</div>
-        <div class="text-[10px] font-mono space-y-3">
+        <div class="text-brutalist-line mb-4">[AWARDS]</div>
+        <div class="font-mono space-y-3">
             <div class="flex items-start gap-2">
                 <span class="text-brutalist-accent">▸</span>
                 <div>
@@ -74,8 +74,8 @@
     </div>
 
     <div class="mt-10">
-        <div class="text-[10px] text-brutalist-line mb-4">[RESEARCH INTERESTS]</div>
-        <div class="text-[10px] font-mono text-zinc-600 space-y-1">
+        <div class="text-brutalist-line mb-4">[RESEARCH INTERESTS]</div>
+        <div class="font-mono text-zinc-500 space-y-1">
             <p>&gt; {interests}</p>
         </div>
     </div>
