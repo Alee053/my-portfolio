@@ -2,6 +2,7 @@
 import '../styles/globals.css';
 import Navbar from '../components/Navbar.svelte';
 import ContactModal from '../components/ContactModal.svelte';
+import AboutModal from '../components/AboutModal.svelte';
 ---
 
 <!DOCTYPE html>
@@ -41,46 +42,7 @@ import ContactModal from '../components/ContactModal.svelte';
     </div>
   </footer>
   <!-- About Modal -->
-  <aside id="about-modal" class="fixed top-0 right-0 w-full md:w-1/3 h-full bg-brutalist-bg border-l border-brutalist-line z-50 p-10 flex flex-col shadow-2xl" style="transform: translateX(100%);">
-    <div class="flex justify-between items-center mb-10">
-      <div class="text-[10px] font-mono">[MODAL: ABOUT_ME]</div>
-      <button class="text-sm hover:text-white cursor-pointer" onclick="toggleAboutModal()">[X]</button>
-    </div>
-    <div class="flex-grow font-mono text-sm leading-relaxed overflow-y-auto pr-4">
-      <p class="mb-6">
-        <span class="text-brutalist-line mr-2">// ORIGIN:</span>
-        Alejandro Castro is a software engineer and AI enthusiast based in the world of code and innovation.
-      </p>
-      <p class="mb-6">
-        <span class="text-brutalist-line mr-2">// FOCUS:</span>
-        Building full-stack applications, AI/ML projects, and contributing to open-source with a brutalist aesthetic.
-      </p>
-      <div class="mt-12 space-y-4">
-        <div class="flex justify-between border-b border-brutalist-line pb-1">
-          <span>EDUCATION</span>
-          <span class="text-zinc-500">SOFTWARE ENGINEER</span>
-        </div>
-        <div class="flex justify-between border-b border-brutalist-line pb-1">
-          <span>STATUS</span>
-          <span class="text-green-500 text-[10px]">● ACTIVE</span>
-        </div>
-      </div>
-      <div class="mt-20">
-        <div class="text-[10px] text-brutalist-line mb-4">[SYSTEM_LOGS]</div>
-        <div class="text-[10px] font-mono text-zinc-600 space-y-1">
-          <p>&gt; Initialize connection...</p>
-          <p>&gt; Loading biography.v2.dat</p>
-          <p>&gt; Parsing credentials</p>
-          <p>&gt; Rendering view... OK</p>
-        </div>
-      </div>
-    </div>
-    <div class="mt-10 border-t border-brutalist-line pt-6">
-      <button class="w-full bg-zinc-800 hover:bg-brutalist-accent hover:text-white py-3 font-mono text-xs uppercase tracking-widest transition-colors">
-        Download CV
-      </button>
-    </div>
-  </aside>
+  <AboutModal client:only/>
   
   <!-- Contact Modal -->
   <ContactModal client:only githubUrl="https://github.com/alejandrocastrodev" linkedInUrl="https://linkedin.com/in/alejandrocastrodev" email="alex@alejandrocastro.dev" />
@@ -92,28 +54,11 @@ import ContactModal from '../components/ContactModal.svelte';
     let contactModalComponent = null;
     
     function toggleAboutModal() {
-      const modal = document.getElementById('about-modal');
-      
-      if (!isAboutModalOpen) {
-        gsap.to(modal, {
-          x: '0%',
-          duration: 0.5,
-          ease: 'power3.out'
-        });
-        isAboutModalOpen = true;
-      } else {
-        gsap.to(modal, {
-          x: '100%',
-          duration: 0.4,
-          ease: 'power3.in'
-        });
-        isAboutModalOpen = false;
-      }
+      const event = new CustomEvent('toggle-about-modal');
+      document.dispatchEvent(event);
     }
     
     function toggleContactModal() {
-      // The ContactModal component will handle its own toggle via exported methods
-      // We dispatch a custom event that the component can listen to
       const event = new CustomEvent('toggle-contact-modal');
       document.dispatchEvent(event);
     }
