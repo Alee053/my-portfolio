@@ -14,23 +14,32 @@
         Get in touch through any of these channels.
     </p>
 
-    <div class="space-y-6 mt-8">
-        <a href={githubUrl} target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 text-brutalist-text hover:text-brutalist-accent transition-colors group">
-            <span class="text-brutalist-line">[GITHUB]</span>
-            <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-brutalist-accent transition-colors"></span>
-            <span class="text-xs">OPEN ↗</span>
+    <div class="space-y-3 mt-8">
+        <a href={githubUrl} target="_blank" rel="noopener noreferrer" 
+           class="block p-4 border border-brutalist-line hover:border-brutalist-accent bg-brutalist-bg hover:bg-opacity-90 transition-all duration-150 group">
+            <div class="flex items-center gap-4">
+                <span class="text-brutalist-line group-hover:text-brutalist-accent transition-colors">[GITHUB]</span>
+                <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-brutalist-accent transition-colors"></span>
+                <span class="text-xs text-brutalist-line group-hover:text-brutalist-accent transition-colors">OPEN ↗</span>
+            </div>
         </a>
 
-        <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 text-brutalist-text hover:text-brutalist-accent transition-colors group">
-            <span class="text-brutalist-line">[LINKEDIN]</span>
-            <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-brutalist-accent transition-colors"></span>
-            <span class="text-xs">OPEN ↗</span>
+        <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" 
+           class="block p-4 border border-brutalist-line hover:border-brutalist-accent bg-brutalist-bg hover:bg-opacity-90 transition-all duration-150 group">
+            <div class="flex items-center gap-4">
+                <span class="text-brutalist-line group-hover:text-brutalist-accent transition-colors">[LINKEDIN]</span>
+                <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-brutalist-accent transition-colors"></span>
+                <span class="text-xs text-brutalist-line group-hover:text-brutalist-accent transition-colors">OPEN ↗</span>
+            </div>
         </a>
 
-        <a href="mailto:{email}" class="flex items-center gap-4 text-brutalist-text hover:text-brutalist-accent transition-colors group">
-            <span class="text-brutalist-line">[EMAIL]</span>
-            <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-brutalist-accent transition-colors"></span>
-            <span class="text-xs">SEND ↗</span>
+        <a href="mailto:{email}" 
+           class="block p-4 border border-brutalist-line hover:border-brutalist-accent bg-brutalist-bg hover:bg-opacity-90 transition-all duration-150 group">
+            <div class="flex items-center gap-4">
+                <span class="text-brutalist-line group-hover:text-brutalist-accent transition-colors">[EMAIL]</span>
+                <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-brutalist-accent transition-colors"></span>
+                <span class="text-xs text-brutalist-line group-hover:text-brutalist-accent transition-colors">SEND ↗</span>
+            </div>
         </a>
     </div>
 
