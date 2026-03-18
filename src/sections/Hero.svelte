@@ -81,6 +81,3 @@
     </div>
 </section>
 
-<div class="mt-20 w-full h-px dashed-line relative">
-    <span class="absolute -top-3 right-0 text-[10px] font-mono text-brutalist-line opacity-50 select-none">[LAYOUT GRID X-72]</span>
-</div>
