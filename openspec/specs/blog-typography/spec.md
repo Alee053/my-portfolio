@@ -9,6 +9,19 @@ The system SHALL render article body text using a Serif font family (IBM Plex Se
 - **AND** font color is `#E2E8F0`
 - **AND** line-height is `1.8` for optimal readability
 
+### Requirement: Article links use site accent color
+The system SHALL style article links with the site's accent color.
+
+#### Scenario: Link renders in article
+- **WHEN** a link appears within article content
+- **THEN** the link color is `#13ecaf` (brutalist-accent)
+- **AND** the link has an underline with 2px offset
+
+#### Scenario: User hovers over article link
+- **WHEN** user hovers over a link in article content
+- **THEN** the link color brightens to `#34f7c3`
+- **AND** the underline remains visible
+
 ### Requirement: Article headers use Monospace font
 The system SHALL render article headers (h1, h2, h3) using JetBrains Mono monospace font.
 
@@ -52,5 +65,5 @@ The system SHALL style blockquotes with a terminal/system aesthetic.
 - **WHEN** blockquotes appear in article content
 - **THEN** text color is `#888888`
 - **AND** text is styled italic
-- **AND** left border is `2px solid #FF5500`
+- **AND** left border is `2px solid #13ecaf` (brutalist-accent)
 - **AND** no border-radius (sharp edges)
