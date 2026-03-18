@@ -12,6 +12,10 @@
     font-family: 'IBM Plex Serif', Georgia, 'Times New Roman', serif;
     color: #E2E8F0;
     line-height: 1.8;
+    /* Hide background grid lines */
+    background-color: #111111;
+    position: relative;
+    z-index: 1;
 }
 
 /* Article Headers - Monospace, Uppercase */

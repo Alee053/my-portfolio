@@ -13,11 +13,36 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+const { Content, headings } = await post.render();
+
+// Filter to only h2 and h3 headings for TOC
+const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
 ---
 
 <Layout title={post.data.title}>
-    <section class="p-8 border-b border-brutalist-line">
+    <!-- Sticky Blog Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-brutalist-bg/95 backdrop-blur-sm border-b border-brutalist-line">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="/blogs" class="text-xs font-mono text-brutalist-line hover:text-brutalist-accent transition-colors uppercase tracking-wider">
+                ← [BLOGS]
+            </a>
+            <span class="text-xs font-mono text-brutalist-text uppercase tracking-wider truncate max-w-md px-4">
+                {post.data.title}
+            </span>
+            <div class="flex items-center gap-4">
+                {post.data.repo_url && (
+                    <a href={post.data.repo_url} target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-brutalist-accent hover:text-white transition-colors uppercase">
+                        [SRC]
+                    </a>
+                )}
+                <span class="text-[10px] font-mono text-zinc-500">
+                    [SCROLL]
+                </span>
+            </div>
+        </div>
+    </nav>
+    
+    <section class="pt-24 p-8 border-b border-brutalist-line">
         <div class="mb-4 text-[10px] font-mono text-brutalist-line">[SEC // BLOG VIEWER]</div>
         <div class="mb-4 text-xs font-bold text-brutalist-accent uppercase">
             [SYSTEM_LOG: POST_LOADED]
@@ -27,26 +52,27 @@ const { Content } = await post.render();
         </h1>
         <div class="flex flex-wrap gap-4 text-xs text-brutalist-line font-mono border-t border-brutalist-line pt-4 pb-8">
             <span>[{new Date(post.data.date).toLocaleDateString('en-CA')}]</span>
-            {post.data.status && (
-                <span class="px-2 py-0.5 border border-brutalist-accent text-brutalist-accent uppercase">{post.data.status}</span>
-            )}
             {post.data.tags?.map((tag) => (
                 <span class="px-2 py-0.5 border border-brutalist-line uppercase">[ {tag} ]</span>
             ))}
         </div>
+        
+        {toc.length > 0 && (
+            <div class="border border-brutalist-line p-4 mb-8">
+                <div class="text-[10px] font-mono text-brutalist-line mb-2">[TABLE_OF_CONTENTS]</div>
+                <div class="flex flex-wrap gap-x-4 gap-y-2">
+                    {toc.map((h) => (
+                        <a 
+                            href={`#${h.slug}`} 
+                            class={`text-xs font-mono hover:text-brutalist-accent transition-colors ${h.depth === 3 ? 'pl-4 text-zinc-400' : 'text-zinc-300'}`}
+                        >
+                            {h.depth === 3 ? '└ ' : ''}{h.text}
+                        </a>
+                    ))}
+                </div>
+            </div>
+        )}
     </section>
-    
-    {post.data.fig_01 && (
-        <div class="px-8 py-8">
-            <Image 
-                src={post.data.fig_01} 
-                width={1200} 
-                height={600} 
-                alt={post.data.title}
-                class="w-full aspect-video object-cover border border-brutalist-line"
-            />
-        </div>
-    )}
     
     <article class="article-content p-8">
         <Content />

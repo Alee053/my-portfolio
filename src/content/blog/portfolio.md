@@ -2,8 +2,6 @@
 title: "Building My New Portfolio: A Developer's Journey"
 description: "A look at the tools and challenges behind my new website, and how I stepped out of my comfort zone to build an interactive experience."
 date: "2025-09-16"
-status: "[STATUS: ARCHIVED]"
-fig_01: "https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758081997/hero_fhl6aj.png"
 tags: ["astro", "svelte", "gsap", "webdev", "portfolio", "learning"]
 ---
 

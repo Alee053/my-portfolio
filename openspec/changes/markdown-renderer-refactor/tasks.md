@@ -36,8 +36,8 @@
 
 ## 5. Integration & Verification
 
-- [ ] 5.1 Verify KaTeX renders inline equations correctly
-- [ ] 5.2 Verify KaTeX renders block equations correctly
-- [ ] 5.3 Verify code blocks have syntax highlighting with sharp edges
-- [ ] 5.4 Verify typography split (Serif body, Mono headers) is applied
-- [ ] 5.5 Verify auto-generated slugs work for blog navigation
+- [x] 5.1 Verify KaTeX renders inline equations correctly
+- [x] 5.2 Verify KaTeX renders block equations correctly
+- [x] 5.3 Verify code blocks have syntax highlighting with sharp edges
+- [x] 5.4 Verify typography split (Serif body, Mono headers) is applied
+- [x] 5.5 Verify auto-generated slugs work for blog navigation
