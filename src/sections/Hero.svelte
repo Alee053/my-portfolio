@@ -10,41 +10,40 @@
     onMount(() => {
         const heroName = document.querySelector('[data-hero="name"]');
         const heroSubtitle = document.querySelector('[data-hero="subtitle"]');
-        const cursor = document.querySelector('[data-hero="cursor"]');
 
-        if (heroName && heroSubtitle && cursor) {
+        if (heroName && heroSubtitle) {
             const nameFirst = heroName.querySelector('.name-first');
             const nameLast = heroName.querySelector('.name-last');
 
             if (nameFirst && nameLast) {
                 const tl = gsap.timeline();
 
-                tl.set([nameFirst.querySelectorAll('.char'), nameLast.querySelectorAll('.char'), heroSubtitle.querySelectorAll('.char')], {
-                    opacity: 0
-                })
-                .set(cursor, { opacity: 0 })
-                .to(nameFirst.querySelectorAll('.char'), {
-                    opacity: 1,
-                    duration: 0.1,
-                    stagger: 0.1,
-                    ease: 'none',
-                })
-                .to(nameLast.querySelectorAll('.char'), {
-                    opacity: 1,
-                    duration: 0.1,
-                    stagger: 0.1,
-                    ease: 'none',
-                }, '>')
-                .to(cursor, {
-                    opacity: 1,
-                    duration: 0,
-                }, '+=0')
-                .to(heroSubtitle.querySelectorAll('.char'), {
-                    opacity: 1,
-                    duration: 0.01,
-                    stagger: 0.0085,
-                    ease: 'none',
-                });
+                const firstNameChars = nameFirst.querySelectorAll('.char');
+                const lastNameChars = nameLast.querySelectorAll('.char');
+                const subtitleChars = heroSubtitle.querySelectorAll('.char');
+
+                tl.set(firstNameChars, { opacity: 0 })
+                    .set(lastNameChars, { opacity: 0 })
+                    .set(subtitleChars, { opacity: 0 })
+
+                    .to(firstNameChars, {
+                        opacity: 1,
+                        duration: 0.08,
+                        stagger: 0.08,
+                        ease: 'none'
+                    })
+                    .to(lastNameChars, {
+                        opacity: 1,
+                        duration: 0.08,
+                        stagger: 0.08,
+                        ease: 'none'
+                    }, '>')
+                    .to(subtitleChars, {
+                        opacity: 1,
+                        duration: 0.02,
+                        stagger: 0.02,
+                        ease: 'none'
+                    }, '<');
             }
         }
     });
@@ -53,15 +52,6 @@
 <style>
     .char {
         display: inline-block;
-    }
-
-    @keyframes blink {
-        0%, 50% { opacity: 1; }
-        51%, 100% { opacity: 0; }
-    }
-
-    .cursor {
-        animation: blink 1s step-end infinite;
     }
 </style>
 
@@ -79,7 +69,6 @@
                     <span class="char">{char}</span>
                 {/each}
             </span>
-            <span class="inline-block w-2 h-[0.7em] bg-brutalist-line ml-1 align-middle cursor" data-hero="cursor"></span>
         </h1>
         <p class="max-w-md font-mono text-sm leading-relaxed text-zinc-500" data-hero="subtitle">
             {#each splitToChars('AI RESEARCHER & SYSTEM ARCHITECT. FOCUSING ON NEURAL SYMBOLIC REASONING AND AUTONOMOUS AGENT TOPOLOGIES.') as char}
