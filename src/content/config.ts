@@ -21,6 +21,8 @@ const projectsCollection = defineCollection({
         link: z.string().url(),
         tags: z.array(z.string()),
         order: z.number().optional(),
+        blog_slug: z.string().optional(),
+        demo_url: z.string().url().optional(),
     }),
 });
 

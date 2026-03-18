@@ -4,10 +4,13 @@ import ProjectsBrowser from '../components/ProjectsBrowser.svelte';
 import { getCollection } from 'astro:content';
 
 const projectsData = (await getCollection('projects')).map(project => ({
+    slug: project.slug,
     title: project.data.name,
     subtitle: project.data.subtitle || '',
     tags: project.data.tags || [],
-    link: project.data.link || ''
+    github_url: project.data.link || '',
+    blog_slug: project.data.blog_slug || '',
+    demo_url: project.data.demo_url || ''
 }));
 ---
 

@@ -1,10 +1,11 @@
 slug: ai-2048
 name: "AI 2048: Hybrid RL + Expectimax Search"
-subtitle: "Cracking 2048: A Hybrid Approach using PPO, C++ Expectimax, and
-  Bayesian Optimization"
+subtitle: "Cracking 2048: A Hybrid Approach using PPO, C++ Expectimax, and Bayesian Optimization"
 year: 2025
 image: https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758141015/ai-2048_fcbc6t.png
 link: https://github.com/Alee053/AI2048
+blog_slug: ai2048
+# demo_url: https://your-demo-url.com  # Uncomment when hosted
 tags:
   - AI/ML
   - C++

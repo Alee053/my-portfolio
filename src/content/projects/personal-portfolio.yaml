@@ -4,6 +4,7 @@ subtitle: "A deep dive into modern web architecture, combining a static-first ap
 year: 2025
 image: "https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758081997/hero_fhl6aj.png"
 link: "https://github.com/Alee053/my-portfolio"
+blog_slug: portfolio
 tags:
   - "Astro"
   - "Svelte"
