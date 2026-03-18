@@ -42,23 +42,37 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
         </div>
     </nav>
     
+    <!-- Blog Header -->
     <section class="pt-24 p-8 border-b border-brutalist-line">
         <div class="mb-4 text-[10px] font-mono text-brutalist-line">[SEC // BLOG VIEWER]</div>
-        <div class="mb-4 text-xs font-bold text-brutalist-accent uppercase">
-            [SYSTEM_LOG: POST_LOADED]
-        </div>
         <h1 class="text-4xl md:text-5xl font-bold text-brutalist-text leading-none tracking-tighter mb-6 uppercase">
             {post.data.title}
         </h1>
         <div class="flex flex-wrap gap-4 text-xs text-brutalist-line font-mono border-t border-brutalist-line pt-4 pb-8">
             <span>[{new Date(post.data.date).toLocaleDateString('en-CA')}]</span>
             {post.data.tags?.map((tag) => (
-                <span class="px-2 py-0.5 border border-brutalist-line uppercase">[ {tag} ]</span>
+                <span class="px-2 py-0.5 border text-brutalist-text border-brutalist-line uppercase">[ {tag} ]</span>
             ))}
         </div>
-        
-        {toc.length > 0 && (
-            <div class="border border-brutalist-line p-4 mb-8">
+    </section>
+    
+    <!-- Featured Image -->
+    {post.data.fig_01 && (
+        <div class="px-8 py-8 flex justify-center">
+            <Image 
+                src={post.data.fig_01} 
+                width={1200} 
+                height={600} 
+                alt={post.data.title}
+                class="w-full max-w-4xl aspect-video object-cover border border-brutalist-line"
+            />
+        </div>
+    )}
+    
+    <!-- Mobile TOC - inline -->
+    {toc.length > 0 && (
+        <div class="md:hidden px-8 py-4 border-b border-brutalist-line">
+            <div class="border border-brutalist-line p-4">
                 <div class="text-[10px] font-mono text-brutalist-line mb-2">[TABLE_OF_CONTENTS]</div>
                 <div class="flex flex-wrap gap-x-4 gap-y-2">
                     {toc.map((h) => (
@@ -71,15 +85,38 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
                     ))}
                 </div>
             </div>
-        )}
-    </section>
+        </div>
+    )}
     
-    <article class="article-content p-8">
-        <Content />
-    </article>
+    <!-- Content wrapper with relative positioning for TOC -->
+    <div class="relative">
+        <!-- Floating TOC - Desktop only, positioned absolutely -->
+        {toc.length > 0 && (
+            <aside class="hidden md:block absolute left-8 top-8 w-56">
+                <div class="sticky top-24 border border-brutalist-line p-4">
+                    <div class="text-[10px] font-mono text-brutalist-line mb-3">[TABLE_OF_CONTENTS]</div>
+                    <nav class="flex flex-col gap-2">
+                        {toc.map((h) => (
+                            <a 
+                                href={`#${h.slug}`} 
+                                class={`text-xs font-mono hover:text-brutalist-accent transition-colors ${h.depth === 3 ? 'pl-4 text-zinc-500' : 'text-zinc-300'}`}
+                            >
+                                {h.depth === 3 ? '└ ' : ''}{h.text}
+                            </a>
+                        ))}
+                    </nav>
+                </div>
+            </aside>
+        )}
+        
+        <!-- Article Content - centered -->
+        <article class="article-content p-8 mx-auto">
+            <Content />
+        </article>
+    </div>
     
     {post.data.repo_url && (
-        <div class="px-8 pb-4">
+        <div class="px-8 pb-4 flex justify-center">
             <a 
                 href={post.data.repo_url}
                 target="_blank"
@@ -91,7 +128,7 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
         </div>
     )}
     
-    <div class="p-8 border-t border-brutalist-line">
+    <div class="p-8 border-t border-brutalist-line flex justify-center">
         <a 
             href="/blogs"
             class="group inline-flex items-center gap-2 px-4 py-2 border border-brutalist-line hover:bg-brutalist-accent hover:text-black hover:border-brutalist-accent transition-colors text-sm font-mono uppercase tracking-wider"
