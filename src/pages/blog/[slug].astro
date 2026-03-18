@@ -43,7 +43,7 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
     </nav>
     
     <!-- Blog Header -->
-    <section class="pt-24 p-8 border-b border-brutalist-line">
+    <section class="pt-24 p-8">
         <div class="mb-4 text-[10px] font-mono text-brutalist-line">[SEC // BLOG VIEWER]</div>
         <h1 class="text-4xl md:text-5xl font-bold text-brutalist-text leading-none tracking-tighter mb-6 uppercase">
             {post.data.title}
@@ -55,20 +55,7 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
             ))}
         </div>
     </section>
-    
-    <!-- Featured Image -->
-    {post.data.fig_01 && (
-        <div class="px-8 py-8 flex justify-center">
-            <Image 
-                src={post.data.fig_01} 
-                width={1200} 
-                height={600} 
-                alt={post.data.title}
-                class="w-full max-w-4xl aspect-video object-cover border border-brutalist-line"
-            />
-        </div>
-    )}
-    
+
     <!-- Mobile TOC - inline -->
     {toc.length > 0 && (
         <div class="md:hidden px-8 py-4 border-b border-brutalist-line">
@@ -76,8 +63,8 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
                 <div class="text-[10px] font-mono text-brutalist-line mb-2">[TABLE_OF_CONTENTS]</div>
                 <div class="flex flex-wrap gap-x-4 gap-y-2">
                     {toc.map((h) => (
-                        <a 
-                            href={`#${h.slug}`} 
+                        <a
+                            href={`#${h.slug}`}
                             class={`text-xs font-mono hover:text-brutalist-accent transition-colors ${h.depth === 3 ? 'pl-4 text-zinc-400' : 'text-zinc-300'}`}
                         >
                             {h.depth === 3 ? '└ ' : ''}{h.text}
@@ -89,17 +76,17 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
     )}
     
     <!-- Content wrapper with relative positioning for TOC -->
-    <div class="relative">
+    <div class="relative bg-brutalist-bg -mx-8 border-t border-b border-brutalist-line">
         <!-- Floating TOC - Desktop only, positioned absolutely -->
         {toc.length > 0 && (
-            <aside class="hidden md:block absolute left-8 top-8 w-56">
+            <aside class="hidden md:block absolute left-8 top-8 w-75">
                 <div class="sticky top-24 border border-brutalist-line p-4">
-                    <div class="text-[10px] font-mono text-brutalist-line mb-3">[TABLE_OF_CONTENTS]</div>
+                    <div class="text-[0.9rem] font-mono text-brutalist-line mb-3">[TABLE_OF_CONTENTS]</div>
                     <nav class="flex flex-col gap-2">
                         {toc.map((h) => (
                             <a 
                                 href={`#${h.slug}`} 
-                                class={`text-xs font-mono hover:text-brutalist-accent transition-colors ${h.depth === 3 ? 'pl-4 text-zinc-500' : 'text-zinc-300'}`}
+                                class={`font-mono hover:text-brutalist-accent transition-colors ${h.depth === 3 ? 'pl-4 text-zinc-500' : 'text-zinc-300'}`}
                             >
                                 {h.depth === 3 ? '└ ' : ''}{h.text}
                             </a>
@@ -113,22 +100,23 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
         <article class="article-content p-8 mx-auto">
             <Content />
         </article>
+        {post.data.repo_url && (
+                <div class="px-8 pb-4 flex justify-center">
+                    <a
+                            href={post.data.repo_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-2 text-brutalist-accent hover:text-brutalist-accent/80 text-sm font-mono uppercase tracking-wider"
+                    >
+                        [VIEW SOURCE CODE] →
+                    </a>
+                </div>
+        )}
     </div>
     
-    {post.data.repo_url && (
-        <div class="px-8 pb-4 flex justify-center">
-            <a 
-                href={post.data.repo_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 text-brutalist-accent hover:text-brutalist-accent/80 text-sm font-mono uppercase tracking-wider"
-            >
-                [VIEW SOURCE CODE] →
-            </a>
-        </div>
-    )}
+
     
-    <div class="p-8 border-t border-brutalist-line flex justify-center">
+    <div class="p-8 flex">
         <a 
             href="/blogs"
             class="group inline-flex items-center gap-2 px-4 py-2 border border-brutalist-line hover:bg-brutalist-accent hover:text-black hover:border-brutalist-accent transition-colors text-sm font-mono uppercase tracking-wider"
