@@ -4,8 +4,10 @@ const blogCollection = defineCollection({
     schema: z.object({
         title: z.string(),
         description: z.string(),
-        pubDate: z.coerce.date(),
-        heroImage: z.string().optional(),
+        date: z.coerce.date(),
+        status: z.string().default('[STATUS: ARCHIVED]'),
+        fig_01: z.string().optional(),
+        repo_url: z.string().url().optional(),
         tags: z.array(z.string())
     }),
 });

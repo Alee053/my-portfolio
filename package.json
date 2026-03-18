@@ -19,6 +19,8 @@
     "astro-decap-cms-oauth": "^0.5.1",
     "gsap": "^3.13.0",
     "matter-js": "^0.20.0",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
     "svelte": "^5.38.10",
     "tailwindcss": "^4.1.13",
     "typescript": "^5.9.2"

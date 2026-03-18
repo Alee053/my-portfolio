@@ -8,7 +8,7 @@ const blogsData = (await getCollection('blog')).map(blog => ({
     description: blog.data.description || '',
     tags: blog.data.tags || [],
     slug: blog.slug,
-    pubDate: blog.data.pubDate
+    date: blog.data.date
 }));
 ---
 

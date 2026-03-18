@@ -1,21 +1,21 @@
 ---
-slug: portfolio
 title: "Building My New Portfolio: A Developer's Journey"
 description: "A look at the tools and challenges behind my new website, and how I stepped out of my comfort zone to build an interactive experience."
-pubDate: "2025-09-16"
-heroImage: "https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758081997/hero_fhl6aj.png"
+date: "2025-09-16"
+status: "[STATUS: ARCHIVED]"
+fig_01: "https://res.cloudinary.com/dwhzvvrmu/image/upload/v1758081997/hero_fhl6aj.png"
 tags: ["astro", "svelte", "gsap", "webdev", "portfolio", "learning"]
 ---
 
 Welcome to my new website! As a software engineering student, I wanted my portfolio to be more than just a resume. It needed to show my skills and my love for building interesting, interactive things for the web.
 
-This post is about the technology I used to create this site. It’s also about a personal challenge: what happens when a developer who usually works on logic and algorithms tries to build something visual?
+This post is about the technology I used to create this site. It's also about a personal challenge: what happens when a developer who usually works on logic and algorithms tries to build something visual?
 
 ### Leaving My Comfort Zone
 
 To be honest, I'm not mainly a frontend developer. I am most comfortable with C++ and solving complex problems with code. In that area, speed is the most important thing, and the "user interface" is usually just a simple command line.
 
-Frontend development felt like a totally different world. It’s where code meets design, and where the user's experience is the most important goal. So, this project was a big challenge for me. I wanted to see if I could use my engineering mindset to build something creative for the browser.
+Frontend development felt like a totally different world. It's where code meets design, and where the user's experience is the most important goal. So, this project was a big challenge for me. I wanted to see if I could use my engineering mindset to build something creative for the browser.
 
 ### The Tools I Chose
 

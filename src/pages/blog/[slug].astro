@@ -2,6 +2,7 @@
 import Layout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
+import '../../styles/article-typography.css';
 
 export async function getStaticPaths() {
     const blogs = await getCollection('blog');
@@ -25,17 +26,20 @@ const { Content } = await post.render();
             {post.data.title}
         </h1>
         <div class="flex flex-wrap gap-4 text-xs text-brutalist-line font-mono border-t border-brutalist-line pt-4 pb-8">
-            <span>[{new Date(post.data.pubDate).toLocaleDateString('en-CA')}]</span>
+            <span>[{new Date(post.data.date).toLocaleDateString('en-CA')}]</span>
+            {post.data.status && (
+                <span class="px-2 py-0.5 border border-brutalist-accent text-brutalist-accent uppercase">{post.data.status}</span>
+            )}
             {post.data.tags?.map((tag) => (
                 <span class="px-2 py-0.5 border border-brutalist-line uppercase">[ {tag} ]</span>
             ))}
         </div>
     </section>
     
-    {post.data.heroImage && (
+    {post.data.fig_01 && (
         <div class="px-8 py-8">
             <Image 
-                src={post.data.heroImage} 
+                src={post.data.fig_01} 
                 width={1200} 
                 height={600} 
                 alt={post.data.title}
@@ -44,20 +48,22 @@ const { Content } = await post.render();
         </div>
     )}
     
-    <article class="p-8 prose prose-invert prose-lg max-w-none 
-        prose-headings:font-bold prose-headings:uppercase prose-headings:text-brutalist-text
-        prose-h1:text-3xl prose-h1:border-b prose-h1:border-brutalist-line prose-h1:pb-4
-        prose-h2:text-2xl prose-h2:border-b prose-h2:border-brutalist-line/50 prose-h2:pb-2
-        prose-h3:text-xl
-        prose-a:text-brutalist-accent hover:prose-a:text-brutalist-accent/80 prose-a:no-underline hover:prose-a:underline
-        prose-strong:text-white prose-strong:font-bold
-        prose-blockquote:border-l-brutalist-accent prose-blockquote:bg-zinc-900/50 prose-blockquote:py-1 prose-blockquote:px-4
-        prose-code:bg-white/10 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono
-        prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-brutalist-line
-        prose-img:border prose-img:border-brutalist-line
-    ">
+    <article class="article-content p-8">
         <Content />
     </article>
+    
+    {post.data.repo_url && (
+        <div class="px-8 pb-4">
+            <a 
+                href={post.data.repo_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 text-brutalist-accent hover:text-brutalist-accent/80 text-sm font-mono uppercase tracking-wider"
+            >
+                [VIEW SOURCE CODE] →
+            </a>
+        </div>
+    )}
     
     <div class="p-8 border-t border-brutalist-line">
         <a 

@@ -22,8 +22,8 @@
             return matchesSearch && matchesTags;
         })
         .sort((a, b) => {
-            const dateA = new Date(a.pubDate).getTime();
-            const dateB = new Date(b.pubDate).getTime();
+            const dateA = new Date(a.date).getTime();
+            const dateB = new Date(b.date).getTime();
             return sortDirection === 'desc' ? dateB - dateA : dateA - dateB;
         });
     
