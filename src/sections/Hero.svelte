@@ -70,8 +70,8 @@
                 {/each}
             </span>
         </h1>
-        <p class="max-w-md font-mono text-sm leading-relaxed text-zinc-500" data-hero="subtitle">
-            {#each splitToChars('AI RESEARCHER & SYSTEM ARCHITECT. FOCUSING ON NEURAL SYMBOLIC REASONING AND AUTONOMOUS AGENT TOPOLOGIES.') as char}
+        <p class="max-w-md font-mono text-sm leading-relaxed text-justify text-zinc-500" data-hero="subtitle">
+            {#each splitToChars('AI RESEARCHER & SYSTEMS ENGINEERING STUDENT. FOCUSING ON REINFORCEMENT LEARNING, ALGORITHMS, AND SEARCH-BASED PLANNING.') as char}
                 <span class="char">{char}</span>
             {/each}
         </p>

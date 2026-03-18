@@ -3,7 +3,7 @@
 
     export let githubUrl = 'https://github.com/alejandrocastrodev';
     export let linkedInUrl = 'https://linkedin.com/in/alejandrocastrodev';
-    export let email = 'alex@example.com';
+    export let email = 'alejandro.castro.0520@gmail.com';
 
     let baseModal;
 </script>
