@@ -1,9 +1,0 @@
-name: "Inverse Kinematics"
-subtitle: "2D FABRIK Algorithm Visualization"
-year: 2024
-repo_url: https://github.com/Alee053/InverseKinematics-FABRIK
-tags:
-  - JavaScript
-  - Algorithms
-  - p5.js
-order: 2
