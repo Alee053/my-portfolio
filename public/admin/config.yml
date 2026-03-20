@@ -25,14 +25,13 @@ collections:
     label: "Blog Posts"
     folder: "src/content/blog"
     create: true
-    slug: "{{fields.slug}}"
+    slug: "{{slug}}"
     fields:
-      - { label: "Slug (URL and Filename)", name: "slug", widget: "string" }
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
       - { label: "Description", name: "description", widget: "text" }
-      - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
-      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Tags", name: "tags", widget: "list", default: [] }
+      - { label: "Repository URL", name: "repo_url", widget: "string", required: false }
       - { label: "Body", name: "body", widget: "markdown" }
 
   # Projects Collection
@@ -40,15 +39,15 @@ collections:
     label: "Projects"
     folder: "src/content/projects"
     create: true
-    slug: "{{fields.slug}}"
+    slug: "{{slug}}"
     extension: "yaml"
     format: "yaml"
     fields:
-      - { label: "Slug (URL and Filename)", name: "slug", widget: "string" }
       - { label: "Name", name: "name", widget: "string" }
       - { label: "Subtitle", name: "subtitle", widget: "string" }
       - { label: "Year", name: "year", widget: "number" }
-      - { label: "Image", name: "image", widget: "image" }
-      - { label: "Link", name: "link", widget: "string" }
-      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Repository URL", name: "repo_url", widget: "string", required: false }
+      - { label: "Blog Post Slug", name: "blog_slug", widget: "string", required: false, hint: "Slug of related blog post (e.g., 'ai2048' for ai2048.md)" }
+      - { label: "Demo URL", name: "demo_url", widget: "string", required: false }
+      - { label: "Tags", name: "tags", widget: "list", default: [] }
       - { label: "Order", name: "order", widget: "number", required: false, default: 99 }
