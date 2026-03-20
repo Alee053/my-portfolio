@@ -56,12 +56,12 @@
 
 <section id="hero-section">
     <SectionLabel number="01" label="HERO" />
-    <div class="border-l-4 border-brutalist-line pl-8">
-        <h1 class="text-7xl md:text-9xl font-bold tracking-tighter leading-none mb-4 uppercase font-sans" data-hero="name">
+    <div class="border-l-4 border-brutalist-line pl-4 md:pl-8">
+        <h1 class="text-5xl md:text-7xl lg:text-9xl font-bold tracking-tighter leading-none mb-4 uppercase font-sans" data-hero="name">
             <span class="name-first">ALEJANDRO</span><br>
             <span class="name-last">CASTRO</span>
         </h1>
-        <p class="description max-w-lg font-mono text-sm leading-relaxed text-left text-zinc-500" data-hero="subtitle">
+        <p class="description max-w-lg font-mono text-xs md:text-sm leading-relaxed text-left text-zinc-500" data-hero="subtitle">
             AI RESEARCHER & SYSTEMS ENGINEERING STUDENT. FOCUSING ON REINFORCEMENT LEARNING, ALGORITHMS, AND SEARCH-BASED PLANNING.
         </p>
     </div>

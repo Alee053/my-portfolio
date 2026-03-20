@@ -34,11 +34,11 @@ const { title } = Astro.props;
   <!-- Navbar -->
   <Navbar client:load />
   
-  <main class="relative z-10 min-h-screen pt-32 px-8 pb-20" style="min-height: 100vh;">
+  <main class="relative z-10 min-h-screen pt-32 px-4 md:px-8 pb-20" style="min-height: 100vh;">
     <slot />
   </main>
   <!-- Footer -->
-  <footer class="border-t border-brutalist-line p-8 flex justify-between items-center">
+  <footer class="border-t border-brutalist-line p-4 md:p-8 flex justify-between items-center">
     <div class="text-[10px] font-mono uppercase tracking-wider">
       © 2026 ALEJANDRO CASTRO // ALL RIGHTS RESERVED
     </div>

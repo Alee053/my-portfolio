@@ -54,13 +54,13 @@
         <h2 class="text-4xl font-light uppercase tracking-widest">Blogs</h2>
     </div>
     
-    <div class="mb-8 flex flex-wrap gap-4 items-center">
-        <div class="flex items-center border border-brutalist-line px-3 py-1 bg-black">
-            <span class="text-[10px] font-mono mr-4">SEARCH:</span>
+    <div class="mb-8 flex flex-col md:flex-row flex-wrap gap-4 items-start md:items-center">
+        <div class="flex items-center border border-brutalist-line px-3 py-1 bg-black w-full md:w-auto">
+            <span class="text-[10px] font-mono mr-2 md:mr-4">SEARCH:</span>
             <input 
                 type="text" 
                 bind:value={searchQuery}
-                class="bg-transparent border-none focus:ring-0 focus:outline-none text-sm p-0 flex-1 font-mono uppercase min-w-[200px] text-white" 
+                class="bg-transparent border-none focus:ring-0 focus:outline-none text-sm p-0 flex-1 font-mono uppercase min-w-0 md:min-w-[200px] text-white" 
                 placeholder="_"
             />
         </div>

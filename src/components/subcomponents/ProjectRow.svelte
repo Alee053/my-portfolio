@@ -39,7 +39,7 @@
 </script>
 
 <div 
-    class="grid grid-cols-12 py-6 border-b border-dashed border-brutalist-line group hover:bg-zinc-900/50 transition-colors cursor-pointer"
+    class="grid grid-cols-1 md:grid-cols-12 py-4 md:py-6 border-b border-dashed border-brutalist-line group hover:bg-zinc-900/50 transition-colors cursor-pointer gap-3 md:gap-0"
     onmouseenter={() => rowHovered = true}
     onmouseleave={() => { rowHovered = false; hoveredBtn = null; }}
     onclick={handleClick}
@@ -47,13 +47,13 @@
     role="button"
     tabindex="0"
 >
-    <div class="col-span-1 font-mono text-xs text-brutalist-line">{String(index + 1).padStart(2, '0')}.</div>
-    <div class="col-span-7">
-        <h3 class="text-xl font-bold uppercase group-hover:text-brutalist-accent transition-colors">{name}</h3>
+    <div class="font-mono text-xs text-brutalist-line md:col-span-1 mb-1 md:mb-0">{String(index + 1).padStart(2, '0')}.</div>
+    <div class="md:col-span-7">
+        <h3 class="text-lg md:text-xl font-bold uppercase group-hover:text-brutalist-accent transition-colors">{name}</h3>
         <p class="text-xs font-mono text-zinc-500 mt-1">{subtitle}</p>
     </div>
-    <div class="col-span-4 text-right">
-        <div class="flex flex-wrap justify-end gap-1 mb-2 font-mono text-[10px]">
+    <div class="md:col-span-4 md:text-right">
+        <div class="flex flex-wrap md:justify-end gap-1 mb-2 font-mono text-[10px]">
             {#if tags}
                 {#each tags as tag}
                     <span class="px-2 py-0.5 border border-brutalist-line group-hover:border-brutalist-accent">[ {tag.toUpperCase()} ]</span>
@@ -61,7 +61,7 @@
             {/if}
         </div>
         {#if hasLinks}
-            <div class="flex flex-wrap justify-end gap-2 font-mono text-[10px]">
+            <div class="flex flex-wrap md:justify-end gap-2 font-mono text-[10px]">
                 {#if repo_url}
                     <a 
                         href={repo_url} 
@@ -70,7 +70,7 @@
                         onclick={stopPropagation}
                         onmouseenter={() => hoveredBtn = 'github'}
                         onmouseleave={() => hoveredBtn = null}
-                        class="px-2 py-1 transition-colors {githubHighlighted ? 'bg-brutalist-accent text-black' : 'bg-brutalist-line/20 text-brutalist-accent hover:bg-brutalist-accent hover:text-black'}"
+                        class="px-2 py-1 transition-colors min-h-[44px] md:min-h-0 flex items-center {githubHighlighted ? 'bg-brutalist-accent text-black' : 'bg-brutalist-line/20 text-brutalist-accent hover:bg-brutalist-accent hover:text-black'}"
                     >
                         GITHUB ↗
                     </a>
@@ -81,7 +81,7 @@
                         onclick={stopPropagation}
                         onmouseenter={() => hoveredBtn = 'blog'}
                         onmouseleave={() => hoveredBtn = null}
-                        class="px-2 py-1 transition-colors {hoveredBtn === 'blog' ? 'bg-brutalist-accent text-black' : 'bg-brutalist-line/20 text-brutalist-accent hover:bg-brutalist-accent hover:text-black'}"
+                        class="px-2 py-1 transition-colors min-h-[44px] md:min-h-0 flex items-center {hoveredBtn === 'blog' ? 'bg-brutalist-accent text-black' : 'bg-brutalist-line/20 text-brutalist-accent hover:bg-brutalist-accent hover:text-black'}"
                     >
                         ARTICLE
                     </a>
@@ -94,7 +94,7 @@
                         onclick={stopPropagation}
                         onmouseenter={() => hoveredBtn = 'demo'}
                         onmouseleave={() => hoveredBtn = null}
-                        class="px-2 py-1 transition-colors {demoHighlighted ? 'bg-brutalist-accent text-black' : 'bg-brutalist-line/20 text-brutalist-accent hover:bg-brutalist-accent hover:text-black'}"
+                        class="px-2 py-1 transition-colors min-h-[44px] md:min-h-0 flex items-center {demoHighlighted ? 'bg-brutalist-accent text-black' : 'bg-brutalist-line/20 text-brutalist-accent hover:bg-brutalist-accent hover:text-black'}"
                     >
                         LIVE_DEMO ↗
                     </a>
