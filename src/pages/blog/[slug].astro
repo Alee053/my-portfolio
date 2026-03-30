@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { Image } from 'astro:assets';
 import '../../styles/article-typography.css';
 
 export async function getStaticPaths() {
@@ -20,43 +19,26 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
 ---
 
 <Layout title={post.data.title}>
-    <!-- Sticky Blog Navigation - desktop only, mobile uses Navbar hamburger -->
-    <nav class="hidden md:fixed top-0 left-0 right-0 z-50 bg-brutalist-bg/95 backdrop-blur-sm border-b border-brutalist-line">
-        <div class="w-full px-4 py-3 flex items-center justify-between gap-2">
-            <a href="/blogs" class="text-xs font-mono text-brutalist-line hover:text-brutalist-accent transition-colors uppercase tracking-wider shrink-0">
-                ← [BLOGS]
-            </a>
-            <span class="text-xs font-mono text-brutalist-text uppercase tracking-wider truncate max-w-[200px] lg:max-w-md px-2">
-                {post.data.title}
-            </span>
-            <div class="flex items-center gap-4 shrink-0">
-                {post.data.repo_url && (
-                    <a href={post.data.repo_url} target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-brutalist-accent hover:text-white transition-colors uppercase whitespace-nowrap">
-                        [SRC]
-                    </a>
-                )}
-                <span class="text-[10px] font-mono text-zinc-500 whitespace-nowrap">
-                    [SCROLL]
-                </span>
-            </div>
-        </div>
-    </nav>
-    
     <!-- Blog Header -->
-    <section class="pt-24 p-8">
+    <section class="pt-8 md:pt-32 pb-0 px-4 md:px-8">
         <div class="mb-4 text-[10px] font-mono text-brutalist-line">[SEC // BLOG VIEWER]</div>
         <h1 class="text-4xl md:text-5xl font-bold text-brutalist-text leading-none tracking-tighter mb-6 uppercase">
             {post.data.title}
         </h1>
-        <div class="flex flex-wrap gap-4 text-xs text-brutalist-line font-mono border-t border-brutalist-line pt-4 pb-8">
+        <div class="flex flex-wrap gap-4 text-xs text-brutalist-line font-mono border-t border-brutalist-line pt-4 pb-8 items-center">
             <span>[{new Date(post.data.date).toLocaleDateString('en-CA')}]</span>
             {post.data.tags?.map((tag) => (
                 <span class="px-2 py-0.5 border text-brutalist-text border-brutalist-line uppercase">[ {tag} ]</span>
             ))}
+            {post.data.repo_url && (
+                <a href={post.data.repo_url} target="_blank" rel="noopener noreferrer" class="px-3 py-1 border border-brutalist-accent text-brutalist-accent hover:bg-brutalist-accent hover:text-black transition-colors uppercase font-mono">
+                    [SRC] ↗
+                </a>
+            )}
         </div>
     </section>
 
-    <!-- Mobile TOC - inline -->
+    <!-- Mobile TOC - inline at top -->
     {toc.length > 0 && (
         <div class="xl:hidden px-4 py-4 border-b border-brutalist-line">
             <div class="border border-brutalist-line p-3">
@@ -74,18 +56,18 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
             </div>
         </div>
     )}
-    
-    <!-- Content wrapper with relative positioning for TOC -->
+
+    <!-- Content with floating TOC on desktop -->
     <div class="relative bg-brutalist-bg border-t border-b border-brutalist-line">
-        <!-- Floating TOC - Desktop only, positioned absolutely -->
+        <!-- Floating TOC - Desktop only -->
         {toc.length > 0 && (
-            <aside class="hidden xl:block absolute left-8 top-8 w-64">
-                <div class="sticky top-24 border border-brutalist-line p-4">
+            <aside class="hidden xl:block absolute right-8 top-8 w-72">
+                <div class="sticky top-32 border border-brutalist-line p-4 bg-brutalist-bg/95">
                     <div class="text-sm font-mono text-brutalist-line mb-3">[TABLE_OF_CONTENTS]</div>
                     <nav class="flex flex-col gap-2">
                         {toc.map((h) => (
-                            <a 
-                                href={`#${h.slug}`} 
+                            <a
+                                href={`#${h.slug}`}
                                 class={`font-mono text-sm hover:text-brutalist-accent transition-colors ${h.depth === 3 ? 'pl-4 text-zinc-500' : 'text-zinc-300'}`}
                             >
                                 {h.depth === 3 ? '└ ' : ''}{h.text}
@@ -95,31 +77,18 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
                 </div>
             </aside>
         )}
-        
-        <!-- Article Content - centered -->
-        <article class="article-content">
+
+        <!-- Article Content -->
+        <article class="article-content px-4 md:px-8 xl:pr-[340px] pb-8">
             <Content />
         </article>
-        {post.data.repo_url && (
-                <div class="px-8 pb-4 flex justify-start">
-                    <a
-                            href={post.data.repo_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="inline-flex items-center gap-2 text-brutalist-accent hover:text-brutalist-accent/80 text-sm font-mono uppercase tracking-wider"
-                    >
-                        [VIEW SOURCE CODE] →
-                    </a>
-                </div>
-        )}
     </div>
-    
 
-    
-    <div class="p-8 flex">
+    <!-- Back to blogs link -->
+    <div class="px-4 md:px-8 py-8">
         <a
             href="/blogs"
-            class="group inline-flex items-center gap-2 px-4 py-2 border border-brutalist-line hover:bg-brutalist-accent hover:text-black hover:border-brutalist-accent transition-colors text-sm font-mono uppercase tracking-wider"
+            class="inline-flex items-center gap-2 px-4 py-2 border border-brutalist-line hover:bg-brutalist-accent hover:text-black hover:border-brutalist-accent transition-colors text-sm font-mono uppercase tracking-wider"
         >
             ← [BACK TO BROWSER]
         </a>

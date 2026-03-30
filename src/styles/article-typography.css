@@ -5,8 +5,8 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&display=swap');
 
 .article-content {
-    /* Container constraint */
-    max-width: 48rem; /* max-w-3xl */
+    /* Container constraint - wider for desktop readability */
+    max-width: 64rem; /* max-w-5xl */
     margin-left: auto;
     margin-right: auto;
     font-family: 'IBM Plex Serif', Georgia, 'Times New Roman', serif;
@@ -161,12 +161,15 @@
 /* KaTeX Math */
 .article-content .katex {
     font-size: 1.1em;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 .article-content .katex-display {
     margin: 1.5rem 0;
     overflow-x: auto;
     padding: 1rem 0;
+    max-width: 100%;
 }
 
 /* Strong text */
