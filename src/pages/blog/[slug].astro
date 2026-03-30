@@ -79,9 +79,11 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
         )}
 
         <!-- Article Content -->
-        <article class="article-content px-4 md:px-8 xl:pr-[340px] pb-8">
-            <Content />
-        </article>
+        <div class="overflow-x-auto px-4 md:px-8 xl:pr-[340px] pb-8">
+            <article class="article-content">
+                <Content />
+            </article>
+        </div>
     </div>
 
     <!-- Back to blogs link -->
