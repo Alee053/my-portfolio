@@ -14,6 +14,7 @@
     line-height: 1.8;
     position: relative;
     z-index: 1;
+    text-align: justify;
 }
 
 /* Article Headers - Monospace, Uppercase */
@@ -142,7 +143,7 @@
     overflow-x: auto;
     width: auto;
     border-collapse: collapse;
-    margin: 1.5rem 0;
+    margin: 1.5rem auto;
     -webkit-overflow-scrolling: touch;
 }
 

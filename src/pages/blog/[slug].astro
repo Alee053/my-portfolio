@@ -31,8 +31,8 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
                 <span class="px-2 py-0.5 border text-brutalist-text border-brutalist-line uppercase">[ {tag} ]</span>
             ))}
             {post.data.repo_url && (
-                <a href={post.data.repo_url} target="_blank" rel="noopener noreferrer" class="px-3 py-1 border border-brutalist-accent text-brutalist-accent hover:bg-brutalist-accent hover:text-black transition-colors uppercase font-mono">
-                    [SRC] ↗
+                <a href={post.data.repo_url} target="_blank" rel="noopener noreferrer" class="ml-auto px-3 py-1 border border-brutalist-accent text-brutalist-accent hover:bg-brutalist-accent hover:text-black transition-colors uppercase font-mono text-xs">
+                    [REPO] ↗
                 </a>
             )}
         </div>
@@ -61,7 +61,7 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
     <div class="relative bg-brutalist-bg border-t border-b border-brutalist-line">
         <!-- Floating TOC - Desktop only -->
         {toc.length > 0 && (
-            <aside class="hidden xl:block absolute right-8 top-8 w-72">
+            <aside class="hidden xl:block absolute right-8 top-8 w-80">
                 <div class="sticky top-32 border border-brutalist-line p-4 bg-brutalist-bg/95">
                     <div class="text-sm font-mono text-brutalist-line mb-3">[TABLE_OF_CONTENTS]</div>
                     <nav class="flex flex-col gap-2">
@@ -79,7 +79,7 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
         )}
 
         <!-- Article Content -->
-        <div class="overflow-x-auto px-4 md:px-8 xl:pr-85 pb-8">
+        <div class="overflow-x-auto px-4 md:px-8 xl:pr-[340px] pb-8">
             <article class="article-content">
                 <Content />
             </article>
