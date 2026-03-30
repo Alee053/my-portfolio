@@ -14,7 +14,6 @@
     line-height: 1.8;
     position: relative;
     z-index: 1;
-    text-align: justify;
 }
 
 /* Article Headers - Monospace, Uppercase */
@@ -55,6 +54,7 @@
 /* Body Paragraphs */
 .article-content p {
     margin-bottom: 1.25rem;
+    text-align: justify;
 }
 
 /* Links */
