@@ -1,3 +1,21 @@
+## MODIFIED Requirements
+
+### Requirement: Tapping hamburger opens sidebar
+The system SHALL open a mobile sidebar navigation when the user taps the hamburger menu icon, unless a modal is already open in which case it SHALL close the modal first.
+
+#### Scenario: User taps hamburger on mobile
+- **WHEN** user taps the hamburger menu icon on a mobile viewport
+- **AND** no modal is open
+- **THEN** a sidebar slides in from the right side of the screen
+- **AND** the sidebar fills the viewport width
+- **AND** the sidebar displays all navigation links (HOME, ABOUT ME, PROJECTS, BLOGS, CONTACT)
+
+#### Scenario: Modal open, user taps hamburger
+- **WHEN** user taps the hamburger menu icon on a mobile viewport
+- **AND** a modal is open
+- **THEN** the open modal closes first
+- **AND** the sidebar remains closed
+
 ## ADDED Requirements
 
 ### Requirement: Hamburger menu icon displays on mobile
@@ -12,15 +30,6 @@ The system SHALL display a hamburger menu icon in the navbar on viewports smalle
 - **WHEN** the site is loaded on a viewport 768px or wider
 - **THEN** the hamburger menu icon is hidden
 - **AND** the horizontal desktop navigation links are visible
-
-### Requirement: Tapping hamburger opens sidebar
-The system SHALL open a mobile sidebar navigation when the user taps the hamburger menu icon.
-
-#### Scenario: User taps hamburger on mobile
-- **WHEN** user taps the hamburger menu icon on a mobile viewport
-- **THEN** a sidebar slides in from the right side of the screen
-- **AND** the sidebar fills the viewport width
-- **AND** the sidebar displays all navigation links (HOME, ABOUT ME, PROJECTS, BLOGS, CONTACT)
 
 ### Requirement: Mobile sidebar contains full navigation
 The mobile sidebar SHALL contain all navigation elements from the desktop navbar including metadata annotation and LiveTimestamp.

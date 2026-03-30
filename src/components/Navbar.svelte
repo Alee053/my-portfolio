@@ -39,6 +39,8 @@
         if (sidebarOpen) {
             closeSidebar();
         } else {
+            document.dispatchEvent(new CustomEvent('close-toggle-about-modal'));
+            document.dispatchEvent(new CustomEvent('close-toggle-contact-modal'));
             openSidebar();
         }
     }
@@ -124,7 +126,7 @@
                 class="hover:text-brutalist-accent transition-colors p-2 min-w-[44px] min-h-[44px] flex items-center justify-center" 
                 aria-label="Close navigation menu"
             >
-                <span class="font-mono text-2xl">×</span>
+                <span class="font-mono text-sm">[X]</span>
             </button>
         </div>
         
