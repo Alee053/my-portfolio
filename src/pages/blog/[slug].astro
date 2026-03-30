@@ -40,7 +40,7 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
 
     <!-- Mobile TOC - inline at top -->
     {toc.length > 0 && (
-        <div class="xl:hidden px-4 py-4 border-b border-brutalist-line">
+        <div class="lg:hidden px-4 py-4 border-b border-brutalist-line">
             <div class="border border-brutalist-line p-3">
                 <div class="text-[10px] font-mono text-brutalist-line mb-2">[TABLE_OF_CONTENTS]</div>
                 <div class="flex flex-col gap-2">
@@ -79,7 +79,7 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
         )}
 
         <!-- Article Content -->
-        <div class="overflow-x-auto px-4 md:px-8 xl:pr-[340px] pb-8">
+        <div class="overflow-x-auto px-4 md:px-8 xl:pr-85 pb-8">
             <article class="article-content">
                 <Content />
             </article>

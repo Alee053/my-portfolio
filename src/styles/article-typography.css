@@ -138,10 +138,9 @@
 
 /* Tables - scrollable on overflow */
 .article-content table {
-    display: block;
+    display: table;
     overflow-x: auto;
-    width: 100%;
-    table-layout: fixed;
+    width: auto;
     border-collapse: collapse;
     margin: 1.5rem 0;
     -webkit-overflow-scrolling: touch;
