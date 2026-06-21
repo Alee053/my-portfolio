@@ -23,3 +23,7 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 .vercel
+
+# local worktrees and brainstorm artifacts
+.worktrees/
+.superpowers/
