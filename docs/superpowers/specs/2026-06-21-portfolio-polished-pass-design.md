@@ -196,7 +196,7 @@ Minimal page in the same brutalist vocabulary:
 ### 3.4 `astro.config.mjs`
 
 - Add `@astrojs/sitemap` integration
-- Set `site: 'https://alecastro.dev'` (assumed; confirm with user)
+- Set `site: 'https://alecastro.dev'` (confirmed)
 
 ### 3.5 `public/robots.txt` (new)
 
@@ -432,7 +432,7 @@ Add to the README a one-line note that this design is governed by `docs/superpow
 
 ## 6. Open questions and risks
 
-1. **Canonical URL**: `@astrojs/sitemap` requires `site` in `astro.config.mjs`. Assumed `https://alecastro.dev`. **Confirm.**
+1. **Canonical URL**: `https://alecastro.dev` (confirmed).
 2. **GSAP SplitText is a Club GreenSock plugin**: free for non-commercial use; commercial requires a license. The current usage already triggers this. New motion work uses CSS/IO + GSAP core to avoid expanding the paid surface.
 3. **Decap CMS / Cloudinary**: preserved as-is. If the CMS is no longer in use, the Decap + Cloudinary dependencies could be removed in a future spec.
 4. **`.idea/` cleanup**: directory is in `.gitignore` but already tracked. `git rm -r --cached .idea` is required.
