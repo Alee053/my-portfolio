@@ -2,23 +2,24 @@
   "name": "my-portfolio",
   "type": "module",
   "version": "0.0.1",
+  "packageManager": "pnpm@10.33.2",
   "scripts": {
     "dev": "astro dev",
     "dev-host": "astro dev --host",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check",
+    "check:a11y": "node scripts/check-a11y.mjs"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "@astrojs/svelte": "^7.1.1",
     "@astrojs/vercel": "^8.2.7",
     "@tailwindcss/vite": "^4.1.13",
-    "@vercel/analytics": "^1.5.0",
-    "@vercel/speed-insights": "^1.2.0",
     "astro": "^5.13.7",
     "astro-decap-cms-oauth": "^0.5.1",
     "gsap": "^3.13.0",
-    "matter-js": "^0.20.0",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
     "svelte": "^5.38.10",
@@ -26,9 +27,7 @@
     "typescript": "^5.9.2"
   },
   "devDependencies": {
-    "@iconify/json": "^2.2.384",
     "@tailwindcss/typography": "^0.5.16",
-    "sharp": "^0.34.5",
-    "unplugin-icons": "^22.3.0"
+    "sharp": "^0.34.5"
   }
 }
