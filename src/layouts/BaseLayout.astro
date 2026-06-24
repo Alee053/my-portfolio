@@ -3,21 +3,28 @@ import '../styles/globals.css';
 import Navbar from '../components/Navbar.svelte';
 import ContactModal from '../components/ContactModal.svelte';
 import AboutModal from '../components/AboutModal.svelte';
+import SEO from '../components/SEO.astro';
+import BuildTimestamp from '../components/BuildTimestamp.astro';
 
 interface Props {
-    title?: string;
+    title: string;
+    description: string;
+    image?: string;
+    type?: 'website' | 'article';
+    publishedTime?: string;
+    tags?: string[];
 }
 
-const { title } = Astro.props;
+const { title, description, image, type, publishedTime, tags } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width" />
   <link rel="icon" href="/logo.png" />
-  <title>{title ? `${title} | ALEJANDRO CASTRO` : 'ALEJANDRO CASTRO'}</title>
+  <SEO {title} {description} {image} {type} {publishedTime} {tags} />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -28,47 +35,82 @@ const { title } = Astro.props;
   <slot name="head" />
 </head>
 <body class="bg-brutalist-bg text-brutalist-text font-sans relative min-h-screen">
-  <!-- Background Grid - scrolls with content -->
-  <div class="absolute inset-0 pointer-events-none blueprint-grid opacity-20 z-0" style="min-height: 100vh;"></div>
-  
+
+  <!-- Skip link -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-brutalist-accent focus:text-black focus:font-mono focus:text-sm">
+    SKIP TO CONTENT
+  </a>
+
+  <!-- Background grid (40% opacity) -->
+  <div class="absolute inset-0 pointer-events-none blueprint-grid opacity-40 z-0" style="min-height: 100vh;" aria-hidden="true"></div>
+
+  <!-- Corner crosshairs (decorative) -->
+  <div class="pointer-events-none fixed inset-0 z-[1] corner-crosshairs" aria-hidden="true">
+    <span class="ch ch-tl"></span>
+    <span class="ch ch-tr"></span>
+    <span class="ch ch-bl"></span>
+    <span class="ch ch-br"></span>
+  </div>
+
+  <!-- Viewport label -->
+  <div class="pointer-events-none fixed top-2 right-2 z-[2] font-mono text-[10px] text-brutalist-text/40 select-none" aria-hidden="true">
+    <span id="viewport-label">[VIEWPORT: 0×0]</span>
+  </div>
+
   <!-- Navbar -->
   <Navbar client:load />
-  
-  <main class="relative z-10 min-h-screen pt-32 md:px-8 pb-20 px-4" style="min-height: 100vh;">
+
+  <main id="main" class="relative z-10 min-h-screen pt-32 md:px-8 pb-20 px-4" style="min-height: 100vh;">
     <slot />
   </main>
+
   <!-- Footer -->
-  <footer class="border-t border-brutalist-line p-4 md:p-8 flex justify-between items-center">
-    <div class="text-[10px] font-mono uppercase tracking-wider">
-      © 2026 ALEJANDRO CASTRO // ALL RIGHTS RESERVED
+  <footer class="border-t border-brutalist-line p-4 md:p-8 flex justify-between items-center font-mono text-[10px] uppercase tracking-wider">
+    <div>
+      © {new Date().getFullYear()} ALEJANDRO CASTRO // ALL RIGHTS RESERVED
     </div>
-    <div class="flex gap-4">
-      <div class="w-3 h-3 bg-brutalist-line"></div>
-      <div class="w-3 h-3 bg-zinc-700"></div>
-      <div class="w-3 h-3 bg-zinc-500"></div>
+    <div class="text-brutalist-line/60">
+      <BuildTimestamp />
     </div>
   </footer>
+
   <!-- About Modal -->
-  <AboutModal client:only/>
-  
+  <AboutModal client:only />
+
   <!-- Contact Modal -->
   <ContactModal client:only githubUrl="https://github.com/Alee053" linkedInUrl="https://www.linkedin.com/in/alejandrocastroalvarez/" email="alejandro@alecastro.dev" />
-  
+
   <script>
     function toggleAboutModal() {
       document.dispatchEvent(new CustomEvent('close-toggle-contact-modal'));
       document.dispatchEvent(new CustomEvent('toggle-about-modal'));
     }
-    
+
     function toggleContactModal() {
       document.dispatchEvent(new CustomEvent('close-toggle-about-modal'));
       document.dispatchEvent(new CustomEvent('toggle-contact-modal'));
     }
-    
+
     // @ts-ignore
     window.toggleAboutModal = toggleAboutModal;
     // @ts-ignore
     window.toggleContactModal = toggleContactModal;
+
+    // Viewport label — updates on resize, debounced
+    (function () {
+      const el = document.getElementById('viewport-label');
+      if (!el) return;
+      let t;
+      function update() {
+        el.textContent = `[VIEWPORT: ${window.innerWidth}×${window.innerHeight}]`;
+      }
+      function onResize() {
+        clearTimeout(t);
+        t = setTimeout(update, 200);
+      }
+      update();
+      window.addEventListener('resize', onResize);
+    })();
   </script>
 </body>
 </html>

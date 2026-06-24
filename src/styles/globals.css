@@ -123,3 +123,43 @@ html {
         transition: none !important;
     }
 }
+
+/* Corner crosshairs */
+.corner-crosshairs .ch {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    opacity: 0.3;
+    animation: cornerPulse 6s ease-in-out infinite;
+}
+.corner-crosshairs .ch::before,
+.corner-crosshairs .ch::after {
+    content: '';
+    position: absolute;
+    background: var(--color-brutalist-text);
+}
+.corner-crosshairs .ch::before {
+    left: 0; right: 0; top: 50%;
+    height: 1px; transform: translateY(-0.5px);
+}
+.corner-crosshairs .ch::after {
+    top: 0; bottom: 0; left: 50%;
+    width: 1px; transform: translateX(-0.5px);
+}
+.corner-crosshairs .ch-tl { top: 8px;    left: 8px;    }
+.corner-crosshairs .ch-tr { top: 8px;    right: 8px;   }
+.corner-crosshairs .ch-bl { bottom: 8px; left: 8px;    }
+.corner-crosshairs .ch-br { bottom: 8px; right: 8px;   }
+.corner-crosshairs .ch-tr,
+.corner-crosshairs .ch-br { animation-delay: 1.5s; }
+.corner-crosshairs .ch-bl,
+.corner-crosshairs .ch-br { animation-delay: 3s; }
+
+@keyframes cornerPulse {
+    0%, 100% { opacity: 0.2; }
+    50%      { opacity: 0.4; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .corner-crosshairs .ch { animation: none; opacity: 0.3; }
+}
