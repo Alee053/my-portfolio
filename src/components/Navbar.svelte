@@ -127,7 +127,7 @@
 >
     <div class="flex flex-col h-full">
         <div class="flex justify-between items-center p-4 border-b border-brutalist-line">
-            <div class="text-[10px] font-mono tracking-widest uppercase">
+            <div class="text-[10px] font-mono tracking-widest uppercase text-brutalist-line/60">
                 [REF: AC-2026-MINIMAL]<br/>
                 <span class="text-brutalist-line/80">{buildTimestamp}</span>
             </div>
@@ -179,7 +179,7 @@
 </aside>
 
 <header class="sticky top-0 z-40 flex justify-between h-20 border-b px-4 md:px-8 items-center border-brutalist-line bg-brutalist-bg/80 backdrop-blur-sm">
-    <div class="text-[10px] font-mono tracking-widest uppercase" data-purpose="technical-annotation">
+    <div class="text-[10px] font-mono tracking-widest uppercase text-brutalist-line/60" data-purpose="technical-annotation">
         [REF: AC-2026-MINIMAL] <br/>
         <span class="text-brutalist-line/80">{buildTimestamp}</span>
     </div>
