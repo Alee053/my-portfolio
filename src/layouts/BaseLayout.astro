@@ -100,12 +100,12 @@ const { title, description, image, type, publishedTime, tags } = Astro.props;
     (function () {
       const el = document.getElementById('viewport-label');
       if (!el) return;
-      let t;
+      let t: ReturnType<typeof setTimeout> | undefined;
       function update() {
-        el.textContent = `[VIEWPORT: ${window.innerWidth}×${window.innerHeight}]`;
+        el!.textContent = `[VIEWPORT: ${window.innerWidth}×${window.innerHeight}]`;
       }
       function onResize() {
-        clearTimeout(t);
+        if (t) clearTimeout(t);
         t = setTimeout(update, 200);
       }
       update();
