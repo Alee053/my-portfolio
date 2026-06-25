@@ -2,10 +2,9 @@
 import { defineConfig } from 'astro/config';
 
 import svelte from '@astrojs/svelte';
+import sitemap from '@astrojs/sitemap';
 
 import tailwindcss from '@tailwindcss/vite';
-
-import Icons from 'unplugin-icons/vite'
 
 import vercel from '@astrojs/vercel';
 
@@ -16,23 +15,20 @@ import rehypeKatex from 'rehype-katex';
 
 // https://astro.build/config
 export default defineConfig({
-    integrations: [svelte(), decapCmsOauth()],
+    site: 'https://alecastro.dev',
+    integrations: [svelte(), decapCmsOauth(), sitemap()],
     image: {
-        domains: ["res.cloudinary.com"],
+        domains: ['res.cloudinary.com'],
     },
     markdown: {
         remarkPlugins: [remarkMath],
         rehypePlugins: [rehypeKatex],
         shikiConfig: {
             theme: 'github-dark',
-            wrap: true,
         },
     },
     vite: {
-        plugins: [tailwindcss(),Icons({
-            compiler: 'svelte',
-        }),]
-      },
-
-  adapter: vercel(),
+        plugins: [tailwindcss()],
+    },
+    adapter: vercel(),
 });

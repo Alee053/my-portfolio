@@ -1,0 +1,10 @@
+---
+const buildDate = new Date();
+const yyyy = buildDate.getFullYear();
+const mm = String(buildDate.getMonth() + 1).padStart(2, '0');
+const dd = String(buildDate.getDate()).padStart(2, '0');
+const hash = (Math.floor(buildDate.getTime() / 60000) % 0xffff).toString(16).toUpperCase().padStart(4, '0');
+const label = `TS: ${hash}·BUILD·${yyyy}.${mm}.${dd}`;
+---
+
+<span class="font-mono text-[10px] tracking-widest text-brutalist-line/80" aria-hidden="true">{label}</span>

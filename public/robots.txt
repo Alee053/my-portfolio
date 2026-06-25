@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alecastro.dev/sitemap-index.xml

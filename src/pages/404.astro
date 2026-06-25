@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/BaseLayout.astro';
+---
+
+<Layout
+    title="ERR_404 // NOT_FOUND"
+    description="The requested resource does not exist on this domain."
+>
+    <section class="min-h-[60vh] flex flex-col items-start justify-center gap-6">
+        <div class="font-mono text-[10px] text-brutalist-line tracking-widest">[ERR 404 // NOT_FOUND]</div>
+        <h1 class="text-4xl md:text-6xl font-bold uppercase tracking-tighter leading-none">
+            RESOURCE_<br>
+            <span class="text-brutalist-accent">UNREACHABLE</span>
+        </h1>
+        <p class="font-mono text-sm text-brutalist-text max-w-md">
+            &gt; The requested resource does not exist on this domain.<br>
+            &gt; Check the URL or return to the index.
+        </p>
+        <a
+            href="/"
+            class="inline-block px-4 py-2 border border-brutalist-accent text-brutalist-accent font-mono text-xs uppercase tracking-widest hover:bg-brutalist-accent hover:text-black transition-colors"
+        >
+            [← RETURN TO INDEX]
+        </a>
+    </section>
+</Layout>

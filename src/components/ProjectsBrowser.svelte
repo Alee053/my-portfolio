@@ -1,6 +1,7 @@
 <script>
     import ProjectRow from './subcomponents/ProjectRow.svelte';
-    
+    import { reveal } from '../lib/reveal';
+
     export let projects = [];
     
     let searchQuery = '';
@@ -73,11 +74,12 @@
     <div class="mb-8 flex flex-col md:flex-row flex-wrap gap-4 items-start md:items-center">
         <div class="flex items-center border border-brutalist-line px-3 py-1 bg-black w-full md:w-auto">
             <span class="text-[10px] font-mono mr-2 md:mr-4">SEARCH:</span>
-            <input 
-                type="text" 
+            <input
+                type="text"
                 bind:value={searchQuery}
-                class="bg-transparent border-none focus:ring-0 focus:outline-none text-sm p-0 flex-1 font-mono uppercase min-w-0 md:min-w-[200px] text-white" 
+                class="bg-transparent border-none focus:outline-none focus-visible:outline focus-visible:outline-1 focus-visible:outline-brutalist-accent focus-visible:outline-offset-2 text-sm p-0 flex-1 font-mono uppercase min-w-0 md:min-w-[200px] text-white"
                 placeholder="_"
+                aria-label="Search projects"
             />
         </div>
         
@@ -125,9 +127,13 @@
                 {/if}
             </div>
         {:else}
-            {#each filteredProjects as project, index (project.name)}
-                <ProjectRow {project} {index} />
-            {/each}
+            <div use:reveal={{ variant: 'stagger' }} class="contents">
+                {#key activeFilterCount}
+                    {#each filteredProjects as project, index (project.name)}
+                        <ProjectRow {project} {index} />
+                    {/each}
+                {/key}
+            </div>
         {/if}
     </div>
 </section>

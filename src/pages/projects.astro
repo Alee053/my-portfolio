@@ -17,6 +17,9 @@ const projectsData = (await getCollection('projects'))
     }));
 ---
 
-<Layout title="PROJECTS">
-    <ProjectsBrowser projects={projectsData} client:load />
+<Layout
+    title="PROJECTS"
+    description="Selected projects in AI/ML, algorithms, and interactive systems."
+>
+    <ProjectsBrowser projects={projectsData} client:visible />
 </Layout>

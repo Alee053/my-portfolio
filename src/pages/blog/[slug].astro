@@ -16,9 +16,17 @@ const { Content, headings } = await post.render();
 
 // Filter to only h2 and h3 headings for TOC
 const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
+
+const description = post.data.description ?? post.body.slice(0, 155).replace(/[#*`]/g, '').trim();
 ---
 
-<Layout title={post.data.title}>
+<Layout
+    title={post.data.title}
+    description={description}
+    type="article"
+    publishedTime={post.data.date.toISOString()}
+    tags={post.data.tags}
+>
     <!-- Blog Header -->
     <section class="pt-8 md:pt-32 pb-0 px-4 md:px-8">
         <div class="mb-4 text-[10px] font-mono text-brutalist-line">[SEC // BLOG VIEWER]</div>

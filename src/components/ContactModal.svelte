@@ -15,30 +15,40 @@
     </p>
 
     <div class="space-y-3 mt-8">
-        <a href={githubUrl} target="_blank" rel="noopener noreferrer" 
-           class="block p-4 border border-brutalist-line hover:border-brutalist-accent bg-brutalist-bg hover:bg-opacity-90 transition-all duration-150 group">
+        <a
+            href={githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group block p-4 border border-brutalist-line hover:bg-brutalist-accent hover:border-brutalist-accent transition-all duration-150 focus-visible:outline focus-visible:outline-1 focus-visible:outline-brutalist-accent focus-visible:outline-offset-2"
+        >
             <div class="flex items-center gap-4">
-                <span class="text-brutalist-line group-hover:text-brutalist-accent transition-colors">[GITHUB]</span>
-                <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-brutalist-accent transition-colors"></span>
-                <span class="text-xs text-brutalist-line group-hover:text-brutalist-accent transition-colors">OPEN ↗</span>
+                <span class="text-brutalist-line group-hover:text-black transition-colors">[GITHUB]</span>
+                <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-black transition-colors"></span>
+                <span class="text-xs text-brutalist-line group-hover:text-black transition-colors">OPEN ↗</span>
             </div>
         </a>
 
-        <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" 
-           class="block p-4 border border-brutalist-line hover:border-brutalist-accent bg-brutalist-bg hover:bg-opacity-90 transition-all duration-150 group">
+        <a
+            href={linkedInUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group block p-4 border border-brutalist-line hover:bg-brutalist-accent hover:border-brutalist-accent transition-all duration-150 focus-visible:outline focus-visible:outline-1 focus-visible:outline-brutalist-accent focus-visible:outline-offset-2"
+        >
             <div class="flex items-center gap-4">
-                <span class="text-brutalist-line group-hover:text-brutalist-accent transition-colors">[LINKEDIN]</span>
-                <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-brutalist-accent transition-colors"></span>
-                <span class="text-xs text-brutalist-line group-hover:text-brutalist-accent transition-colors">OPEN ↗</span>
+                <span class="text-brutalist-line group-hover:text-black transition-colors">[LINKEDIN]</span>
+                <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-black transition-colors"></span>
+                <span class="text-xs text-brutalist-line group-hover:text-black transition-colors">OPEN ↗</span>
             </div>
         </a>
 
-        <a href="mailto:{email}" 
-           class="block p-4 border border-brutalist-line hover:border-brutalist-accent bg-brutalist-bg hover:bg-opacity-90 transition-all duration-150 group">
+        <a
+            href="mailto:{email}"
+            class="group block p-4 border border-brutalist-line hover:bg-brutalist-accent hover:border-brutalist-accent transition-all duration-150 focus-visible:outline focus-visible:outline-1 focus-visible:outline-brutalist-accent focus-visible:outline-offset-2"
+        >
             <div class="flex items-center gap-4">
-                <span class="text-brutalist-line group-hover:text-brutalist-accent transition-colors">[EMAIL]</span>
-                <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-brutalist-accent transition-colors"></span>
-                <span class="text-xs text-brutalist-line group-hover:text-brutalist-accent transition-colors">SEND ↗</span>
+                <span class="text-brutalist-line group-hover:text-black transition-colors">[EMAIL]</span>
+                <span class="flex-grow border-b border-dashed border-brutalist-line group-hover:border-black transition-colors"></span>
+                <span class="text-xs text-brutalist-line group-hover:text-black transition-colors">SEND ↗</span>
             </div>
         </a>
     </div>

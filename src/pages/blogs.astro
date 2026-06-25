@@ -12,6 +12,9 @@ const blogsData = (await getCollection('blog')).map(blog => ({
 }));
 ---
 
-<Layout title="BLOGS">
-    <BlogsBrowser blogs={blogsData} client:load />
+<Layout
+    title="BLOGS"
+    description="Writing on reinforcement learning, algorithms, and engineering craft."
+>
+    <BlogsBrowser blogs={blogsData} client:visible />
 </Layout>

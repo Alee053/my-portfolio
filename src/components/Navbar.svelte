@@ -1,8 +1,18 @@
 <script>
     import { onMount, onDestroy } from 'svelte';
     import { gsap } from 'gsap';
-    import LiveTimestamp from './LiveTimestamp.svelte';
-    
+
+    // Build timestamp — computed once when the Svelte module loads
+    const buildDate = new Date();
+    const buildYyyy = buildDate.getFullYear();
+    const buildMm = String(buildDate.getMonth() + 1).padStart(2, '0');
+    const buildDd = String(buildDate.getDate()).padStart(2, '0');
+    const buildHash = (Math.floor(buildDate.getTime() / 60000) % 0xffff)
+        .toString(16)
+        .toUpperCase()
+        .padStart(4, '0');
+    const buildTimestamp = `TS: ${buildHash}·BUILD·${buildYyyy}.${buildMm}.${buildDd}`;
+
     let sidebarOpen = false;
     let sidebarElement;
     let backdropElement;
@@ -117,13 +127,13 @@
 >
     <div class="flex flex-col h-full">
         <div class="flex justify-between items-center p-4 border-b border-brutalist-line">
-            <div class="text-[10px] font-mono tracking-widest uppercase">
+            <div class="text-[10px] font-mono tracking-widest uppercase text-brutalist-line/60">
                 [REF: AC-2026-MINIMAL]<br/>
-                <LiveTimestamp />
+                <span class="text-brutalist-line/80">{buildTimestamp}</span>
             </div>
-            <button 
-                on:click={closeSidebar} 
-                class="hover:text-brutalist-accent transition-colors p-2 min-w-[44px] min-h-[44px] flex items-center justify-center" 
+            <button
+                on:click={closeSidebar}
+                class="hover:text-brutalist-accent transition-colors p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Close navigation menu"
             >
                 <span class="font-mono text-sm">[X]</span>
@@ -169,9 +179,9 @@
 </aside>
 
 <header class="sticky top-0 z-40 flex justify-between h-20 border-b px-4 md:px-8 items-center border-brutalist-line bg-brutalist-bg/80 backdrop-blur-sm">
-    <div class="text-[10px] font-mono tracking-widest uppercase" data-purpose="technical-annotation">
+    <div class="text-[10px] font-mono tracking-widest uppercase text-brutalist-line/60" data-purpose="technical-annotation">
         [REF: AC-2026-MINIMAL] <br/>
-        <LiveTimestamp />
+        <span class="text-brutalist-line/80">{buildTimestamp}</span>
     </div>
     
     <button 
