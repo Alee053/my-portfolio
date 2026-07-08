@@ -28,13 +28,14 @@ const { title } = Astro.props;
   <slot name="head" />
 </head>
 <body class="bg-brutalist-bg text-brutalist-text font-sans relative min-h-screen">
+  <a href="#main" class="skip-link">[SKIP TO CONTENT]</a>
   <!-- Background Grid - scrolls with content -->
   <div class="absolute inset-0 pointer-events-none blueprint-grid opacity-20 z-0" style="min-height: 100vh;"></div>
-  
+
   <!-- Navbar -->
   <Navbar client:load />
-  
-  <main class="relative z-10 min-h-screen pt-32 md:px-8 pb-20 px-4" style="min-height: 100vh;">
+
+  <main id="main" class="relative z-10 min-h-screen pt-32 md:px-8 pb-20 px-4" style="min-height: 100vh;">
     <slot />
   </main>
   <!-- Footer -->

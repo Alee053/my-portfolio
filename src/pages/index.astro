@@ -7,8 +7,25 @@ import Blogs from '../sections/Blogs.svelte';
 
 const projects = (await getCollection('projects'))
     .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
-    .slice(0, 3);
-const blogs = (await getCollection('blog')).sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()).slice(0, 3);
+    .slice(0, 3)
+    .map((project) => ({
+        name: project.data.name,
+        subtitle: project.data.subtitle || '',
+        tags: project.data.tags || [],
+        repo_url: project.data.repo_url || '',
+        blog_slug: project.data.blog_slug || '',
+        demo_url: project.data.demo_url || ''
+    }));
+const blogs = (await getCollection('blog'))
+    .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+    .slice(0, 3)
+    .map((blog) => ({
+        title: blog.data.title,
+        description: blog.data.description || '',
+        tags: blog.data.tags || [],
+        slug: blog.slug,
+        date: blog.data.date
+    }));
 ---
 <Layout>
     <Hero client:load />

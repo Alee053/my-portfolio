@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { formatDate } from '../../lib/formatDate';
 import '../../styles/article-typography.css';
 
 export async function getStaticPaths() {
@@ -26,7 +27,7 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
             {post.data.title}
         </h1>
         <div class="flex flex-wrap gap-4 text-xs text-brutalist-line font-mono border-t border-brutalist-line pt-4 pb-8 items-center">
-            <span>[{new Date(post.data.date).toLocaleDateString('en-CA')}]</span>
+            <span>[{formatDate(post.data.date)}]</span>
             {post.data.tags?.map((tag) => (
                 <span class="px-2 py-0.5 border text-brutalist-text border-brutalist-line uppercase">[ {tag} ]</span>
             ))}
