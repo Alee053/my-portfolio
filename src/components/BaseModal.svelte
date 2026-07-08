@@ -1,5 +1,5 @@
 <script>
-    import { onMount, onDestroy, createEventDispatcher } from 'svelte';
+    import { onMount, createEventDispatcher } from 'svelte';
     import { gsap } from 'gsap';
     import { prefersReducedMotion } from '../lib/motion';
 
@@ -139,13 +139,17 @@
         document.addEventListener(eventName, handleToggleEvent);
         document.addEventListener(`close-${eventName}`, handleCloseEvent);
         document.addEventListener('keydown', handleKeydown);
-    });
+        // Close before view transitions so body overflow is restored
+        document.addEventListener('astro:before-swap', handleCloseEvent);
 
-    onDestroy(() => {
-        document.removeEventListener(eventName, handleToggleEvent);
-        document.removeEventListener(`close-${eventName}`, handleCloseEvent);
-        document.removeEventListener('keydown', handleKeydown);
-        document.body.style.overflow = '';
+        // Cleanup here (not onDestroy) so it never runs during SSR
+        return () => {
+            document.removeEventListener(eventName, handleToggleEvent);
+            document.removeEventListener(`close-${eventName}`, handleCloseEvent);
+            document.removeEventListener('keydown', handleKeydown);
+            document.removeEventListener('astro:before-swap', handleCloseEvent);
+            document.body.style.overflow = '';
+        };
     });
 </script>
 
@@ -157,7 +161,7 @@
     style="opacity: 0; pointer-events: none;">
 </div>
 
-<aside bind:this={modal} role="dialog" aria-modal="true" aria-label={title} class="fixed top-20 right-0 w-full h-[calc(100vh-5rem)] md:w-1/3 bg-brutalist-bg border-l border-brutalist-line  z-50 p-10 flex flex-col shadow-2xl">
+<aside bind:this={modal} role="dialog" aria-modal="true" aria-label={title} class="fixed top-20 right-0 w-full h-[calc(100vh-5rem)] md:w-1/3 bg-brutalist-bg border-l border-brutalist-line  z-50 p-10 flex flex-col shadow-2xl" style="transform: translateX(100%);">
     <div class="flex justify-between items-center mb-10">
         <div class="text-[10px] font-mono">{title}</div>
         <button bind:this={closeButton} aria-label="Close {title}" class="text-sm text-brutalist-line hover:text-brutalist-accent cursor-pointer font-mono transition-colors duration-150" on:click={close}>[X]</button>

@@ -1,5 +1,5 @@
 <script>
-    import { onMount, onDestroy } from 'svelte';
+    import { onMount } from 'svelte';
     import { gsap } from 'gsap';
     import LiveTimestamp from './LiveTimestamp.svelte';
     
@@ -7,6 +7,12 @@
     let sidebarElement;
     let backdropElement;
     
+    function handleBeforeSwap() {
+        if (sidebarOpen) {
+            closeSidebar();
+        }
+    }
+
     onMount(() => {
         if (sidebarElement) {
             gsap.set(sidebarElement, { x: '100%' });
@@ -14,11 +20,15 @@
         if (backdropElement) {
             gsap.set(backdropElement, { opacity: 0, pointerEvents: 'none' });
         }
-    });
-    
-    onDestroy(() => {
-        if (sidebarElement) gsap.killTweensOf(sidebarElement);
-        if (backdropElement) gsap.killTweensOf(backdropElement);
+        // Close before view transitions so body overflow is restored
+        document.addEventListener('astro:before-swap', handleBeforeSwap);
+
+        // Cleanup here (not onDestroy) so it never runs during SSR
+        return () => {
+            document.removeEventListener('astro:before-swap', handleBeforeSwap);
+            if (sidebarElement) gsap.killTweensOf(sidebarElement);
+            if (backdropElement) gsap.killTweensOf(backdropElement);
+        };
     });
     
     function handleAboutClick() {
@@ -104,16 +114,20 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <!-- Backdrop - always in DOM but hidden -->
-<div 
-    bind:this={backdropElement} 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div
+    bind:this={backdropElement}
     class="fixed inset-0 bg-black/50 z-40"
     on:click={closeSidebar}
+    style="opacity: 0; pointer-events: none;"
 ></div>
 
 <!-- Mobile Sidebar - always in DOM but hidden off-screen -->
-<aside 
-    bind:this={sidebarElement} 
+<aside
+    bind:this={sidebarElement}
     class="fixed top-0 right-0 h-full w-full md:hidden bg-brutalist-bg border-l border-brutalist-line z-50 overflow-y-auto"
+    style="transform: translateX(100%);"
 >
     <div class="flex flex-col h-full">
         <div class="flex justify-between items-center p-4 border-b border-brutalist-line">

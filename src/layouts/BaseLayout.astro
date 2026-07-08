@@ -5,6 +5,7 @@ import ContactModal from '../components/ContactModal.svelte';
 import AboutModal from '../components/AboutModal.svelte';
 import Splash from '../components/Splash.astro';
 import { SITE } from '../lib/site';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
     title?: string;
@@ -27,6 +28,7 @@ const { title, showSplash = false } = Astro.props;
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.cdnfonts.com/css/liberation-mono" rel="stylesheet">
+  <ClientRouter />
 
   <slot name="head" />
 </head>
@@ -46,7 +48,7 @@ const { title, showSplash = false } = Astro.props;
   </div>
 
   <!-- Navbar -->
-  <Navbar client:load />
+  <Navbar client:load transition:persist="navbar" />
 
   <main id="main" class="relative z-10 min-h-screen pt-32 md:px-8 pb-20 px-4" style="min-height: 100vh;">
     <slot />
@@ -63,10 +65,10 @@ const { title, showSplash = false } = Astro.props;
     </div>
   </footer>
   <!-- About Modal -->
-  <AboutModal client:only/>
-  
+  <AboutModal client:load transition:persist="about-modal" />
+
   <!-- Contact Modal -->
-  <ContactModal client:only githubUrl={SITE.github} linkedInUrl={SITE.linkedin} email={SITE.email} />
+  <ContactModal client:load transition:persist="contact-modal" githubUrl={SITE.github} linkedInUrl={SITE.linkedin} email={SITE.email} />
   
   <script>
     function toggleAboutModal() {

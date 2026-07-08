@@ -18,6 +18,8 @@
         // SSR markup is the final state; only animate on the first visit of the
         // session (decided by the splash inline script) and with motion allowed.
         if (!window.__bootRan || prefersReducedMotion()) return;
+        // Consume the flag so view-transition re-mounts don't replay the intro
+        window.__bootRan = false;
 
         const lineInners = sectionEl.querySelectorAll('.line-inner');
         const chips = chipsEl.querySelectorAll('a');
