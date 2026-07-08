@@ -33,13 +33,27 @@
     padding-bottom: 0.5rem;
 }
 
+.article-content h4,
+.article-content h5,
+.article-content h6 {
+    font-family: 'JetBrains Mono', 'Liberation Mono', 'Fira Code', monospace;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #FFFFFF;
+    letter-spacing: 0.05em;
+}
+
+/* Anchored headings must clear the sticky navbar (h-20 = 5rem) */
+.article-content :is(h1, h2, h3, h4, h5, h6) {
+    scroll-margin-top: 6.5rem;
+}
+
 .article-content h2 {
     font-size: 1.75rem;
     margin-top: 2rem;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px dashed #333333;
-    scroll-margin-top: 160px;
 }
 
 .article-content h3 {
@@ -48,13 +62,33 @@
     margin-bottom: 0.75rem;
     padding-bottom: 0.25rem;
     border-bottom: 1px dashed #333333;
-    scroll-margin-top: 160px;
+}
+
+.article-content h4 {
+    font-size: 1.125rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px dashed #333333;
+    padding-bottom: 0.25rem;
+}
+
+.article-content h5 {
+    font-size: 1rem;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #CCCCCC;
+}
+
+.article-content h6 {
+    font-size: 0.875rem;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #999999;
 }
 
 /* Body Paragraphs */
 .article-content p {
     margin-bottom: 1.25rem;
-    text-align: justify;
 }
 
 /* Links */
@@ -72,9 +106,34 @@
 .article-content img {
     width: 100%;
     max-width: 100%;
+    height: auto; /* keep aspect ratio when width/height attributes reserve space */
     border-radius: 0;
     border: 1px solid #333333;
     margin: 1.5rem auto;
+}
+
+/* Figures (image + caption) */
+.article-content figure {
+    margin: 1.5rem 0;
+}
+
+.article-content figure img {
+    margin: 0 auto;
+}
+
+.article-content figcaption {
+    font-family: 'JetBrains Mono', 'Liberation Mono', monospace;
+    font-size: 0.75rem;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.article-content figcaption::before {
+    content: "[FIG] ";
+    color: #13ecaf;
 }
 
 /* Blockquotes - Terminal system output style */
@@ -103,13 +162,41 @@
 
 /* Code - Blocks */
 .article-content pre {
-    background-color: #0d1117; /* github-dark background */
+    /* !important beats Shiki's inline background so the block matches the design */
+    background-color: #0d1117 !important;
     border: 1px solid #333333;
     border-radius: 0;
     padding: 1rem 1.25rem;
     overflow-x: auto;
     margin: 1.5rem 0;
     max-width: 100%;
+    position: relative; /* anchor for the copy button */
+}
+
+/* Copy button on code blocks */
+.article-content .copy-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-family: 'JetBrains Mono', 'Liberation Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    color: #5e5e5e;
+    background: #0d1117;
+    border: none;
+    border-left: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.article-content .copy-btn:hover {
+    color: #13ecaf;
+}
+
+.article-content .copy-btn.copied {
+    color: #13ecaf;
 }
 
 .article-content pre code {
@@ -137,14 +224,21 @@
     margin: 2rem 0;
 }
 
-/* Tables - scrollable on overflow */
-.article-content table {
-    display: table;
+/* Tables - wide tables scroll inside their own wrapper */
+.article-content .table-wrap {
     overflow-x: auto;
-    width: auto;
-    border-collapse: collapse;
-    margin: 1.5rem auto;
+    margin: 1.5rem 0;
     -webkit-overflow-scrolling: touch;
+}
+
+.article-content table {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.article-content .table-wrap table {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .article-content th,
@@ -194,4 +288,79 @@
 /* Emphasis */
 .article-content em {
     font-style: italic;
+}
+
+/* Strikethrough (GFM) */
+.article-content del {
+    color: #4a4a4a;
+}
+
+/* Task lists (GFM) */
+.article-content ul.contains-task-list {
+    padding-left: 0.5rem;
+    list-style: none;
+}
+
+.article-content li.task-list-item input[type="checkbox"] {
+    appearance: none;
+    width: 0.85em;
+    height: 0.85em;
+    border: 1px solid #5e5e5e;
+    margin-right: 0.5em;
+    vertical-align: -0.05em;
+}
+
+.article-content li.task-list-item input[type="checkbox"]:checked {
+    background-color: #13ecaf;
+    border-color: #13ecaf;
+}
+
+/* Footnotes (GFM) */
+.article-content .footnotes {
+    margin-top: 3rem;
+    border-top: 1px dashed #333333;
+    padding-top: 1rem;
+    font-size: 0.8125rem;
+    color: #999999;
+}
+
+.article-content .footnotes h2 {
+    font-size: 0.75rem;
+    border-bottom: none;
+    color: #5e5e5e;
+}
+
+.article-content .footnotes h2::before {
+    content: "[";
+}
+
+.article-content .footnotes h2::after {
+    content: "]";
+}
+
+.article-content [data-footnote-backref] {
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.article-content sup a {
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 0 0.125rem;
+}
+
+/* Mobile reading adjustments */
+@media (max-width: 640px) {
+    .article-content {
+        font-size: 0.9375rem;
+        line-height: 1.7;
+    }
+
+    .article-content pre {
+        padding: 0.75rem;
+    }
+
+    .article-content pre code {
+        font-size: 0.8125rem;
+    }
 }

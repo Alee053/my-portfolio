@@ -3,6 +3,7 @@ import Layout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { formatDate } from '../../lib/formatDate';
 import '../../styles/article-typography.css';
+import 'katex/dist/katex.min.css';
 
 export async function getStaticPaths() {
     const blogs = await getCollection('blog');
@@ -15,8 +16,8 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content, headings } = await post.render();
 
-// Filter to only h2 and h3 headings for TOC
-const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
+// Filter to h2-h4 headings for TOC
+const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
 ---
 
 <Layout title={post.data.title}>
@@ -48,9 +49,9 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
                     {toc.map((h) => (
                         <a
                             href={`#${h.slug}`}
-                            class={`text-xs font-mono hover:text-brutalist-accent transition-colors break-words ${h.depth === 3 ? 'pl-4 text-zinc-400' : 'text-zinc-300'}`}
+                            class={`text-xs font-mono hover:text-brutalist-accent transition-colors break-words ${h.depth === 4 ? 'pl-8 text-zinc-500' : h.depth === 3 ? 'pl-4 text-zinc-400' : 'text-zinc-300'}`}
                         >
-                            {h.depth === 3 ? '└ ' : ''}{h.text}
+                            {h.depth >= 3 ? '└ ' : ''}{h.text}
                         </a>
                     ))}
                 </div>
@@ -78,9 +79,9 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
                             {toc.map((h) => (
                                 <a
                                     href={`#${h.slug}`}
-                                    class={`font-mono text-sm hover:text-brutalist-accent transition-colors ${h.depth === 3 ? 'pl-4 text-zinc-500' : 'text-zinc-300'}`}
+                                    class={`font-mono text-sm hover:text-brutalist-accent transition-colors ${h.depth === 4 ? 'pl-8 text-zinc-600' : h.depth === 3 ? 'pl-4 text-zinc-500' : 'text-zinc-300'}`}
                                 >
-                                    {h.depth === 3 ? '└ ' : ''}{h.text}
+                                    {h.depth >= 3 ? '└ ' : ''}{h.text}
                                 </a>
                             ))}
                         </nav>
@@ -100,3 +101,35 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
         </a>
     </div>
 </Layout>
+
+<script>
+    function initCopyButtons() {
+        document.querySelectorAll('.article-content pre').forEach((pre) => {
+            if (pre.querySelector('.copy-btn')) return;
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'copy-btn';
+            btn.textContent = '[COPY]';
+            btn.setAttribute('aria-label', 'Copy code to clipboard');
+            btn.addEventListener('click', async () => {
+                const code = pre.querySelector('code')?.textContent ?? '';
+                try {
+                    await navigator.clipboard.writeText(code);
+                    btn.textContent = '[COPIED]';
+                    btn.classList.add('copied');
+                } catch {
+                    btn.textContent = '[ERROR]';
+                }
+                setTimeout(() => {
+                    btn.textContent = '[COPY]';
+                    btn.classList.remove('copied');
+                }, 1500);
+            });
+            pre.appendChild(btn);
+        });
+    }
+
+    initCopyButtons();
+    // Re-init after client-side navigations once ClientRouter is present
+    document.addEventListener('astro:page-load', initCopyButtons);
+</script>
