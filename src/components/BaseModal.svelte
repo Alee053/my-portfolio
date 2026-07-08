@@ -1,6 +1,7 @@
 <script>
     import { onMount, onDestroy, createEventDispatcher } from 'svelte';
     import { gsap } from 'gsap';
+    import { prefersReducedMotion } from '../lib/motion';
 
     export let title = '[MODAL]';
     export let eventName = 'toggle-modal';
@@ -12,9 +13,6 @@
     let previouslyFocused = null;
 
     const dispatch = createEventDispatcher();
-
-    const prefersReducedMotion = () =>
-        typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function handleToggleEvent() {
         toggle();

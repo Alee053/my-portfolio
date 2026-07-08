@@ -6,7 +6,7 @@
 </script>
 
 {#if blogs.length > 0}
-<section id="blogs-section" class="pb-20">
+<section id="blogs-section" class="pb-20" data-reveal>
     <a href="/blogs" class="flex justify-between items-end mb-12 group cursor-pointer">
         <div>
             <SectionLabel number="03" label="RECENT_BLOGS" />

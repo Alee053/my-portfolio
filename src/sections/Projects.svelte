@@ -5,7 +5,7 @@
     export let projects = [];
 </script>
 
-<section id="projects-section" class="mt-32 pb-32">
+<section id="projects-section" class="mt-32 pb-32" data-reveal>
     <a href="/projects" class="flex justify-between items-end mb-12 group cursor-pointer">
         <div>
             <SectionLabel number="02" label="RECENT_WORK" />

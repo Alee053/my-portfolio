@@ -100,3 +100,84 @@ html {
 .interactive-link:hover {
   color: white;
 }
+
+/* Corner crosshairs - viewport registration marks */
+.crosshair {
+  position: fixed;
+  width: 13px;
+  height: 13px;
+  pointer-events: none;
+  z-index: var(--z-layer-decoration);
+  animation: crosshair-pulse 3s ease-in-out infinite;
+}
+
+.crosshair::before,
+.crosshair::after {
+  content: "";
+  position: absolute;
+  background: var(--color-brutalist-decoration);
+}
+
+.crosshair::before {
+  left: 6px;
+  top: 0;
+  width: 1px;
+  height: 100%;
+}
+
+.crosshair::after {
+  top: 6px;
+  left: 0;
+  height: 1px;
+  width: 100%;
+}
+
+/* Top marks sit below the sticky navbar (h-20 = 5rem) */
+.crosshair-tl { top: calc(5rem + 8px); left: 8px; }
+.crosshair-tr { top: calc(5rem + 8px); right: 8px; animation-delay: 0.75s; }
+.crosshair-br { bottom: 8px; right: 8px; animation-delay: 1.5s; }
+.crosshair-bl { bottom: 8px; left: 8px; animation-delay: 2.25s; }
+
+@keyframes crosshair-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.9; }
+}
+
+/* Live viewport dimensions readout */
+.viewport-label {
+  position: fixed;
+  bottom: 10px;
+  right: 28px;
+  z-index: var(--z-layer-decoration);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  user-select: none;
+  color: var(--color-brutalist-decoration);
+}
+
+/* Scroll reveal - gated on html.js so content is visible without JS */
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+html.js [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crosshair {
+    animation: none;
+    opacity: 0.5;
+  }
+
+  html.js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

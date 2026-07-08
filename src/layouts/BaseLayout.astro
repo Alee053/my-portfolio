@@ -17,6 +17,7 @@ const { title } = Astro.props;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width" />
   <link rel="icon" href="/logo.png" />
+  <script is:inline>document.documentElement.classList.add('js');</script>
   <title>{title ? `${title} | ALEJANDRO CASTRO` : 'ALEJANDRO CASTRO'}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +30,16 @@ const { title } = Astro.props;
 <body class="bg-brutalist-bg text-brutalist-text font-sans relative min-h-screen">
   <a href="#main" class="skip-link">[SKIP TO CONTENT]</a>
   <!-- Background Grid - scrolls with content -->
-  <div class="absolute inset-0 pointer-events-none blueprint-grid opacity-20 z-0" style="min-height: 100vh;"></div>
+  <div class="absolute inset-0 pointer-events-none blueprint-grid opacity-40 z-0" style="min-height: 100vh;"></div>
+
+  <!-- Viewport decoration: corner crosshairs + live dimensions -->
+  <div aria-hidden="true">
+    <div class="crosshair crosshair-tl"></div>
+    <div class="crosshair crosshair-tr"></div>
+    <div class="crosshair crosshair-br"></div>
+    <div class="crosshair crosshair-bl"></div>
+    <div class="viewport-label" id="viewport-label"></div>
+  </div>
 
   <!-- Navbar -->
   <Navbar client:load />
@@ -69,6 +79,34 @@ const { title } = Astro.props;
     window.toggleAboutModal = toggleAboutModal;
     // @ts-ignore
     window.toggleContactModal = toggleContactModal;
+  </script>
+
+  <script>
+    import { initReveal } from '../lib/reveal';
+
+    let viewportLabel: HTMLElement | null = null;
+    let rafId = 0;
+
+    function updateViewportLabel() {
+      if (viewportLabel) {
+        viewportLabel.textContent = `[VIEWPORT: ${window.innerWidth}x${window.innerHeight}]`;
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(updateViewportLabel);
+    });
+
+    function initPage() {
+      viewportLabel = document.getElementById('viewport-label');
+      updateViewportLabel();
+      initReveal();
+    }
+
+    initPage();
+    // Re-init after client-side navigations once ClientRouter is present
+    document.addEventListener('astro:page-load', initPage);
   </script>
 </body>
 </html>
