@@ -1,0 +1,148 @@
+---
+// Boot-sequence splash. Self-contained: the inline script below runs
+// synchronously before first paint and decides whether the overlay shows.
+// Without JS the overlay never appears (hidden unless html[data-boot="run"]).
+---
+<script is:inline>
+  (function () {
+    var run = false;
+    try {
+      run = !sessionStorage.getItem('boot-done')
+        && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (e) {}
+    window.__bootRan = run;
+    if (run) {
+      document.documentElement.setAttribute('data-boot', 'run');
+      // Failsafe: never trap the user behind the overlay
+      setTimeout(function () {
+        if (document.documentElement.getAttribute('data-boot') === 'run' && !window.__bootDone) {
+          window.__bootDone = true;
+          document.documentElement.removeAttribute('data-boot');
+          document.dispatchEvent(new CustomEvent('boot:done'));
+        }
+      }, 4000);
+    } else {
+      window.__bootDone = true;
+    }
+  })();
+</script>
+
+<div id="boot-splash" aria-hidden="true">
+  <div class="boot-box">
+    <div class="boot-line" data-step="0">[SYS] ALECASTRO.DEV</div>
+    <div class="boot-line" data-step="1">[BOOT] LOADING ASSETS... <span class="boot-ok">OK</span></div>
+    <div class="boot-line" data-step="2">[GRID] BLUEPRINT....... <span class="boot-ok">OK</span></div>
+    <div class="boot-line" data-step="3"><span id="boot-bar">░░░░░░░░░░░░░░░░░░░░</span> <span id="boot-pct">0%</span></div>
+    <div class="boot-line" data-step="4">&gt; INIT PORTFOLIO<span class="boot-cursor">_</span></div>
+  </div>
+</div>
+
+<style>
+  #boot-splash {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #111111;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+    cursor: pointer;
+  }
+
+  html[data-boot="run"] #boot-splash {
+    display: flex;
+  }
+
+  #boot-splash.boot-exit {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .boot-box {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 2;
+    color: #cccccc;
+    letter-spacing: 0.05em;
+    padding: 2rem;
+    border: 1px solid #323232;
+    min-width: min(320px, 85vw);
+  }
+
+  .boot-line {
+    visibility: hidden;
+    white-space: nowrap;
+  }
+
+  .boot-line.on {
+    visibility: visible;
+  }
+
+  .boot-ok {
+    color: #13ecaf;
+  }
+
+  .boot-cursor {
+    animation: boot-blink 1s steps(1) infinite;
+    color: #13ecaf;
+  }
+
+  @keyframes boot-blink {
+    50% { opacity: 0; }
+  }
+</style>
+
+<script>
+  const splash = document.getElementById('boot-splash');
+  const running = document.documentElement.getAttribute('data-boot') === 'run';
+
+  if (splash && running) {
+    const lines = splash.querySelectorAll<HTMLElement>('.boot-line');
+    const bar = document.getElementById('boot-bar');
+    const pct = document.getElementById('boot-pct');
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    let finished = false;
+
+    const showLine = (step: number) => lines[step]?.classList.add('on');
+
+    const setProgress = (fraction: number) => {
+      const cells = 20;
+      const filled = Math.round(cells * fraction);
+      if (bar) bar.textContent = '█'.repeat(filled) + '░'.repeat(cells - filled);
+      if (pct) pct.textContent = `${Math.round(fraction * 100)}%`;
+    };
+
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      timers.forEach(clearTimeout);
+      try { sessionStorage.setItem('boot-done', '1'); } catch {}
+      lines.forEach((line) => line.classList.add('on'));
+      setProgress(1);
+      // Signal at fade start so the hero animation begins under the fade
+      (window as any).__bootDone = true;
+      document.dispatchEvent(new CustomEvent('boot:done'));
+      splash.classList.add('boot-exit');
+      timers.push(setTimeout(() => {
+        document.documentElement.removeAttribute('data-boot');
+      }, 260));
+    };
+
+    const at = (ms: number, fn: () => void) => timers.push(setTimeout(fn, ms));
+
+    at(0, () => showLine(0));
+    at(140, () => showLine(1));
+    at(300, () => showLine(2));
+    at(380, () => showLine(3));
+    const steps = [0.13, 0.31, 0.47, 0.62, 0.78, 0.91, 1];
+    steps.forEach((fraction, i) => at(420 + i * 80, () => setProgress(fraction)));
+    at(1000, () => showLine(4));
+    at(1250, finish);
+
+    // Skippable with click or any key
+    splash.addEventListener('click', finish, { once: true });
+    window.addEventListener('keydown', finish, { once: true });
+  }
+</script>

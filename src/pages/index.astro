@@ -27,7 +27,7 @@ const blogs = (await getCollection('blog'))
         date: blog.data.date
     }));
 ---
-<Layout>
+<Layout showSplash>
     <Hero client:load />
     <Projects projects={projects} client:load />
     <Blogs blogs={blogs} client:load />

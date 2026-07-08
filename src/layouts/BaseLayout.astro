@@ -3,12 +3,15 @@ import '../styles/globals.css';
 import Navbar from '../components/Navbar.svelte';
 import ContactModal from '../components/ContactModal.svelte';
 import AboutModal from '../components/AboutModal.svelte';
+import Splash from '../components/Splash.astro';
+import { SITE } from '../lib/site';
 
 interface Props {
     title?: string;
+    showSplash?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, showSplash = false } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -28,6 +31,7 @@ const { title } = Astro.props;
   <slot name="head" />
 </head>
 <body class="bg-brutalist-bg text-brutalist-text font-sans relative min-h-screen">
+  {showSplash && <Splash />}
   <a href="#main" class="skip-link">[SKIP TO CONTENT]</a>
   <!-- Background Grid - scrolls with content -->
   <div class="absolute inset-0 pointer-events-none blueprint-grid opacity-40 z-0" style="min-height: 100vh;"></div>
@@ -62,7 +66,7 @@ const { title } = Astro.props;
   <AboutModal client:only/>
   
   <!-- Contact Modal -->
-  <ContactModal client:only githubUrl="https://github.com/Alee053" linkedInUrl="https://www.linkedin.com/in/alejandrocastroalvarez/" email="alejandro@alecastro.dev" />
+  <ContactModal client:only githubUrl={SITE.github} linkedInUrl={SITE.linkedin} email={SITE.email} />
   
   <script>
     function toggleAboutModal() {
