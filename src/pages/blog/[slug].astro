@@ -20,7 +20,12 @@ const { Content, headings } = await post.render();
 const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
 ---
 
-<Layout title={post.data.title}>
+<Layout
+    title={post.data.title}
+    description={post.data.description || `${post.data.title} — an article by Alejandro Castro.`}
+    type="article"
+    publishDate={new Date(post.data.date)}
+>
     <!-- Blog Header -->
     <section class="pt-8 md:pt-32 pb-0 px-4 md:px-8" data-reveal>
         <div class="mb-4 text-[10px] font-mono text-brutalist-line">[SEC // BLOG VIEWER]</div>

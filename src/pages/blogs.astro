@@ -12,6 +12,6 @@ const blogsData = (await getCollection('blog')).map(blog => ({
 }));
 ---
 
-<Layout title="BLOGS">
+<Layout title="BLOGS" description="Technical blog by Alejandro Castro: reinforcement learning, algorithms, search-based planning, and systems engineering.">
     <BlogsBrowser blogs={blogsData} client:load />
 </Layout>

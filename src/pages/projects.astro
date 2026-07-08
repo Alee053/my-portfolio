@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 
 const projectsData = (await getCollection('projects'))
     .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
-    .map((project, index) => ({
+    .map((project) => ({
         id: project.id,
         name: project.data.name,
         subtitle: project.data.subtitle || '',
@@ -17,6 +17,6 @@ const projectsData = (await getCollection('projects'))
     }));
 ---
 
-<Layout title="PROJECTS">
+<Layout title="PROJECTS" description="Projects by Alejandro Castro: AI, reinforcement learning, algorithms, and simulation work.">
     <ProjectsBrowser projects={projectsData} client:load />
 </Layout>

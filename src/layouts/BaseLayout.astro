@@ -4,15 +4,29 @@ import Navbar from '../components/Navbar.svelte';
 import ContactModal from '../components/ContactModal.svelte';
 import AboutModal from '../components/AboutModal.svelte';
 import Splash from '../components/Splash.astro';
+import SEO from '../components/SEO.astro';
 import { SITE } from '../lib/site';
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
     title?: string;
+    description?: string;
+    image?: string;
+    type?: 'website' | 'article';
+    publishDate?: Date;
     showSplash?: boolean;
 }
 
-const { title, showSplash = false } = Astro.props;
+const {
+    title,
+    description = 'Portfolio of Alejandro Castro — AI researcher and systems engineering student focused on reinforcement learning, algorithms, and search-based planning.',
+    image,
+    type,
+    publishDate,
+    showSplash = false,
+} = Astro.props;
+
+const fullTitle = title ? `${title} | ALEJANDRO CASTRO` : 'ALEJANDRO CASTRO';
 ---
 
 <!DOCTYPE html>
@@ -22,7 +36,8 @@ const { title, showSplash = false } = Astro.props;
   <meta name="viewport" content="width=device-width" />
   <link rel="icon" href="/logo.png" />
   <script is:inline>document.documentElement.classList.add('js');</script>
-  <title>{title ? `${title} | ALEJANDRO CASTRO` : 'ALEJANDRO CASTRO'}</title>
+  <title>{fullTitle}</title>
+  <SEO title={fullTitle} description={description} image={image} type={type} publishDate={publishDate} />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">

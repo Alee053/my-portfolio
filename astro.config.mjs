@@ -7,6 +7,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 import vercel from '@astrojs/vercel';
 
+import sitemap from '@astrojs/sitemap';
+
 import decapCmsOauth from 'astro-decap-cms-oauth';
 
 import remarkMath from 'remark-math';
@@ -16,7 +18,14 @@ import rehypeTableWrap from './src/lib/rehype/rehype-table-wrap.mjs';
 
 // https://astro.build/config
 export default defineConfig({
-    integrations: [svelte(), decapCmsOauth()],
+    site: 'https://alecastro.dev',
+    integrations: [
+        svelte(),
+        sitemap({
+            filter: (page) => !page.includes('/admin'),
+        }),
+        decapCmsOauth(),
+    ],
     image: {
         domains: ["res.cloudinary.com"],
     },

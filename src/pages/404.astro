@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/BaseLayout.astro';
+---
+
+<Layout title="404" description="Page not found.">
+    <section class="min-h-[60vh] flex flex-col justify-center px-4 md:px-8">
+        <div class="mb-4 text-[10px] font-mono text-brutalist-line">[ERR 404 // ROUTE_NOT_FOUND]</div>
+        <div class="border-l-4 border-brutalist-line pl-4 md:pl-8">
+            <h1 class="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-none mb-6 uppercase font-sans">
+                404<span class="text-brutalist-accent">_</span>
+            </h1>
+            <p class="max-w-lg font-mono text-xs md:text-sm leading-relaxed text-zinc-500 mb-10">
+                THE REQUESTED ROUTE DOES NOT EXIST ON THIS SERVER. CHECK THE URL OR RETURN TO A KNOWN COORDINATE.
+            </p>
+            <a
+                href="/"
+                class="inline-flex items-center gap-2 px-4 py-2 border border-brutalist-line hover:bg-brutalist-accent hover:text-black hover:border-brutalist-accent transition-colors text-sm font-mono uppercase tracking-wider"
+            >
+                ← [RETURN TO INDEX]
+            </a>
+        </div>
+    </section>
+</Layout>
