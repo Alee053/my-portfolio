@@ -1,48 +1,47 @@
-# Interactive Personal Portfolio
+# Personal Portfolio
 
-This repository contains the source code for my personal portfolio, accessible at [www.alecastro.dev](https://www.alecastro.dev). This project was a deep dive into modern web technologies.
+Source code for my personal portfolio, live at [www.alecastro.dev](https://www.alecastro.dev). A brutalist, terminal-inspired site built to be fast, readable, and two clicks away from anything that matters.
 
 ## ✨ Features
 
-* **Complex Animations:** The homepage features a scroll-driven animation powered by GSAP that deconstructs the header text, and page elements animate into view.
-* **Physics-Based Project Gallery:** On desktop, the projects section is a dynamic sandbox built with Matter.js, allowing users to interact with project blocks in a physics simulated environment.
-* **Optimized Mobile Experience:** The projects section serves a completely different, lightweight list-based component for mobile users to ensure a fast and intuitive experience on all devices.
-* **Headless Content Management:** All content, including blog posts and project details, is managed through Decap CMS, which commits changes directly to the GitHub repository.
-* **Type-Safe Content:** Blog posts and projects are structured using Astro's Content Collections, providing type safety and validation for all data.
-* **Dynamic Filtering:** Both the blog and projects sections feature client-side filtering by tags and years.
+* **Brutalist design system:** dark blueprint grid, monospace labels (`[SEC 01 // HERO]`), a single neon accent, and zero border radius — defined entirely with Tailwind v4 `@theme` tokens.
+* **GSAP-animated entry:** the hero animates in with timeline-based motion, respecting `prefers-reduced-motion`.
+* **Headless content management:** blog posts and project details are managed through Decap CMS, which commits changes directly to the GitHub repository.
+* **Type-safe content:** blog posts (`.md`) and projects (`.yaml`) are structured with Astro Content Collections and validated with Zod schemas.
+* **Math & code-friendly blog:** KaTeX for equations (remark-math + rehype-katex) and Shiki for syntax highlighting, with a generated table of contents per post.
+* **Dynamic filtering:** both the blog and projects sections feature client-side filtering by tags and years.
 
 ## 🚀 Tech Stack & Architecture
 
-This project is built on the principle of using the right tool for the job, combining a static site generator with highly interactive client-side islands.
+Static-first architecture with interactive client-side islands.
 
-| Category                  | Technology                                                                                                  | Purpose                                                                                                                             |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| **Core Framework** | [**Astro**](https://astro.build/)                                                                           | Provides a static-first architecture for maximum performance. Renders UI to HTML at build time, minimizing client-side JavaScript. |
-| **Interactivity** | [**Svelte**](https://svelte.dev/)                                                                           | Used to create highly efficient "islands" of interactivity for components like the physics gallery and dynamic filters.             |
-| **Styling** | [**Tailwind CSS**](https://tailwindcss.com/)                                                                | A utility-first CSS framework for rapid, responsive UI development without custom CSS.                                              |
-| **Animation & Physics** | [**GSAP**](https://gsap.com/), [**Matter.js**](https://brm.io/matter-js/)                                     | GSAP handles all timeline-based and scroll-triggered animations. Matter.js provides the 2D physics engine for the project gallery. |
-| **Content & Data** | [**Astro Content Collections**](https://docs.astro.build/en/guides/content-collections/)                    | Manages structured content (blog posts as `.md`, projects as `.yml`) with type safety via Zod schemas.                            |
-| **Content Management** | [**Decap CMS**](https://decapcms.org/)                                                                      | A Git-based headless CMS that provides a UI for content editing and commits changes directly to the repository.                   |
-| **Image Optimization** | [**Cloudinary**](https://cloudinary.com/)                                                                   | Serves as a headless DAM for media, with on-the-fly optimization and a global CDN.                                                  |
-| **Deployment & Analytics**| [**Vercel**](https://vercel.com/)                                                                           | Provides hosting, CI/CD, and serverless functions for the CMS authentication.                                                       |
-|                           | [**Vercel Analytics & Speed Insights**](https://vercel.com/analytics)                                     | Integrated for privacy-friendly audience and performance metrics.                                                                   |
+| Category | Technology | Purpose |
+| --- | --- | --- |
+| **Core Framework** | [**Astro 5**](https://astro.build/) | Static-first rendering; UI compiled to HTML at build time, minimal client-side JavaScript. |
+| **Interactivity** | [**Svelte 5**](https://svelte.dev/) | Islands of interactivity: modals, navbar, and the blog/project browsers with filtering. |
+| **Styling** | [**Tailwind CSS v4**](https://tailwindcss.com/) | Utility-first styling; design tokens live in `src/styles/globals.css` via `@theme`. |
+| **Animation** | [**GSAP**](https://gsap.com/) | Timeline-based entry animations and modal transitions. |
+| **Content & Data** | [**Astro Content Collections**](https://docs.astro.build/en/guides/content-collections/) | Structured content (blog posts as `.md`, projects as `.yaml`) with type safety via Zod schemas. |
+| **Content Management** | [**Decap CMS**](https://decapcms.org/) | Git-based headless CMS; edits commit directly to the repository. |
+| **Image Optimization** | [**Cloudinary**](https://cloudinary.com/) | Headless DAM for media with on-the-fly optimization and a global CDN. |
+| **Deployment** | [**Vercel**](https://vercel.com/) | Hosting, CI/CD, and the serverless OAuth endpoint for CMS authentication. |
 
-## Technical Highlights & Challenges
+## Headless Workflow with Decap CMS
 
-### Responsive Architecture: The Physics Engine Problem
+The entire content of the site is managed headlessly:
 
-Matter.js is resource-intensive and not well-suited for mobile touch interfaces. Instead of trying to force it to work, I implemented a responsive "switcher" component. This component detects the user's screen size and renders one of two completely different children:
-* **`ProjectsDesktop.svelte`**: The full physics simulation.
-* **`ProjectsMobile.svelte`**: A lightweight, performant grid view.
+1. Log in at `/admin`.
+2. Create or edit a blog post or project through the Decap CMS interface.
+3. On publish, the CMS commits the new/updated `.md` or `.yaml` file to the GitHub repository.
+4. The commit triggers an automatic rebuild and deployment on Vercel.
 
-This ensures that no unnecessary JavaScript is loaded on mobile devices, leading to a much better user experience.
+This provides a user-friendly CMS without the cost or maintenance of a database and backend.
 
-### Headless Workflow with Decap CMS
+## Development
 
-The entire content of the site is managed headlessly.
-1.  I log in at `/admin`.
-2.  I create or edit a blog post or project using the Decap CMS interface.
-3.  Upon publishing, the CMS commits the new/updated `.md` or `.yml` file to the GitHub repository.
-4.  This commit triggers an automatic rebuild and deployment on Vercel.
-
-This workflow provides the benefits of a user-friendly CMS without the cost or maintenance of a traditional database and backend.
+```sh
+pnpm install
+pnpm dev      # local dev server
+pnpm build    # production build
+pnpm preview  # preview the build
+```

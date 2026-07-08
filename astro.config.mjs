@@ -5,8 +5,6 @@ import svelte from '@astrojs/svelte';
 
 import tailwindcss from '@tailwindcss/vite';
 
-import Icons from 'unplugin-icons/vite'
-
 import vercel from '@astrojs/vercel';
 
 import decapCmsOauth from 'astro-decap-cms-oauth';
@@ -29,9 +27,7 @@ export default defineConfig({
         },
     },
     vite: {
-        plugins: [tailwindcss(),Icons({
-            compiler: 'svelte',
-        }),]
+        plugins: [tailwindcss()]
       },
 
   adapter: vercel(),
