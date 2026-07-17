@@ -4,7 +4,7 @@ subtitle: Interactive p5.js implementation of the FABRIK inverse-kinematics
   target.
 year: 2024
 repo_url: https://github.com/Alee053/InverseKinematics-FABRIK
-demo_url: https://inverse-kinematics-ale053.vercel.app/
+demo_url: ""
 tags:
   - fabrik
   - robotics
