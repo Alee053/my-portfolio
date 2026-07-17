@@ -1,0 +1,14 @@
+name: Rikal
+subtitle: Archived local-first flashcard application combining FSRS scheduling,
+  offline-capable synchronization, AI-assisted card generation, and semantic
+  answer evaluation.
+year: 2025
+repo_url: https://github.com/Alee053/rikal
+blog_slug: ""
+tags:
+  - fsrs
+  - ai
+  - llm
+  - learning
+  - archived
+order: 2
