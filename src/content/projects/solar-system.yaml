@@ -1,5 +1,6 @@
-name: "Solar System Simulation"
-subtitle: "2D p5.js Physics Simulation of the Solar System with accurate orbital mechanics and gravitational interactions."
+name: Solar System Simulation
+subtitle: 2D p5.js Physics Simulation of the Solar System with accurate orbital
+  mechanics and gravitational interactions.
 year: 2024
 repo_url: https://github.com/Alee053/SolarSystem-Sim
 tags:
@@ -7,4 +8,4 @@ tags:
   - Algorithms
   - p5.js
   - Physics
-order: 1
+order: 4
