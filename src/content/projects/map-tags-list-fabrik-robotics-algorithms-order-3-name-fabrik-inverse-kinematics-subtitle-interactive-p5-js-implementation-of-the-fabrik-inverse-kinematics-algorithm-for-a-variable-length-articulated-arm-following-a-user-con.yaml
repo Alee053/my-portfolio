@@ -1,0 +1,12 @@
+name: FABRIK Inverse Kinematics
+subtitle: Interactive p5.js implementation of the FABRIK inverse-kinematics
+  algorithm for a variable-length articulated arm following a user-controlled
+  target.
+year: 2024
+repo_url: https://github.com/Alee053/InverseKinematics-FABRIK
+demo_url: https://inverse-kinematics-ale053.vercel.app/
+tags:
+  - fabrik
+  - robotics
+  - algorithms
+order: 3
