@@ -79,7 +79,7 @@
         display: block;
         border: 1px solid var(--ink-line);
         border-radius: 0.875rem;
-        background: rgba(6, 17, 20, 0.52);
+        background: #061114;
         color: var(--ink-muted);
         padding: 1rem;
         text-decoration: none;
@@ -88,7 +88,7 @@
 
     .contact-link:hover {
         border-color: var(--ink-accent);
-        background: rgba(101, 231, 189, 0.08);
+        background: #102d31;
         color: var(--ink-text);
     }
 
@@ -137,6 +137,17 @@
     @media (prefers-reduced-motion: reduce) {
         .contact-link {
             transition: none;
+        }
+    }
+
+    @supports (backdrop-filter: blur(1px)) {
+        .contact-link {
+            background: rgba(6, 17, 20, 0.52);
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-link:hover {
+            background: rgba(101, 231, 189, 0.08);
         }
     }
 </style>

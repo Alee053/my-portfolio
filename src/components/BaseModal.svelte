@@ -14,6 +14,16 @@
 
     const dispatch = createEventDispatcher();
 
+    function syncAccessibility(open) {
+        if (modal) {
+            modal.inert = !open;
+            modal.setAttribute('aria-hidden', String(!open));
+        }
+        if (backdrop) {
+            backdrop.inert = !open;
+        }
+    }
+
     function handleToggleEvent() {
         toggle();
     }
@@ -68,10 +78,14 @@
     }
 
     export function open() {
-        if (!modal || !backdrop) return;
+        if (!modal || !backdrop || isOpen) return;
 
-        document.body.style.overflow = 'hidden';
         previouslyFocused = document.activeElement;
+        isOpen = true;
+        syncAccessibility(true);
+        document.body.style.overflow = 'hidden';
+        gsap.killTweensOf(modal);
+        gsap.killTweensOf(backdrop);
 
         if (prefersReducedMotion()) {
             gsap.set(backdrop, { opacity: 1 });
@@ -81,10 +95,7 @@
             gsap.to(backdrop, {
                 opacity: 1,
                 duration: 0.15,
-                ease: 'none',
-                onStart: () => {
-                    backdrop.style.pointerEvents = 'auto';
-                }
+                ease: 'none'
             });
             gsap.to(modal, {
                 x: '0%',
@@ -92,15 +103,20 @@
                 ease: 'none'
             });
         }
-        isOpen = true;
+        backdrop.style.pointerEvents = 'auto';
         closeButton?.focus();
         dispatch('open');
     }
 
     export function close() {
-        if (!modal || !backdrop) return;
+        if (!modal || !backdrop || !isOpen) return;
 
+        isOpen = false;
+        syncAccessibility(false);
         document.body.style.overflow = '';
+        backdrop.style.pointerEvents = 'none';
+        gsap.killTweensOf(modal);
+        gsap.killTweensOf(backdrop);
 
         if (prefersReducedMotion()) {
             gsap.set(backdrop, { opacity: 0 });
@@ -110,10 +126,7 @@
             gsap.to(backdrop, {
                 opacity: 0,
                 duration: 0.15,
-                ease: 'none',
-                onComplete: () => {
-                    backdrop.style.pointerEvents = 'none';
-                }
+                ease: 'none'
             });
             gsap.to(modal, {
                 x: '100%',
@@ -121,7 +134,6 @@
                 ease: 'none'
             });
         }
-        isOpen = false;
         if (previouslyFocused instanceof HTMLElement) {
             previouslyFocused.focus();
             previouslyFocused = null;
@@ -136,6 +148,7 @@
         if (backdrop) {
             gsap.set(backdrop, { opacity: 0 });
         }
+        syncAccessibility(false);
         document.addEventListener(eventName, handleToggleEvent);
         document.addEventListener(`close-${eventName}`, handleCloseEvent);
         document.addEventListener('keydown', handleKeydown);
@@ -148,7 +161,10 @@
             document.removeEventListener(`close-${eventName}`, handleCloseEvent);
             document.removeEventListener('keydown', handleKeydown);
             document.removeEventListener('astro:before-swap', handleCloseEvent);
+            gsap.killTweensOf(modal);
+            gsap.killTweensOf(backdrop);
             document.body.style.overflow = '';
+            syncAccessibility(false);
         };
     });
 </script>
@@ -158,10 +174,12 @@
 <div bind:this={backdrop}
     class="modal-backdrop"
     on:click={handleBackdropClick}
+    aria-hidden="true"
+    inert={!isOpen}
     style="opacity: 0; pointer-events: none;">
 </div>
 
-<aside bind:this={modal} role="dialog" aria-modal="true" aria-label={title} aria-labelledby={`modal-title-${eventName}`} class="modal-panel glass-panel-strong" style="transform: translateX(100%);">
+<aside bind:this={modal} role="dialog" aria-modal="true" aria-label={title} aria-labelledby={`modal-title-${eventName}`} aria-hidden={!isOpen} inert={!isOpen} class="modal-panel glass-panel-strong" style="transform: translateX(100%);">
     <div class="modal-header">
         <h2 id={`modal-title-${eventName}`} class="modal-title">{title}</h2>
         <button bind:this={closeButton} aria-label="Close {title}" class="modal-close focus-ring" on:click={close} type="button">Close</button>
@@ -176,12 +194,13 @@
     .modal-backdrop {
         position: fixed;
         inset: 0;
-        z-index: 30;
-        background: rgba(3, 13, 16, 0.72);
+        z-index: 60;
+        background: #030d10;
     }
 
     @supports (backdrop-filter: blur(1px)) {
         .modal-backdrop {
+            background: rgba(3, 13, 16, 0.72);
             backdrop-filter: blur(10px);
         }
     }
@@ -191,7 +210,7 @@
         top: 0;
         right: 0;
         bottom: 0;
-        z-index: 50;
+        z-index: 70;
         display: flex;
         width: min(100%, 36rem);
         flex-direction: column;
@@ -236,7 +255,7 @@
 
     .modal-close:hover {
         border-color: var(--ink-accent);
-        background: rgba(101, 231, 189, 0.08);
+        background: #102d31;
         color: var(--ink-text);
     }
 
@@ -261,6 +280,12 @@
     @media (prefers-reduced-motion: reduce) {
         .modal-close {
             transition: none;
+        }
+    }
+
+    @supports (backdrop-filter: blur(1px)) {
+        .modal-close:hover {
+            background: rgba(101, 231, 189, 0.08);
         }
     }
 </style>

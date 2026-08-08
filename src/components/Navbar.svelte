@@ -7,6 +7,34 @@
     let sidebarOpen = false;
     let sidebarElement;
     let backdropElement;
+    let closeButton;
+    let desktopIdentity;
+    let sidebarTrigger;
+
+    function syncDrawerAccessibility(open) {
+        if (sidebarElement) {
+            sidebarElement.inert = !open;
+            sidebarElement.setAttribute('aria-hidden', String(!open));
+        }
+        if (backdropElement) {
+            backdropElement.inert = !open;
+            backdropElement.setAttribute('aria-hidden', String(!open));
+        }
+    }
+
+    function canReceiveFocus(element) {
+        return element instanceof HTMLElement
+            && element.isConnected
+            && element.getClientRects().length > 0;
+    }
+
+    function restoreSidebarFocus() {
+        const target = canReceiveFocus(sidebarTrigger) ? sidebarTrigger : desktopIdentity;
+        if (canReceiveFocus(target)) {
+            target.focus();
+        }
+        sidebarTrigger = null;
+    }
     
     function handleBeforeSwap() {
         if (sidebarOpen) {
@@ -21,29 +49,37 @@
         if (backdropElement) {
             gsap.set(backdropElement, { opacity: 0, pointerEvents: 'none' });
         }
+        syncDrawerAccessibility(false);
         // Close before view transitions so body overflow is restored
         document.addEventListener('astro:before-swap', handleBeforeSwap);
+        window.addEventListener('resize', handleResize);
 
         // Cleanup here (not onDestroy) so it never runs during SSR
         return () => {
             document.removeEventListener('astro:before-swap', handleBeforeSwap);
+            window.removeEventListener('resize', handleResize);
             if (sidebarElement) gsap.killTweensOf(sidebarElement);
             if (backdropElement) gsap.killTweensOf(backdropElement);
+            if (sidebarOpen) {
+                sidebarOpen = false;
+                syncDrawerAccessibility(false);
+                document.body.style.overflow = '';
+            }
         };
     });
     
     function handleAboutClick() {
+        closeSidebar();
         if (typeof window !== 'undefined' && window.toggleAboutModal) {
             window.toggleAboutModal();
         }
-        closeSidebar();
     }
     
     function handleContactClick() {
+        closeSidebar();
         if (typeof window !== 'undefined' && window.toggleContactModal) {
             window.toggleContactModal();
         }
-        closeSidebar();
     }
     
     function toggleSidebar() {
@@ -57,21 +93,26 @@
     }
     
     function openSidebar() {
+        if (sidebarOpen) return;
+        sidebarTrigger = document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : null;
         sidebarOpen = true;
+        syncDrawerAccessibility(true);
         document.body.style.overflow = 'hidden';
         const reducedMotion = prefersReducedMotion();
+
+        if (sidebarElement) gsap.killTweensOf(sidebarElement);
+        if (backdropElement) gsap.killTweensOf(backdropElement);
         
         if (backdropElement) {
+            backdropElement.style.pointerEvents = 'auto';
             if (reducedMotion) {
                 gsap.set(backdropElement, { opacity: 1 });
-                backdropElement.style.pointerEvents = 'auto';
             } else {
                 gsap.to(backdropElement, {
                     opacity: 1,
-                    duration: 0.3,
-                    onStart: () => {
-                        backdropElement.style.pointerEvents = 'auto';
-                    }
+                    duration: 0.3
                 });
             }
         }
@@ -87,23 +128,29 @@
                 });
             }
         }
+
+        closeButton?.focus();
     }
     
     function closeSidebar() {
+        if (!sidebarOpen) return;
+
+        sidebarOpen = false;
+        syncDrawerAccessibility(false);
         document.body.style.overflow = '';
         const reducedMotion = prefersReducedMotion();
+
+        if (sidebarElement) gsap.killTweensOf(sidebarElement);
+        if (backdropElement) gsap.killTweensOf(backdropElement);
         
         if (backdropElement) {
+            backdropElement.style.pointerEvents = 'none';
             if (reducedMotion) {
                 gsap.set(backdropElement, { opacity: 0 });
-                backdropElement.style.pointerEvents = 'none';
             } else {
                 gsap.to(backdropElement, {
                     opacity: 0,
-                    duration: 0.3,
-                    onComplete: () => {
-                        backdropElement.style.pointerEvents = 'none';
-                    }
+                    duration: 0.3
                 });
             }
         }
@@ -119,10 +166,14 @@
                 });
             }
         }
-        
-        setTimeout(() => {
-            sidebarOpen = false;
-        }, 300);
+
+        restoreSidebarFocus();
+    }
+
+    function handleResize() {
+        if (sidebarOpen && window.matchMedia('(min-width: 768px)').matches) {
+            closeSidebar();
+        }
     }
     
     function handleKeydown(event) {
@@ -141,6 +192,8 @@
     bind:this={backdropElement}
     class="nav-backdrop"
     on:click={closeSidebar}
+    aria-hidden={!sidebarOpen}
+    inert={!sidebarOpen}
     style="opacity: 0; pointer-events: none;"
 ></div>
 
@@ -149,6 +202,8 @@
     bind:this={sidebarElement}
     id="mobile-navigation"
     class="nav-drawer glass-panel-strong md:hidden"
+    aria-hidden={!sidebarOpen}
+    inert={!sidebarOpen}
     style="transform: translateX(100%);"
 >
     <div class="nav-drawer__inner">
@@ -159,7 +214,7 @@
                     <LiveTimestamp />
                 </span>
             </a>
-            <button on:click={closeSidebar} class="nav-close focus-ring" aria-label="Close navigation menu" type="button">
+            <button bind:this={closeButton} on:click={closeSidebar} class="nav-close focus-ring" aria-label="Close navigation menu" type="button">
                 <span>Close</span>
             </button>
         </div>
@@ -175,7 +230,7 @@
 </aside>
 
 <header class="site-nav">
-    <a class="nav-identity" href="/" aria-label="Alejandro Castro home">
+    <a bind:this={desktopIdentity} class="nav-identity" href="/" aria-label="Alejandro Castro home">
         <span class="nav-technical" data-purpose="technical-annotation">
             [REF: AC-2026-MINIMAL]<br/>
             <LiveTimestamp />
@@ -216,7 +271,7 @@
         min-height: 5rem;
         padding: 0.75rem max(1rem, 4vw);
         border-bottom: 1px solid var(--ink-line);
-        background: var(--ink-surface-strong);
+        background: var(--ink-900);
         box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16);
     }
 
@@ -279,7 +334,7 @@
 
     .nav-link:hover {
         border-color: var(--ink-line);
-        background: rgba(101, 231, 189, 0.08);
+        background: #102d31;
         color: var(--ink-text);
     }
 
@@ -293,7 +348,7 @@
         gap: 0.3rem;
         border: 1px solid var(--ink-line);
         border-radius: 0.625rem;
-        background: rgba(101, 231, 189, 0.06);
+        background: #102d31;
         color: var(--ink-text);
         cursor: pointer;
     }
@@ -309,12 +364,19 @@
         position: fixed;
         inset: 0;
         z-index: 40;
-        background: rgba(3, 13, 16, 0.68);
+        background: #030d10;
     }
 
     @supports (backdrop-filter: blur(1px)) {
         .nav-backdrop {
+            background: rgba(3, 13, 16, 0.68);
             backdrop-filter: blur(8px);
+        }
+
+        .nav-link:hover,
+        .nav-menu-toggle,
+        .nav-close:hover {
+            background: rgba(101, 231, 189, 0.08);
         }
     }
 
@@ -366,7 +428,7 @@
 
     .nav-close:hover {
         border-color: var(--ink-accent);
-        background: rgba(101, 231, 189, 0.08);
+        background: #102d31;
         color: var(--ink-text);
     }
 
