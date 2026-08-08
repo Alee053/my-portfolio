@@ -156,18 +156,111 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div bind:this={backdrop}
-    class="fixed inset-0 bg-black/60 z-30 backdrop-blur-sm"
+    class="modal-backdrop"
     on:click={handleBackdropClick}
     style="opacity: 0; pointer-events: none;">
 </div>
 
-<aside bind:this={modal} role="dialog" aria-modal="true" aria-label={title} class="fixed top-20 right-0 w-full h-[calc(100vh-5rem)] md:w-1/3 bg-brutalist-bg border-l border-brutalist-line  z-50 p-10 flex flex-col shadow-2xl" style="transform: translateX(100%);">
-    <div class="flex justify-between items-center mb-10">
-        <div class="text-[10px] font-mono">{title}</div>
-        <button bind:this={closeButton} aria-label="Close {title}" class="text-sm text-brutalist-line hover:text-brutalist-accent cursor-pointer font-mono transition-colors duration-150" on:click={close}>[X]</button>
+<aside bind:this={modal} role="dialog" aria-modal="true" aria-label={title} aria-labelledby={`modal-title-${eventName}`} class="modal-panel glass-panel-strong" style="transform: translateX(100%);">
+    <div class="modal-header">
+        <h2 id={`modal-title-${eventName}`} class="modal-title">{title}</h2>
+        <button bind:this={closeButton} aria-label="Close {title}" class="modal-close focus-ring" on:click={close} type="button">Close</button>
     </div>
 
-    <div class="flex-grow font-mono text-sm leading-relaxed overflow-y-auto pr-4">
+    <div class="modal-content">
         <slot />
     </div>
 </aside>
+
+<style>
+    .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        background: rgba(3, 13, 16, 0.72);
+    }
+
+    @supports (backdrop-filter: blur(1px)) {
+        .modal-backdrop {
+            backdrop-filter: blur(10px);
+        }
+    }
+
+    .modal-panel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 50;
+        display: flex;
+        width: min(100%, 36rem);
+        flex-direction: column;
+        border-radius: 1.5rem 0 0 1.5rem;
+        padding: clamp(1.25rem, 4vw, 2.75rem);
+        overflow: hidden;
+    }
+
+    .modal-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .modal-title {
+        margin: 0;
+        color: var(--ink-text);
+        font-family: var(--font-sans);
+        font-size: clamp(1.25rem, 3vw, 1.75rem);
+        font-weight: 500;
+        letter-spacing: -0.02em;
+    }
+
+    .modal-close {
+        display: inline-flex;
+        min-width: 5rem;
+        min-height: 2.75rem;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border: 1px solid var(--ink-line);
+        border-radius: 0.625rem;
+        background: transparent;
+        color: var(--ink-muted);
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+    }
+
+    .modal-close:hover {
+        border-color: var(--ink-accent);
+        background: rgba(101, 231, 189, 0.08);
+        color: var(--ink-text);
+    }
+
+    .modal-content {
+        min-height: 0;
+        flex: 1 1 auto;
+        overflow-y: auto;
+        padding-right: 0.25rem;
+        color: var(--ink-text);
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        line-height: 1.7;
+    }
+
+    @media (max-width: 767px) {
+        .modal-panel {
+            width: 100%;
+            border-radius: 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .modal-close {
+            transition: none;
+        }
+    }
+</style>

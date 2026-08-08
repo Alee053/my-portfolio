@@ -32,11 +32,11 @@
 
 <div id="boot-splash" aria-hidden="true">
   <div class="boot-box">
-    <div class="boot-line" data-step="0">[SYS] ALECASTRO.DEV</div>
-    <div class="boot-line" data-step="1">[BOOT] LOADING ASSETS... <span class="boot-ok">OK</span></div>
-    <div class="boot-line" data-step="2">[GRID] BLUEPRINT....... <span class="boot-ok">OK</span></div>
+    <div class="boot-line boot-label" data-step="0">ALECASTRO.DEV / GLASS LAB</div>
+    <div class="boot-line" data-step="1">LOADING ASSETS... <span class="boot-ok">READY</span></div>
+    <div class="boot-line" data-step="2">CALIBRATING SURFACES... <span class="boot-ok">READY</span></div>
     <div class="boot-line" data-step="3"><span id="boot-bar">░░░░░░░░░░░░░░░░░░░░</span> <span id="boot-pct">0%</span></div>
-    <div class="boot-line" data-step="4">&gt; INIT PORTFOLIO<span class="boot-cursor">_</span></div>
+    <div class="boot-line" data-step="4">&gt; INITIALIZE PORTFOLIO<span class="boot-cursor">_</span></div>
   </div>
 </div>
 
@@ -46,12 +46,21 @@
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: #111111;
+    background: #061114;
     align-items: center;
     justify-content: center;
     opacity: 1;
-    transition: opacity 0.25s ease;
+    padding: 1.5rem;
+    transition: opacity 0.2s ease;
     cursor: pointer;
+  }
+
+  #boot-splash::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 35%, rgba(101, 231, 189, 0.16), transparent 58%);
   }
 
   html[data-boot="run"] #boot-splash {
@@ -64,18 +73,39 @@
   }
 
   .boot-box {
+    position: relative;
+    width: min(100%, 30rem);
     font-family: var(--font-mono);
     font-size: 12px;
     line-height: 2;
-    color: #cccccc;
+    color: var(--ink-text);
     letter-spacing: 0.05em;
-    padding: 2rem;
-    border: 1px solid #323232;
-    min-width: min(320px, 85vw);
+    padding: clamp(1.5rem, 5vw, 2.5rem);
+    border: 1px solid var(--ink-line);
+    border-radius: 1.25rem;
+    background: var(--ink-surface-strong);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.36), 0 0 60px rgba(101, 231, 189, 0.08);
+  }
+
+  @supports (backdrop-filter: blur(1px)) {
+    .boot-box {
+      background: rgba(8, 27, 31, 0.78);
+      backdrop-filter: blur(22px);
+    }
   }
 
   .boot-line {
     visibility: hidden;
+    overflow-wrap: anywhere;
+  }
+
+  .boot-label {
+    color: var(--ink-cyan);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+  }
+
+  .boot-line[data-step="3"] {
     white-space: nowrap;
   }
 
@@ -84,16 +114,22 @@
   }
 
   .boot-ok {
-    color: #13ecaf;
+    color: var(--ink-accent);
   }
 
   .boot-cursor {
     animation: boot-blink 1s steps(1) infinite;
-    color: #13ecaf;
+    color: var(--ink-accent);
   }
 
   @keyframes boot-blink {
     50% { opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .boot-cursor {
+      animation: none;
+    }
   }
 </style>
 
@@ -130,7 +166,7 @@
       splash.classList.add('boot-exit');
       timers.push(setTimeout(() => {
         document.documentElement.removeAttribute('data-boot');
-      }, 260));
+      }, 200));
     };
 
     const at = (ms: number, fn: () => void) => timers.push(setTimeout(fn, ms));
@@ -141,8 +177,8 @@
     at(380, () => showLine(3));
     const steps = [0.13, 0.31, 0.47, 0.62, 0.78, 0.91, 1];
     steps.forEach((fraction, i) => at(420 + i * 80, () => setProgress(fraction)));
-    at(1000, () => showLine(4));
-    at(1250, finish);
+    at(920, () => showLine(4));
+    at(1150, finish);
 
     // Skippable with click or any key
     splash.addEventListener('click', finish, { once: true });

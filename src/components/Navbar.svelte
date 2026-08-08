@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import { gsap } from 'gsap';
     import LiveTimestamp from './LiveTimestamp.svelte';
+    import { prefersReducedMotion } from '../lib/motion';
     
     let sidebarOpen = false;
     let sidebarElement;
@@ -58,45 +59,65 @@
     function openSidebar() {
         sidebarOpen = true;
         document.body.style.overflow = 'hidden';
+        const reducedMotion = prefersReducedMotion();
         
         if (backdropElement) {
-            gsap.to(backdropElement, {
-                opacity: 1,
-                duration: 0.3,
-                onStart: () => {
-                    backdropElement.style.pointerEvents = 'auto';
-                }
-            });
+            if (reducedMotion) {
+                gsap.set(backdropElement, { opacity: 1 });
+                backdropElement.style.pointerEvents = 'auto';
+            } else {
+                gsap.to(backdropElement, {
+                    opacity: 1,
+                    duration: 0.3,
+                    onStart: () => {
+                        backdropElement.style.pointerEvents = 'auto';
+                    }
+                });
+            }
         }
         
         if (sidebarElement) {
-            gsap.to(sidebarElement, {
-                x: '0%',
-                duration: 0.3,
-                ease: 'power2.out'
-            });
+            if (reducedMotion) {
+                gsap.set(sidebarElement, { x: '0%' });
+            } else {
+                gsap.to(sidebarElement, {
+                    x: '0%',
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            }
         }
     }
     
     function closeSidebar() {
         document.body.style.overflow = '';
+        const reducedMotion = prefersReducedMotion();
         
         if (backdropElement) {
-            gsap.to(backdropElement, {
-                opacity: 0,
-                duration: 0.3,
-                onComplete: () => {
-                    backdropElement.style.pointerEvents = 'none';
-                }
-            });
+            if (reducedMotion) {
+                gsap.set(backdropElement, { opacity: 0 });
+                backdropElement.style.pointerEvents = 'none';
+            } else {
+                gsap.to(backdropElement, {
+                    opacity: 0,
+                    duration: 0.3,
+                    onComplete: () => {
+                        backdropElement.style.pointerEvents = 'none';
+                    }
+                });
+            }
         }
         
         if (sidebarElement) {
-            gsap.to(sidebarElement, {
-                x: '100%',
-                duration: 0.3,
-                ease: 'power2.in'
-            });
+            if (reducedMotion) {
+                gsap.set(sidebarElement, { x: '100%' });
+            } else {
+                gsap.to(sidebarElement, {
+                    x: '100%',
+                    duration: 0.3,
+                    ease: 'power2.in'
+                });
+            }
         }
         
         setTimeout(() => {
@@ -118,7 +139,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
     bind:this={backdropElement}
-    class="fixed inset-0 bg-black/50 z-40"
+    class="nav-backdrop"
     on:click={closeSidebar}
     style="opacity: 0; pointer-events: none;"
 ></div>
@@ -126,84 +147,260 @@
 <!-- Mobile Sidebar - always in DOM but hidden off-screen -->
 <aside
     bind:this={sidebarElement}
-    class="fixed top-0 right-0 h-full w-full md:hidden bg-brutalist-bg border-l border-brutalist-line z-50 overflow-y-auto"
+    id="mobile-navigation"
+    class="nav-drawer glass-panel-strong md:hidden"
     style="transform: translateX(100%);"
 >
-    <div class="flex flex-col h-full">
-        <div class="flex justify-between items-center p-4 border-b border-brutalist-line">
-            <div class="text-[10px] font-mono tracking-widest uppercase">
-                [REF: AC-2026-MINIMAL]<br/>
-                <LiveTimestamp />
-            </div>
-            <button 
-                on:click={closeSidebar} 
-                class="hover:text-brutalist-accent transition-colors p-2 min-w-[44px] min-h-[44px] flex items-center justify-center" 
-                aria-label="Close navigation menu"
-            >
-                <span class="font-mono text-sm">[X]</span>
+    <div class="nav-drawer__inner">
+        <div class="nav-drawer__header">
+            <a class="nav-identity" href="/" on:click={closeSidebar} aria-label="Alejandro Castro home">
+                <span class="nav-technical">
+                    [REF: AC-2026-MINIMAL]<br/>
+                    <LiveTimestamp />
+                </span>
+            </a>
+            <button on:click={closeSidebar} class="nav-close focus-ring" aria-label="Close navigation menu" type="button">
+                <span>Close</span>
             </button>
         </div>
         
-        <nav class="flex flex-col p-4 gap-2">
-            <a 
-                class="hover:text-brutalist-accent transition-colors font-mono text-sm p-3 min-h-[44px] flex items-center"
-                href="/" 
-                on:click={closeSidebar}
-            >
-                [HOME]
-            </a>
-            <button 
-                class="hover:text-brutalist-accent transition-colors cursor-pointer bg-transparent border-none font-mono text-sm p-3 text-left min-h-[44px] flex items-center w-full"
-                on:click={handleAboutClick}
-            >
-                [ABOUT ME]
-            </button>
-            <a 
-                class="hover:text-brutalist-accent transition-colors font-mono text-sm p-3 min-h-[44px] flex items-center"
-                href="/projects" 
-                on:click={closeSidebar}
-            >
-                [PROJECTS]
-            </a>
-            <a 
-                class="hover:text-brutalist-accent transition-colors font-mono text-sm p-3 min-h-[44px] flex items-center"
-                href="/blogs" 
-                on:click={closeSidebar}
-            >
-                [BLOGS]
-            </a>
-            <button 
-                class="hover:text-brutalist-accent transition-colors cursor-pointer bg-transparent border-none font-mono text-sm p-3 border-b border-brutalist-line text-left min-h-[44px] flex items-center w-full" 
-                on:click={handleContactClick}
-            >
-                [CONTACT]
-            </button>
+        <nav class="nav-links nav-links--mobile" aria-label="Mobile navigation">
+            <a class="nav-link" href="/" on:click={closeSidebar}>Home</a>
+            <button class="nav-link" on:click={handleAboutClick} type="button">About</button>
+            <a class="nav-link" href="/projects" on:click={closeSidebar}>Projects</a>
+            <a class="nav-link" href="/blogs" on:click={closeSidebar}>Blogs</a>
+            <button class="nav-link" on:click={handleContactClick} type="button">Contact</button>
         </nav>
     </div>
 </aside>
 
-<header class="sticky top-0 z-40 flex justify-between h-20 border-b px-4 md:px-8 items-center border-brutalist-line bg-brutalist-bg/80 backdrop-blur-sm">
-    <div class="text-[10px] font-mono tracking-widest uppercase" data-purpose="technical-annotation">
-        [REF: AC-2026-MINIMAL] <br/>
-        <LiveTimestamp />
-    </div>
+<header class="site-nav">
+    <a class="nav-identity" href="/" aria-label="Alejandro Castro home">
+        <span class="nav-technical" data-purpose="technical-annotation">
+            [REF: AC-2026-MINIMAL]<br/>
+            <LiveTimestamp />
+        </span>
+    </a>
     
-    <button 
-        class="md:hidden hover:text-brutalist-accent transition-colors p-2 min-w-[44px] min-h-[44px] flex flex-col justify-center items-center gap-1" 
-        on:click={toggleSidebar} 
-        aria-label="Open navigation menu" 
+    <button
+        class="nav-menu-toggle focus-ring"
+        on:click={toggleSidebar}
+        aria-label="Open navigation menu"
         aria-expanded={sidebarOpen}
+        aria-controls="mobile-navigation"
+        type="button"
     >
-        <span class="block w-6 h-0.5 bg-current transition-all"></span>
-        <span class="block w-6 h-0.5 bg-current transition-all"></span>
-        <span class="block w-6 h-0.5 bg-current transition-all"></span>
+        <span></span>
+        <span></span>
+        <span></span>
     </button>
     
-    <nav class="hidden md:flex gap-6 font-mono text-sm">
-        <a class="hover:text-brutalist-accent transition-colors" href="/">[HOME]</a>
-        <button class="hover:text-brutalist-accent transition-colors cursor-pointer bg-transparent border-none font-mono text-sm p-0" on:click={handleAboutClick}>[ABOUT ME]</button>
-        <a class="hover:text-brutalist-accent transition-colors" href="/projects">[PROJECTS]</a>
-        <a class="hover:text-brutalist-accent transition-colors" href="/blogs">[BLOGS]</a>
-        <button class="hover:text-brutalist-accent transition-colors cursor-pointer bg-transparent border-none font-mono text-sm p-0" on:click={handleContactClick}>[CONTACT]</button>
+    <nav class="nav-links nav-links--desktop" aria-label="Primary navigation">
+        <a class="nav-link" href="/">Home</a>
+        <button class="nav-link" on:click={handleAboutClick} type="button">About</button>
+        <a class="nav-link" href="/projects">Projects</a>
+        <a class="nav-link" href="/blogs">Blogs</a>
+        <button class="nav-link" on:click={handleContactClick} type="button">Contact</button>
     </nav>
 </header>
+
+<style>
+    .site-nav {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        min-height: 5rem;
+        padding: 0.75rem max(1rem, 4vw);
+        border-bottom: 1px solid var(--ink-line);
+        background: var(--ink-surface-strong);
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16);
+    }
+
+    @supports (backdrop-filter: blur(1px)) {
+        .site-nav {
+            background: rgba(10, 28, 32, 0.72);
+            backdrop-filter: blur(18px) saturate(1.1);
+        }
+    }
+
+    .nav-identity {
+        display: inline-flex;
+        min-height: 2.75rem;
+        align-items: center;
+        border-radius: 0.75rem;
+        color: var(--ink-text);
+        text-decoration: none;
+    }
+
+    .nav-technical {
+        color: var(--ink-muted);
+        font-family: var(--font-mono);
+        font-size: 0.625rem;
+        letter-spacing: 0.12em;
+        line-height: 1.6;
+        text-transform: uppercase;
+        transition: color 180ms ease;
+    }
+
+    .nav-identity:hover .nav-technical {
+        color: var(--ink-text);
+    }
+
+    .nav-links {
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .nav-links--desktop {
+        display: none;
+    }
+
+    .nav-link {
+        display: inline-flex;
+        min-height: 2.75rem;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid transparent;
+        border-radius: 0.625rem;
+        background: transparent;
+        color: var(--ink-muted);
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.04em;
+        padding: 0.625rem 0.8rem;
+        text-decoration: none;
+        transition: border-color 180ms ease, background 180ms ease, color 180ms ease;
+    }
+
+    .nav-link:hover {
+        border-color: var(--ink-line);
+        background: rgba(101, 231, 189, 0.08);
+        color: var(--ink-text);
+    }
+
+    .nav-menu-toggle {
+        display: inline-flex;
+        width: 2.75rem;
+        height: 2.75rem;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.3rem;
+        border: 1px solid var(--ink-line);
+        border-radius: 0.625rem;
+        background: rgba(101, 231, 189, 0.06);
+        color: var(--ink-text);
+        cursor: pointer;
+    }
+
+    .nav-menu-toggle span {
+        display: block;
+        width: 1.25rem;
+        height: 1px;
+        background: currentColor;
+    }
+
+    .nav-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        background: rgba(3, 13, 16, 0.68);
+    }
+
+    @supports (backdrop-filter: blur(1px)) {
+        .nav-backdrop {
+            backdrop-filter: blur(8px);
+        }
+    }
+
+    .nav-drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 50;
+        width: min(100%, 28rem);
+        border-radius: 1.5rem 0 0 1.5rem;
+        overflow-y: auto;
+    }
+
+    .nav-drawer__inner {
+        display: flex;
+        min-height: 100%;
+        flex-direction: column;
+    }
+
+    .nav-drawer__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1rem;
+        border-bottom: 1px solid var(--ink-line);
+    }
+
+    .nav-drawer__header .nav-identity {
+        min-width: 0;
+    }
+
+    .nav-close {
+        display: inline-flex;
+        min-width: 5rem;
+        min-height: 2.75rem;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--ink-line);
+        border-radius: 0.625rem;
+        background: transparent;
+        color: var(--ink-muted);
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+    }
+
+    .nav-close:hover {
+        border-color: var(--ink-accent);
+        background: rgba(101, 231, 189, 0.08);
+        color: var(--ink-text);
+    }
+
+    .nav-links--mobile {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+        padding: 1.25rem;
+    }
+
+    .nav-links--mobile .nav-link {
+        justify-content: flex-start;
+        width: 100%;
+        min-height: 3rem;
+        padding-inline: 1rem;
+        text-align: left;
+    }
+
+    @media (min-width: 768px) {
+        .nav-menu-toggle {
+            display: none;
+        }
+
+        .nav-links--desktop {
+            display: flex;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .nav-technical,
+        .nav-link,
+        .nav-close {
+            transition: none;
+        }
+    }
+</style>
