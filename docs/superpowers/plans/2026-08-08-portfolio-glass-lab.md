@@ -10,6 +10,14 @@
 
 ---
 
+**Local build prerequisite:** `astro-decap-cms-oauth` validates its GitHub OAuth environment schema during builds. When real CMS credentials are not available locally, run build commands with non-secret placeholders:
+
+```bash
+OAUTH_GITHUB_CLIENT_ID=build-placeholder OAUTH_GITHUB_CLIENT_SECRET=build-placeholder OAUTH_GITHUB_REPO_ID=build-placeholder pnpm build
+```
+
+Never commit real values or add them to tracked files.
+
 ## File Map
 
 - `src/styles/globals.css`: Glass Lab color tokens, ambient background, surfaces, cards, controls, focus states, responsive utilities, and reduced-motion rules.
@@ -40,7 +48,7 @@ No new files or dependencies are required by the redesign.
 Run:
 
 ```bash
-pnpm build
+OAUTH_GITHUB_CLIENT_ID=build-placeholder OAUTH_GITHUB_CLIENT_SECRET=build-placeholder OAUTH_GITHUB_REPO_ID=build-placeholder pnpm build
 pnpm astro check
 ```
 
@@ -109,7 +117,7 @@ Keep the skip link, `Navbar`, `AboutModal`, `ContactModal`, `SEO`, `ClientRouter
 Run:
 
 ```bash
-pnpm build
+OAUTH_GITHUB_CLIENT_ID=build-placeholder OAUTH_GITHUB_CLIENT_SECRET=build-placeholder OAUTH_GITHUB_REPO_ID=build-placeholder pnpm build
 pnpm astro check
 git diff --check
 ```
@@ -158,7 +166,7 @@ Keep the synchronous sessionStorage guard, reduced-motion check, click/key skip,
 
 - [ ] **Step 7: Verify chrome behavior and commit**
 
-Run `pnpm build` and `pnpm astro check`. Manually verify desktop and mobile navigation, About/Contact open-close, Escape, backdrop click, focus restoration, and splash skip. Commit:
+Run `OAUTH_GITHUB_CLIENT_ID=build-placeholder OAUTH_GITHUB_CLIENT_SECRET=build-placeholder OAUTH_GITHUB_REPO_ID=build-placeholder pnpm build` and `pnpm astro check`. Manually verify desktop and mobile navigation, About/Contact open-close, Escape, backdrop click, focus restoration, and splash skip. Commit:
 
 ```bash
 git add src/components/Navbar.svelte src/components/Splash.astro src/components/BaseModal.svelte src/components/AboutModal.svelte src/components/ContactModal.svelte
@@ -189,7 +197,7 @@ Keep the rendered `[SEC NN // LABEL]` string and component props. Change only it
 
 - [ ] **Step 5: Verify the hero and commit**
 
-Run `pnpm build` and `pnpm astro check`; inspect the hero at 1440px and 375px widths. Confirm no horizontal overflow, the links retain their destinations, and reduced motion renders the final state immediately. Commit:
+Run `OAUTH_GITHUB_CLIENT_ID=build-placeholder OAUTH_GITHUB_CLIENT_SECRET=build-placeholder OAUTH_GITHUB_REPO_ID=build-placeholder pnpm build` and `pnpm astro check`; inspect the hero at 1440px and 375px widths. Confirm no horizontal overflow, the links retain their destinations, and reduced motion renders the final state immediately. Commit:
 
 ```bash
 git add src/sections/Hero.svelte src/components/subcomponents/SectionLabel.svelte
@@ -222,7 +230,7 @@ Use `.blog-card` with date as muted mono metadata, title as the primary link, an
 
 - [ ] **Step 5: Verify interaction edge cases**
 
-Manually test each project action independently: primary GitHub/demo action, article action when present, and live demo when present. Confirm clicking a card body still activates the primary link, blog cards open the correct slug, and keyboard focus is visible. Run `pnpm build` and `pnpm astro check`.
+Manually test each project action independently: primary GitHub/demo action, article action when present, and live demo when present. Confirm clicking a card body still activates the primary link, blog cards open the correct slug, and keyboard focus is visible. Run `OAUTH_GITHUB_CLIENT_ID=build-placeholder OAUTH_GITHUB_CLIENT_SECRET=build-placeholder OAUTH_GITHUB_REPO_ID=build-placeholder pnpm build` and `pnpm astro check`.
 
 - [ ] **Step 6: Commit homepage card changes**
 
@@ -251,7 +259,7 @@ Keep the same `ProjectRow` and `BlogRow` components so full browsers receive the
 
 - [ ] **Step 4: Verify all browser states and commit**
 
-For both routes, manually test initial state, search-only filtering, multi-tag filtering, sort cycling/toggle, clear controls, and no-match empty states. Test keyboard activation of every chip and button. Run `pnpm build` and `pnpm astro check`, then commit:
+For both routes, manually test initial state, search-only filtering, multi-tag filtering, sort cycling/toggle, clear controls, and no-match empty states. Test keyboard activation of every chip and button. Run `OAUTH_GITHUB_CLIENT_ID=build-placeholder OAUTH_GITHUB_CLIENT_SECRET=build-placeholder OAUTH_GITHUB_REPO_ID=build-placeholder pnpm build` and `pnpm astro check`, then commit:
 
 ```bash
 git add src/components/ProjectsBrowser.svelte src/components/BlogsBrowser.svelte
@@ -283,7 +291,7 @@ Keep the 404 message and `/` destination, but use the same page container, secti
 
 - [ ] **Step 5: Verify article behavior and commit**
 
-Open `/blog/ai2048`, test desktop/mobile TOC links, code copy success/error feedback, external repo link, article links, back-to-browser navigation, and no horizontal page overflow. Open `/404` and verify the return link. Run `pnpm build` and `pnpm astro check`, then commit:
+Open `/blog/ai2048`, test desktop/mobile TOC links, code copy success/error feedback, external repo link, article links, back-to-browser navigation, and no horizontal page overflow. Open `/404` and verify the return link. Run `OAUTH_GITHUB_CLIENT_ID=build-placeholder OAUTH_GITHUB_CLIENT_SECRET=build-placeholder OAUTH_GITHUB_REPO_ID=build-placeholder pnpm build` and `pnpm astro check`, then commit:
 
 ```bash
 git add "src/pages/blog/[slug].astro" src/styles/article-typography.css src/pages/404.astro
@@ -319,7 +327,7 @@ Run:
 
 ```bash
 pnpm astro check
-pnpm build
+OAUTH_GITHUB_CLIENT_ID=build-placeholder OAUTH_GITHUB_CLIENT_SECRET=build-placeholder OAUTH_GITHUB_REPO_ID=build-placeholder pnpm build
 git diff --check
 git status --short --branch
 ```
