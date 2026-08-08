@@ -24,6 +24,71 @@
         }
     }
 
+    function hasHiddenAncestor(element) {
+        let current = element;
+        while (current instanceof HTMLElement) {
+            if (current.hidden
+                || current.inert
+                || current.hasAttribute('inert')
+                || current.getAttribute('aria-hidden') === 'true') {
+                return true;
+            }
+            current = current.parentElement;
+        }
+        return false;
+    }
+
+    function canRestoreFocus(element) {
+        if (!(element instanceof HTMLElement)
+            || !element.isConnected
+            || element === document.body
+            || element === document.documentElement
+            || element.matches(':disabled')
+            || element.hasAttribute('disabled')
+            || element.getAttribute('aria-disabled') === 'true'
+            || element.tabIndex < 0
+            || hasHiddenAncestor(element)) {
+            return false;
+        }
+
+        const style = getComputedStyle(element);
+        const rect = element.getBoundingClientRect();
+        return style.display !== 'none'
+            && style.visibility !== 'hidden'
+            && style.visibility !== 'collapse'
+            && style.opacity !== '0'
+            && element.getClientRects().length > 0
+            && rect.width > 0
+            && rect.height > 0;
+    }
+
+    function findFocusFallback() {
+        const selectors = [
+            '.site-nav .nav-identity[href]',
+            '.site-nav a[href]',
+            '.site-nav button:not([disabled])',
+            'main a[href]',
+            'main button:not([disabled])'
+        ];
+
+        for (const selector of selectors) {
+            const candidates = document.querySelectorAll(selector);
+            for (const candidate of candidates) {
+                if (canRestoreFocus(candidate)) return candidate;
+            }
+        }
+
+        return null;
+    }
+
+    function restoreFocus() {
+        const target = canRestoreFocus(previouslyFocused)
+            ? previouslyFocused
+            : findFocusFallback();
+        previouslyFocused = null;
+        target?.focus();
+    }
+
     function handleToggleEvent() {
         toggle();
     }
@@ -134,10 +199,7 @@
                 ease: 'none'
             });
         }
-        if (previouslyFocused instanceof HTMLElement) {
-            previouslyFocused.focus();
-            previouslyFocused = null;
-        }
+        restoreFocus();
         dispatch('close');
     }
 
