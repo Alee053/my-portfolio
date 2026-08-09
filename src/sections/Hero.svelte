@@ -61,7 +61,18 @@
     .hero-name {
         max-width: 100%;
         font-size: clamp(2rem, 13.5vw, 9.5rem);
-        font-size: clamp(2rem, 14cqw, 9.5rem);
+    }
+
+    @media (min-width: 1024px) {
+        .hero-name {
+            font-size: clamp(2rem, 8vw, 7rem);
+        }
+    }
+
+    @supports (font-size: 1cqw) {
+        .hero-name {
+            font-size: clamp(2rem, 14cqw, 9.5rem);
+        }
     }
 
     .line-mask {

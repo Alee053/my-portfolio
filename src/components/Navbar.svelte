@@ -9,7 +9,9 @@
     let backdropElement;
     let closeButton;
     let desktopIdentity;
+    let siteNavElement;
     let sidebarTrigger;
+    let backgroundSurfaceStates = [];
     const drawerFocusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
     function syncDrawerAccessibility(open) {
@@ -23,10 +25,90 @@
         }
     }
 
+    function getBackgroundSurfaces() {
+        const surfaces = [
+            siteNavElement,
+            document.querySelector('main'),
+            document.querySelector('footer')
+        ];
+
+        return surfaces.filter((surface, index) =>
+            surface instanceof HTMLElement && surfaces.indexOf(surface) === index
+        );
+    }
+
+    function syncBackgroundAccessibility(open) {
+        if (open) {
+            if (backgroundSurfaceStates.length > 0) return;
+
+            backgroundSurfaceStates = getBackgroundSurfaces().map((element) => ({
+                element,
+                inert: element.getAttribute('inert'),
+                ariaHidden: element.getAttribute('aria-hidden')
+            }));
+
+            for (const { element } of backgroundSurfaceStates) {
+                element.inert = true;
+                element.setAttribute('aria-hidden', 'true');
+            }
+            return;
+        }
+
+        for (const { element, inert, ariaHidden } of backgroundSurfaceStates) {
+            if (!element.isConnected) continue;
+
+            if (inert === null) {
+                element.removeAttribute('inert');
+            } else {
+                element.setAttribute('inert', inert);
+            }
+
+            if (ariaHidden === null) {
+                element.removeAttribute('aria-hidden');
+            } else {
+                element.setAttribute('aria-hidden', ariaHidden);
+            }
+        }
+
+        backgroundSurfaceStates = [];
+    }
+
+    function hasHiddenAncestor(element) {
+        let current = element;
+        while (current instanceof HTMLElement) {
+            if (current.hidden
+                || current.inert
+                || current.hasAttribute('inert')
+                || current.getAttribute('aria-hidden') === 'true') {
+                return true;
+            }
+            current = current.parentElement;
+        }
+        return false;
+    }
+
     function canReceiveFocus(element) {
-        return element instanceof HTMLElement
-            && element.isConnected
-            && element.getClientRects().length > 0;
+        if (!(element instanceof HTMLElement)
+            || !element.isConnected
+            || element === document.body
+            || element === document.documentElement
+            || element.matches(':disabled')
+            || element.hasAttribute('disabled')
+            || element.getAttribute('aria-disabled') === 'true'
+            || element.tabIndex < 0
+            || hasHiddenAncestor(element)) {
+            return false;
+        }
+
+        const style = getComputedStyle(element);
+        const rect = element.getBoundingClientRect();
+        return style.display !== 'none'
+            && style.visibility !== 'hidden'
+            && style.visibility !== 'collapse'
+            && style.opacity !== '0'
+            && element.getClientRects().length > 0
+            && rect.width > 0
+            && rect.height > 0;
     }
 
     function getDrawerFocusables() {
@@ -59,11 +141,20 @@
         }
     }
 
+    function findFocusFallback() {
+        const candidates = [
+            desktopIdentity,
+            ...(siteNavElement
+                ? Array.from(siteNavElement.querySelectorAll('a[href], button:not([disabled])'))
+                : [])
+        ];
+
+        return candidates.find(canReceiveFocus) || null;
+    }
+
     function restoreSidebarFocus() {
-        const target = canReceiveFocus(sidebarTrigger) ? sidebarTrigger : desktopIdentity;
-        if (canReceiveFocus(target)) {
-            target.focus();
-        }
+        const target = canReceiveFocus(sidebarTrigger) ? sidebarTrigger : findFocusFallback();
+        target?.focus();
         sidebarTrigger = null;
     }
     
@@ -81,6 +172,7 @@
             gsap.set(backdropElement, { opacity: 0, pointerEvents: 'none' });
         }
         syncDrawerAccessibility(false);
+        syncBackgroundAccessibility(false);
         // Close before view transitions so body overflow is restored
         document.addEventListener('astro:before-swap', handleBeforeSwap);
         window.addEventListener('resize', handleResize);
@@ -96,6 +188,7 @@
                 syncDrawerAccessibility(false);
                 document.body.style.overflow = '';
             }
+            syncBackgroundAccessibility(false);
         };
     });
     
@@ -125,11 +218,10 @@
     
     function openSidebar() {
         if (sidebarOpen) return;
-        sidebarTrigger = document.activeElement instanceof HTMLElement
-            ? document.activeElement
-            : null;
+        sidebarTrigger = canReceiveFocus(document.activeElement) ? document.activeElement : null;
         sidebarOpen = true;
         syncDrawerAccessibility(true);
+        syncBackgroundAccessibility(true);
         document.body.style.overflow = 'hidden';
         const reducedMotion = prefersReducedMotion();
 
@@ -168,6 +260,7 @@
 
         sidebarOpen = false;
         syncDrawerAccessibility(false);
+        syncBackgroundAccessibility(false);
         document.body.style.overflow = '';
         const reducedMotion = prefersReducedMotion();
 
@@ -264,7 +357,7 @@
     </div>
 </aside>
 
-<header class="site-nav">
+<header bind:this={siteNavElement} class="site-nav">
     <a bind:this={desktopIdentity} class="nav-identity" href="/" aria-label="Alejandro Castro home">
         <span class="nav-technical" data-purpose="technical-annotation">
             [REF: AC-2026-MINIMAL]<br/>
