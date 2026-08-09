@@ -3,7 +3,7 @@
     import { gsap } from 'gsap';
     import { prefersReducedMotion } from '../lib/motion';
 
-    export let title = '[MODAL]';
+    export let title = 'MODAL';
     export let eventName = 'toggle-modal';
 
     let modal;
@@ -296,6 +296,7 @@
         font-size: clamp(1.25rem, 3vw, 1.75rem);
         font-weight: 500;
         letter-spacing: -0.02em;
+        text-transform: uppercase;
     }
 
     .modal-close {
@@ -312,6 +313,7 @@
         cursor: pointer;
         font-family: var(--font-mono);
         font-size: 0.75rem;
+        text-transform: uppercase;
         transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
     }
 

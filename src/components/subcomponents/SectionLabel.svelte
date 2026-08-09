@@ -5,7 +5,7 @@
 
 <div class="section-label mb-5 flex items-center gap-3 font-mono select-none" data-purpose="section-label">
     <span class="section-label__rule" aria-hidden="true"></span>
-    <span>[{number ? `SEC ${number} // ${label}` : label}]</span>
+    <span>{number ? `SEC ${number} // ${label}` : label}</span>
 </div>
 
 <style>

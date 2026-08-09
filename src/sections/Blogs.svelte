@@ -12,7 +12,7 @@
             <SectionLabel number="03" label="RECENT_BLOGS" />
             <h2 class="section-heading__title text-4xl font-light uppercase tracking-widest">Blogs</h2>
         </div>
-        <a href="/blogs" class="section-link focus-ring">[VIEW ALL]</a>
+        <a href="/blogs" class="section-link focus-ring">VIEW ALL</a>
     </div>
     <div class="content-grid">
         {#each blogs as blog, index}

@@ -338,7 +338,7 @@
         <div class="nav-drawer__header">
             <a class="nav-identity" href="/" on:click={closeSidebar} aria-label="Alejandro Castro home">
                 <span class="nav-technical">
-                    [REF: AC-2026-MINIMAL]<br/>
+                    REF: AC-2026-MINIMAL<br/>
                     <LiveTimestamp />
                 </span>
             </a>
@@ -360,7 +360,7 @@
 <header bind:this={siteNavElement} class="site-nav">
     <a bind:this={desktopIdentity} class="nav-identity" href="/" aria-label="Alejandro Castro home">
         <span class="nav-technical" data-purpose="technical-annotation">
-            [REF: AC-2026-MINIMAL]<br/>
+            REF: AC-2026-MINIMAL<br/>
             <LiveTimestamp />
         </span>
     </a>
@@ -457,6 +457,7 @@
         letter-spacing: 0.04em;
         padding: 0.625rem 0.8rem;
         text-decoration: none;
+        text-transform: uppercase;
         transition: border-color 180ms ease, background 180ms ease, color 180ms ease;
     }
 
@@ -551,6 +552,7 @@
         cursor: pointer;
         font-family: var(--font-mono);
         font-size: 0.75rem;
+        text-transform: uppercase;
         transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
     }
 

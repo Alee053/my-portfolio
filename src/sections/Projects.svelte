@@ -11,7 +11,7 @@
             <SectionLabel number="02" label="RECENT_WORK" />
             <h2 class="section-heading__title text-4xl font-light uppercase tracking-widest">Projects</h2>
         </div>
-        <a href="/projects" class="section-link focus-ring">[VIEW ALL]</a>
+        <a href="/projects" class="section-link focus-ring">VIEW ALL</a>
     </div>
     <div class="content-grid">
         {#each projects as project, index}
