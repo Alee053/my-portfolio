@@ -2,6 +2,7 @@
 import Layout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { formatDate } from '../../lib/formatDate';
+import { SITE } from '../../lib/site';
 import '../../styles/article-typography.css';
 import 'katex/dist/katex.min.css';
 
@@ -15,6 +16,16 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content, headings } = await post.render();
+const articleUrl = new URL(`/blog/${post.slug}/`, SITE.url).toString();
+const structuredData = [{
+    '@type': 'BreadcrumbList',
+    '@id': `${articleUrl}#breadcrumb`,
+    itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+        { '@type': 'ListItem', position: 2, name: 'Blogs', item: new URL('/blogs/', SITE.url).toString() },
+        { '@type': 'ListItem', position: 3, name: post.data.title, item: articleUrl },
+    ],
+}];
 
 // Filter to h2-h4 headings for TOC
 const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
@@ -25,7 +36,17 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
     description={post.data.description || `${post.data.title} — an article by Alejandro Castro.`}
     type="article"
     publishDate={new Date(post.data.date)}
+    keywords={post.data.tags}
+    structuredData={structuredData}
 >
+    <nav class="article-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="article-breadcrumb__separator" aria-hidden="true">/</span>
+        <a href="/blogs/">Blogs</a>
+        <span class="article-breadcrumb__separator" aria-hidden="true">/</span>
+        <span class="article-breadcrumb__current" aria-current="page">{post.data.title}</span>
+    </nav>
+
     <!-- Blog Header -->
     <section class="article-header glass-panel" data-reveal>
         <div class="article-header__label">SEC // BLOG VIEWER</div>
@@ -33,6 +54,7 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
             {post.data.title}
         </h1>
         <div class="article-meta">
+            <span class="article-meta__author">BY <a href="/" rel="author">ALEJANDRO CASTRO</a></span>
             <time datetime={new Date(post.data.date).toISOString()}>{formatDate(post.data.date)}</time>
             {post.data.tags?.map((tag) => (
                 <span class="article-tag">{tag}</span>
@@ -92,7 +114,7 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
     <!-- Back to blogs link -->
     <div class="article-footer">
         <a
-            href="/blogs"
+            href="/blogs/"
             class="article-back-link"
         >
             ← BACK TO BROWSER

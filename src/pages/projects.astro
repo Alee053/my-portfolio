@@ -2,6 +2,7 @@
 import Layout from '../layouts/BaseLayout.astro';
 import ProjectsBrowser from '../components/ProjectsBrowser.svelte';
 import { getCollection } from 'astro:content';
+import { SITE } from '../lib/site';
 
 const projectsData = (await getCollection('projects'))
     .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
@@ -9,14 +10,58 @@ const projectsData = (await getCollection('projects'))
         id: project.id,
         name: project.data.name,
         subtitle: project.data.subtitle || '',
+        year: project.data.year,
         tags: project.data.tags || [],
         repo_url: project.data.repo_url || '',
         blog_slug: project.data.blog_slug || '',
         demo_url: project.data.demo_url || '',
         order: project.data.order ?? 999
     }));
+
+const projectsUrl = new URL('/projects/', SITE.url).toString();
+const structuredData = [
+    {
+        '@type': 'CollectionPage',
+        '@id': `${projectsUrl}#collection`,
+        name: 'Projects',
+        url: projectsUrl,
+        description: "Explore Alejandro Castro's software projects in reinforcement learning, search algorithms, C++, Python, robotics, and physics simulation.",
+        isPartOf: { '@id': `${SITE.url}/#website` },
+        mainEntity: { '@id': `${projectsUrl}#project-list` },
+    },
+    {
+        '@type': 'ItemList',
+        '@id': `${projectsUrl}#project-list`,
+        name: 'Projects by Alejandro Castro',
+        numberOfItems: projectsData.length,
+        itemListOrder: 'https://schema.org/ItemListOrderAscending',
+        itemListElement: projectsData.map((project, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: project.name,
+            ...(project.repo_url ? { url: project.repo_url } : {}),
+        })),
+    },
+    {
+        '@type': 'BreadcrumbList',
+        '@id': `${projectsUrl}#breadcrumb`,
+        itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+            { '@type': 'ListItem', position: 2, name: 'Projects', item: projectsUrl },
+        ],
+    },
+];
 ---
 
-<Layout title="PROJECTS" description="Projects by Alejandro Castro: AI, reinforcement learning, algorithms, and simulation work.">
+<Layout
+    title="Projects"
+    description="Explore Alejandro Castro's software projects in reinforcement learning, search algorithms, C++, Python, robotics, and physics simulation."
+    structuredData={structuredData}
+>
+    <nav class="mb-8 flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--ink-muted)]" aria-label="Breadcrumb">
+        <a href="/" class="focus-ring hover:text-[var(--ink-accent)]">Home</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Projects</span>
+    </nav>
     <ProjectsBrowser projects={projectsData} client:load />
 </Layout>

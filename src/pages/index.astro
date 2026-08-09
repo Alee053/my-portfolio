@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import Hero from '../sections/Hero.svelte';
 import Projects from '../sections/Projects.svelte';
 import Blogs from '../sections/Blogs.svelte';
+import { SITE } from '../lib/site';
 
 const projects = (await getCollection('projects'))
     .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
@@ -11,6 +12,7 @@ const projects = (await getCollection('projects'))
     .map((project) => ({
         name: project.data.name,
         subtitle: project.data.subtitle || '',
+        year: project.data.year,
         tags: project.data.tags || [],
         repo_url: project.data.repo_url || '',
         blog_slug: project.data.blog_slug || '',
@@ -26,8 +28,18 @@ const blogs = (await getCollection('blog'))
         slug: blog.slug,
         date: blog.data.date
     }));
+
+const structuredData = [{
+    '@type': 'ProfilePage',
+    '@id': `${SITE.url}/#profile`,
+    name: SITE.name,
+    url: SITE.url,
+    description: SITE.description,
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    mainEntity: { '@id': `${SITE.url}/#person` },
+}];
 ---
-<Layout showSplash>
+<Layout structuredData={structuredData} showSplash>
     <Hero client:load />
     <Projects projects={projects} client:load />
     <Blogs blogs={blogs} client:load />

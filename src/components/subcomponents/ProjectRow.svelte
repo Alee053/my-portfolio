@@ -4,6 +4,7 @@
 
     $: ({ name } = project);
     $: subtitle = project.subtitle || '';
+    $: year = project.year;
     $: tags = project.tags || [];
     $: repo_url = project.repo_url || '';
     $: blog_slug = project.blog_slug || '';
@@ -42,6 +43,9 @@
             </div>
         </div>
         <div class="project-card__meta">
+            {#if year}
+                <time datetime={String(year)} class="project-card__year font-mono text-[10px]">{year}</time>
+            {/if}
             <div class="project-card__tags flex flex-wrap gap-1.5 font-mono text-[10px]">
                 {#if tags.length > 0}
                     {#each tags as tag}
@@ -145,6 +149,11 @@
 
     .project-card__tags {
         gap: 0.375rem;
+    }
+
+    .project-card__year {
+        color: var(--ink-muted);
+        letter-spacing: 0.08em;
     }
 
     .project-card__tag {

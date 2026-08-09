@@ -43,6 +43,47 @@
     line-height: 1.4;
 }
 
+.article-meta__author a {
+    color: var(--ink-text);
+    text-decoration: none;
+}
+
+.article-meta__author a:hover {
+    color: var(--ink-accent);
+}
+
+.article-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.article-breadcrumb a {
+    color: var(--ink-muted);
+    text-decoration: none;
+}
+
+.article-breadcrumb a:hover {
+    color: var(--ink-accent);
+}
+
+.article-breadcrumb__separator {
+    color: var(--ink-line);
+}
+
+.article-breadcrumb__current {
+    color: var(--ink-text);
+    overflow-wrap: anywhere;
+}
+
 .article-tag {
     display: inline-flex;
     align-items: center;

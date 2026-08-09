@@ -68,7 +68,7 @@
     <header class="browser-header">
         <div>
             <p class="browser-header__eyebrow">Projects browser</p>
-            <h2 class="browser-header__title text-4xl font-light uppercase tracking-widest">Projects</h2>
+            <h1 class="browser-header__title text-4xl font-light uppercase tracking-widest">Projects</h1>
         </div>
     </header>
 

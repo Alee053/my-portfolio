@@ -3,7 +3,7 @@ import Layout from '../layouts/BaseLayout.astro';
 import SectionLabel from '../components/subcomponents/SectionLabel.svelte';
 ---
 
-<Layout title="404" description="Page not found.">
+<Layout title="404" description="Page not found." robots="noindex, nofollow">
     <section class="flex min-h-[60vh] flex-col justify-center py-12" aria-labelledby="not-found-title">
         <SectionLabel label="ERR 404 // ROUTE_NOT_FOUND" />
         <div class="max-w-3xl">
