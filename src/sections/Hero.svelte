@@ -100,9 +100,10 @@
         gap: 0.5rem;
         padding: 0.5rem 1rem;
         border: 1px solid var(--ink-line);
-        border-radius: 999px;
+        border-radius: 0.75rem;
         background: var(--ink-900);
         color: var(--ink-text);
+        corner-shape: squircle;
         font-family: var(--font-mono);
         font-size: 0.6875rem;
         letter-spacing: 0.04em;

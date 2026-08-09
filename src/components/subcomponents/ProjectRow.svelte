@@ -42,15 +42,15 @@
             </div>
         </div>
         <div class="project-card__meta">
-            <div class="project-card__tags flex flex-wrap gap-2 font-mono text-[10px]">
-                {#if tags}
+            <div class="project-card__tags flex flex-wrap gap-1.5 font-mono text-[10px]">
+                {#if tags.length > 0}
                     {#each tags as tag}
                         <span class="tag-chip project-card__tag">[ {tag.toUpperCase()} ]</span>
                     {/each}
                 {/if}
             </div>
             {#if hasLinks}
-                <div class="project-card__actions row-action flex flex-wrap gap-2 font-mono text-[10px]">
+                <div class="project-card__actions row-action flex flex-wrap gap-1.5 font-mono text-[10px]">
                     {#if repo_url}
                         <a
                             href={repo_url}
@@ -101,7 +101,7 @@
         display: grid;
         min-width: 0;
         height: 100%;
-        gap: 1.5rem;
+        gap: 1.25rem;
     }
 
     .project-card__main {
@@ -118,6 +118,12 @@
         min-width: 0;
     }
 
+    .project-card__meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
     .project-card__index {
         flex: none;
         padding-top: 0.25rem;
@@ -131,17 +137,24 @@
     }
 
     .project-card__subtitle {
+        max-width: 52ch;
         min-width: 0;
+        line-height: 1.5;
         overflow-wrap: anywhere;
     }
 
     .project-card__tags {
-        min-height: 2rem;
+        gap: 0.375rem;
     }
 
     .project-card__tag {
         min-width: 0;
         max-width: 100%;
+        border-radius: 0.5rem;
+        corner-shape: squircle;
+        font-size: 0.625rem;
+        line-height: 1.2;
+        padding: 0.25rem 0.5rem;
         white-space: normal;
         overflow-wrap: anywhere;
     }
@@ -152,10 +165,11 @@
         align-items: center;
         justify-content: center;
         border: 1px solid var(--ink-line);
-        border-radius: 999px;
+        border-radius: 0.625rem;
         background: rgba(14, 47, 52, 0.54);
         color: var(--ink-accent);
-        padding: 0.5rem 0.75rem;
+        corner-shape: squircle;
+        padding: 0.375rem 0.625rem;
         text-decoration: none;
         transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
     }
@@ -165,6 +179,11 @@
         border-color: var(--ink-accent);
         background: var(--ink-accent);
         color: var(--ink-950);
+    }
+
+    .project-card__actions {
+        border-top: 1px solid var(--ink-line);
+        padding-top: 0.75rem;
     }
 
     @media (min-width: 64rem) {

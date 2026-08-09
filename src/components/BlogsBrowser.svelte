@@ -245,10 +245,11 @@
         justify-content: center;
         gap: 0.5rem;
         border: 1px solid var(--ink-line);
-        border-radius: 999px;
+        border-radius: 0.75rem;
         background: var(--ink-900);
         padding: 0.5rem 0.875rem;
         color: var(--ink-muted);
+        corner-shape: squircle;
         font-family: var(--font-mono);
         font-size: 0.6875rem;
         letter-spacing: 0.07em;
@@ -347,10 +348,11 @@
         align-items: center;
         justify-content: center;
         border: 1px solid var(--ink-line);
-        border-radius: 999px;
+        border-radius: 0.75rem;
         background: transparent;
         padding: 0.5rem 0.75rem;
         color: var(--ink-muted);
+        corner-shape: squircle;
         font-family: var(--font-mono);
         font-size: 0.6875rem;
         letter-spacing: 0.06em;
