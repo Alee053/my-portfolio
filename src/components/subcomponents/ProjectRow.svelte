@@ -30,7 +30,7 @@
     <div class="project-card__content">
         <div class="project-card__main">
             <div class="project-card__index font-mono">{String(index + 1).padStart(2, '0')}.</div>
-            <div class="min-w-0">
+            <div class="project-card__details min-w-0">
                 <h3 class="project-card__title text-lg font-bold uppercase transition-colors md:text-xl group-hover:text-[var(--ink-accent)]">
                     {#if primaryUrl}
                         <a href={primaryUrl} target="_blank" rel="noopener noreferrer" class="stretched-link focus-ring">{name}</a>
@@ -38,16 +38,16 @@
                         {name}
                     {/if}
                 </h3>
-                <p class="mt-1 text-xs font-mono text-[var(--ink-muted)]">{subtitle}</p>
+                <p class="project-card__subtitle mt-1 text-xs font-mono text-[var(--ink-muted)]">{subtitle}</p>
             </div>
         </div>
         <div class="project-card__meta">
             <div class="project-card__tags flex flex-wrap gap-2 font-mono text-[10px]">
-            {#if tags}
-                {#each tags as tag}
-                    <span class="tag-chip">[ {tag.toUpperCase()} ]</span>
-                {/each}
-            {/if}
+                {#if tags}
+                    {#each tags as tag}
+                        <span class="tag-chip project-card__tag">[ {tag.toUpperCase()} ]</span>
+                    {/each}
+                {/if}
             </div>
             {#if hasLinks}
                 <div class="project-card__actions row-action flex flex-wrap gap-2 font-mono text-[10px]">
@@ -111,6 +111,13 @@
         gap: 1rem;
     }
 
+    .project-card__details,
+    .project-card__meta,
+    .project-card__tags,
+    .project-card__actions {
+        min-width: 0;
+    }
+
     .project-card__index {
         flex: none;
         padding-top: 0.25rem;
@@ -123,12 +130,20 @@
         overflow-wrap: anywhere;
     }
 
-    .project-card__meta {
+    .project-card__subtitle {
         min-width: 0;
+        overflow-wrap: anywhere;
     }
 
     .project-card__tags {
         min-height: 2rem;
+    }
+
+    .project-card__tag {
+        min-width: 0;
+        max-width: 100%;
+        white-space: normal;
+        overflow-wrap: anywhere;
     }
 
     .project-card__action {
@@ -171,6 +186,8 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+        .project-card,
+        .project-card__title,
         .project-card__action {
             transition: none;
         }

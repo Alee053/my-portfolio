@@ -9,8 +9,8 @@
 
 <article class="glass-card blog-card group">
     <div class="blog-card__content">
-        <time class="blog-card__date font-mono text-[10px] text-[var(--ink-muted)] md:text-[11px]">{formatDate(date)}</time>
-        <div class="min-w-0">
+        <time datetime={new Date(date).toISOString()} class="blog-card__date font-mono text-[10px] text-[var(--ink-muted)] md:text-[11px]">{formatDate(date)}</time>
+        <div class="blog-card__body min-w-0">
             <h3 class="blog-card__title text-base font-bold uppercase transition-colors md:text-lg group-hover:text-[var(--ink-accent)]">
                 <a href={`/blog/${slug}`} class="stretched-link focus-ring">{title}</a>
             </h3>
@@ -26,6 +26,10 @@
     }
 
     .blog-card__content {
+        min-width: 0;
+    }
+
+    .blog-card__body {
         min-width: 0;
     }
 
@@ -54,6 +58,13 @@
         .blog-card__date {
             padding-top: 0.25rem;
             padding-bottom: 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .blog-card,
+        .blog-card__title {
+            transition: none;
         }
     }
 </style>
