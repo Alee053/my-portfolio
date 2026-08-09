@@ -7,12 +7,64 @@
     $: ({ title, description, date, slug } = blog);
 </script>
 
-<div class="relative grid grid-cols-1 md:grid-cols-12 py-4 md:py-6 border-b border-dashed border-brutalist-line group hover:bg-zinc-900/50 transition-colors gap-2 md:gap-0">
-    <div class="font-mono text-[10px] md:text-[11px] text-zinc-500 md:col-span-1">{formatDate(date)}</div>
-    <div class="md:col-span-11">
-        <h3 class="text-base md:text-lg font-bold uppercase group-hover:text-brutalist-accent transition-colors">
-            <a href={`/blog/${slug}`} class="stretched-link">{title}</a>
-        </h3>
-        <p class="text-xs font-mono text-zinc-400 mt-1 max-w-2xl">{description.length > 100 ? `${description.slice(0, 100)}...` : description}</p>
+<article class="glass-card blog-card group">
+    <div class="blog-card__content">
+        <time datetime={new Date(date).toISOString()} class="blog-card__date font-mono text-[10px] text-[var(--ink-muted)] md:text-[11px]">{formatDate(date)}</time>
+        <div class="blog-card__body min-w-0">
+            <h3 class="blog-card__title text-base font-bold uppercase transition-colors md:text-lg group-hover:text-[var(--ink-accent)]">
+                <a href={`/blog/${slug}`} class="stretched-link focus-ring">{title}</a>
+            </h3>
+            <p class="blog-card__description mt-1 max-w-2xl text-xs font-mono text-[var(--ink-muted)]">{description.length > 100 ? `${description.slice(0, 100)}…` : description}</p>
+        </div>
     </div>
-</div>
+</article>
+
+<style>
+    .blog-card {
+        min-width: 0;
+        min-height: 10rem;
+    }
+
+    .blog-card__content {
+        min-width: 0;
+    }
+
+    .blog-card__body {
+        min-width: 0;
+    }
+
+    .blog-card__date {
+        display: block;
+        padding-bottom: 1rem;
+        letter-spacing: 0.04em;
+    }
+
+    .blog-card__title {
+        overflow-wrap: anywhere;
+    }
+
+    .blog-card__description {
+        overflow-wrap: anywhere;
+    }
+
+    @media (min-width: 40rem) {
+        .blog-card__content {
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr);
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .blog-card__date {
+            padding-top: 0.25rem;
+            padding-bottom: 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .blog-card,
+        .blog-card__title {
+            transition: none;
+        }
+    }
+</style>

@@ -3,7 +3,7 @@
     import { gsap } from 'gsap';
     import { prefersReducedMotion } from '../lib/motion';
 
-    export let title = '[MODAL]';
+    export let title = 'MODAL';
     export let eventName = 'toggle-modal';
 
     let modal;
@@ -13,6 +13,81 @@
     let previouslyFocused = null;
 
     const dispatch = createEventDispatcher();
+
+    function syncAccessibility(open) {
+        if (modal) {
+            modal.inert = !open;
+            modal.setAttribute('aria-hidden', String(!open));
+        }
+        if (backdrop) {
+            backdrop.inert = !open;
+        }
+    }
+
+    function hasHiddenAncestor(element) {
+        let current = element;
+        while (current instanceof HTMLElement) {
+            if (current.hidden
+                || current.inert
+                || current.hasAttribute('inert')
+                || current.getAttribute('aria-hidden') === 'true') {
+                return true;
+            }
+            current = current.parentElement;
+        }
+        return false;
+    }
+
+    function canRestoreFocus(element) {
+        if (!(element instanceof HTMLElement)
+            || !element.isConnected
+            || element === document.body
+            || element === document.documentElement
+            || element.matches(':disabled')
+            || element.hasAttribute('disabled')
+            || element.getAttribute('aria-disabled') === 'true'
+            || element.tabIndex < 0
+            || hasHiddenAncestor(element)) {
+            return false;
+        }
+
+        const style = getComputedStyle(element);
+        const rect = element.getBoundingClientRect();
+        return style.display !== 'none'
+            && style.visibility !== 'hidden'
+            && style.visibility !== 'collapse'
+            && style.opacity !== '0'
+            && element.getClientRects().length > 0
+            && rect.width > 0
+            && rect.height > 0;
+    }
+
+    function findFocusFallback() {
+        const selectors = [
+            '.site-nav .nav-identity[href]',
+            '.site-nav a[href]',
+            '.site-nav button:not([disabled])',
+            'main a[href]',
+            'main button:not([disabled])'
+        ];
+
+        for (const selector of selectors) {
+            const candidates = document.querySelectorAll(selector);
+            for (const candidate of candidates) {
+                if (canRestoreFocus(candidate)) return candidate;
+            }
+        }
+
+        return null;
+    }
+
+    function restoreFocus() {
+        const target = canRestoreFocus(previouslyFocused)
+            ? previouslyFocused
+            : findFocusFallback();
+        previouslyFocused = null;
+        target?.focus();
+    }
 
     function handleToggleEvent() {
         toggle();
@@ -68,10 +143,14 @@
     }
 
     export function open() {
-        if (!modal || !backdrop) return;
+        if (!modal || !backdrop || isOpen) return;
 
-        document.body.style.overflow = 'hidden';
         previouslyFocused = document.activeElement;
+        isOpen = true;
+        syncAccessibility(true);
+        document.body.style.overflow = 'hidden';
+        gsap.killTweensOf(modal);
+        gsap.killTweensOf(backdrop);
 
         if (prefersReducedMotion()) {
             gsap.set(backdrop, { opacity: 1 });
@@ -81,10 +160,7 @@
             gsap.to(backdrop, {
                 opacity: 1,
                 duration: 0.15,
-                ease: 'none',
-                onStart: () => {
-                    backdrop.style.pointerEvents = 'auto';
-                }
+                ease: 'none'
             });
             gsap.to(modal, {
                 x: '0%',
@@ -92,15 +168,20 @@
                 ease: 'none'
             });
         }
-        isOpen = true;
+        backdrop.style.pointerEvents = 'auto';
         closeButton?.focus();
         dispatch('open');
     }
 
     export function close() {
-        if (!modal || !backdrop) return;
+        if (!modal || !backdrop || !isOpen) return;
 
+        isOpen = false;
+        syncAccessibility(false);
         document.body.style.overflow = '';
+        backdrop.style.pointerEvents = 'none';
+        gsap.killTweensOf(modal);
+        gsap.killTweensOf(backdrop);
 
         if (prefersReducedMotion()) {
             gsap.set(backdrop, { opacity: 0 });
@@ -110,10 +191,7 @@
             gsap.to(backdrop, {
                 opacity: 0,
                 duration: 0.15,
-                ease: 'none',
-                onComplete: () => {
-                    backdrop.style.pointerEvents = 'none';
-                }
+                ease: 'none'
             });
             gsap.to(modal, {
                 x: '100%',
@@ -121,11 +199,7 @@
                 ease: 'none'
             });
         }
-        isOpen = false;
-        if (previouslyFocused instanceof HTMLElement) {
-            previouslyFocused.focus();
-            previouslyFocused = null;
-        }
+        restoreFocus();
         dispatch('close');
     }
 
@@ -136,6 +210,7 @@
         if (backdrop) {
             gsap.set(backdrop, { opacity: 0 });
         }
+        syncAccessibility(false);
         document.addEventListener(eventName, handleToggleEvent);
         document.addEventListener(`close-${eventName}`, handleCloseEvent);
         document.addEventListener('keydown', handleKeydown);
@@ -148,7 +223,10 @@
             document.removeEventListener(`close-${eventName}`, handleCloseEvent);
             document.removeEventListener('keydown', handleKeydown);
             document.removeEventListener('astro:before-swap', handleCloseEvent);
+            gsap.killTweensOf(modal);
+            gsap.killTweensOf(backdrop);
             document.body.style.overflow = '';
+            syncAccessibility(false);
         };
     });
 </script>
@@ -156,18 +234,122 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div bind:this={backdrop}
-    class="fixed inset-0 bg-black/60 z-30 backdrop-blur-sm"
+    class="modal-backdrop"
     on:click={handleBackdropClick}
+    aria-hidden="true"
+    inert={!isOpen}
     style="opacity: 0; pointer-events: none;">
 </div>
 
-<aside bind:this={modal} role="dialog" aria-modal="true" aria-label={title} class="fixed top-20 right-0 w-full h-[calc(100vh-5rem)] md:w-1/3 bg-brutalist-bg border-l border-brutalist-line  z-50 p-10 flex flex-col shadow-2xl" style="transform: translateX(100%);">
-    <div class="flex justify-between items-center mb-10">
-        <div class="text-[10px] font-mono">{title}</div>
-        <button bind:this={closeButton} aria-label="Close {title}" class="text-sm text-brutalist-line hover:text-brutalist-accent cursor-pointer font-mono transition-colors duration-150" on:click={close}>[X]</button>
+<aside bind:this={modal} role="dialog" aria-modal="true" aria-label={title} aria-labelledby={`modal-title-${eventName}`} aria-hidden={!isOpen} inert={!isOpen} class="modal-panel glass-panel-strong" style="transform: translateX(100%);">
+    <div class="modal-header">
+        <h2 id={`modal-title-${eventName}`} class="modal-title">{title}</h2>
+        <button bind:this={closeButton} aria-label="Close {title}" class="modal-close focus-ring" on:click={close} type="button">Close</button>
     </div>
 
-    <div class="flex-grow font-mono text-sm leading-relaxed overflow-y-auto pr-4">
+    <div class="modal-content">
         <slot />
     </div>
 </aside>
+
+<style>
+    .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        background: #030d10;
+    }
+
+    @supports (backdrop-filter: blur(1px)) {
+        .modal-backdrop {
+            background: rgba(3, 13, 16, 0.72);
+            backdrop-filter: blur(10px);
+        }
+    }
+
+    .modal-panel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 70;
+        display: flex;
+        width: min(100%, 36rem);
+        flex-direction: column;
+        border-radius: 1.5rem 0 0 1.5rem;
+        padding: clamp(1.25rem, 4vw, 2.75rem);
+        overflow: hidden;
+    }
+
+    .modal-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .modal-title {
+        margin: 0;
+        color: var(--ink-text);
+        font-family: var(--font-sans);
+        font-size: clamp(1.25rem, 3vw, 1.75rem);
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+    }
+
+    .modal-close {
+        display: inline-flex;
+        min-width: 5rem;
+        min-height: 2.75rem;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border: 1px solid var(--ink-line);
+        border-radius: 0.625rem;
+        background: transparent;
+        color: var(--ink-muted);
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+    }
+
+    .modal-close:hover {
+        border-color: var(--ink-accent);
+        background: #102d31;
+        color: var(--ink-text);
+    }
+
+    .modal-content {
+        min-height: 0;
+        flex: 1 1 auto;
+        overflow-y: auto;
+        padding-right: 0.25rem;
+        color: var(--ink-text);
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        line-height: 1.7;
+    }
+
+    @media (max-width: 767px) {
+        .modal-panel {
+            width: 100%;
+            border-radius: 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .modal-close {
+            transition: none;
+        }
+    }
+
+    @supports (backdrop-filter: blur(1px)) {
+        .modal-close:hover {
+            background: rgba(101, 231, 189, 0.08);
+        }
+    }
+</style>

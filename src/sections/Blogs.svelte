@@ -6,18 +6,44 @@
 </script>
 
 {#if blogs.length > 0}
-<section id="blogs-section" class="pb-20" data-reveal>
-    <a href="/blogs" class="flex justify-between items-end mb-12 group cursor-pointer">
+<section id="blogs-section" class="content-section pb-20" data-reveal>
+    <div class="section-heading">
         <div>
             <SectionLabel number="03" label="RECENT_BLOGS" />
-            <h2 class="text-4xl font-light uppercase tracking-widest group-hover:text-brutalist-accent transition-colors">Blogs</h2>
+            <h2 class="section-heading__title text-4xl font-light uppercase tracking-widest">Blogs</h2>
         </div>
-        <span class="text-xs font-mono group-hover:text-brutalist-accent text-white transition-colors">[VIEW ALL]</span>
-    </a>
-    <div class="border-t border-brutalist-line">
+        <a href="/blogs" class="section-link focus-ring">VIEW ALL</a>
+    </div>
+    <div class="content-grid">
         {#each blogs as blog, index}
             <BlogRow {blog} {index} />
         {/each}
     </div>
 </section>
 {/if}
+
+<style>
+    .content-section .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .content-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
+    }
+
+    @media (min-width: 40rem) {
+        .content-section .section-heading {
+            align-items: flex-end;
+            flex-direction: row;
+        }
+    }
+
+    @media (min-width: 48rem) {
+        .content-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+</style>
