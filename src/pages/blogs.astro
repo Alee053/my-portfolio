@@ -2,16 +2,57 @@
 import Layout from '../layouts/BaseLayout.astro';
 import BlogsBrowser from '../components/BlogsBrowser.svelte';
 import { getCollection } from 'astro:content';
+import { SITE } from '../lib/site';
 
-const blogsData = (await getCollection('blog')).map(blog => ({
-    title: blog.data.title,
-    description: blog.data.description || '',
-    tags: blog.data.tags || [],
-    slug: blog.slug,
-    date: blog.data.date
-}));
+const blogsData = (await getCollection('blog'))
+    .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+    .map(blog => ({
+        title: blog.data.title,
+        description: blog.data.description || '',
+        tags: blog.data.tags || [],
+        slug: blog.slug,
+        date: blog.data.date
+    }));
+
+const blogsUrl = `${SITE.url}/blogs`;
+const structuredData = [
+    {
+        '@type': 'CollectionPage',
+        '@id': `${blogsUrl}#collection`,
+        name: 'Blogs',
+        url: blogsUrl,
+        description: 'Technical writing by Alejandro Castro on reinforcement learning, C++ search, algorithms, Bayesian optimization, and systems engineering.',
+        isPartOf: { '@id': `${SITE.url}/#website` },
+        mainEntity: { '@id': `${blogsUrl}#article-list` },
+    },
+    {
+        '@type': 'ItemList',
+        '@id': `${blogsUrl}#article-list`,
+        name: 'Articles by Alejandro Castro',
+        numberOfItems: blogsData.length,
+        itemListOrder: 'https://schema.org/ItemListOrderDescending',
+        itemListElement: blogsData.map((blog, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: blog.title,
+            url: `${SITE.url}/blog/${blog.slug}`,
+        })),
+    },
+    {
+        '@type': 'BreadcrumbList',
+        '@id': `${blogsUrl}#breadcrumb`,
+        itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+            { '@type': 'ListItem', position: 2, name: 'Blogs', item: blogsUrl },
+        ],
+    },
+];
 ---
 
-<Layout title="BLOGS" description="Technical blog by Alejandro Castro: reinforcement learning, algorithms, search-based planning, and systems engineering.">
+<Layout
+    title="Blogs"
+    description="Technical writing by Alejandro Castro on reinforcement learning, C++ search, algorithms, Bayesian optimization, and systems engineering."
+    structuredData={structuredData}
+>
     <BlogsBrowser blogs={blogsData} client:load />
 </Layout>

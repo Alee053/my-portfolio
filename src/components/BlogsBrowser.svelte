@@ -52,7 +52,7 @@
     <header class="browser-header">
         <div>
             <p class="browser-header__eyebrow">Blogs browser</p>
-            <h2 class="browser-header__title text-4xl font-light uppercase tracking-widest">Blogs</h2>
+            <h1 class="browser-header__title text-4xl font-light uppercase tracking-widest">Blogs</h1>
         </div>
     </header>
 

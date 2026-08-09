@@ -43,6 +43,15 @@
     line-height: 1.4;
 }
 
+.article-meta__author a {
+    color: var(--ink-text);
+    text-decoration: none;
+}
+
+.article-meta__author a:hover {
+    color: var(--ink-accent);
+}
+
 .article-tag {
     display: inline-flex;
     align-items: center;
