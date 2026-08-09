@@ -39,6 +39,14 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
     keywords={post.data.tags}
     structuredData={structuredData}
 >
+    <nav class="article-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="article-breadcrumb__separator" aria-hidden="true">/</span>
+        <a href="/blogs/">Blogs</a>
+        <span class="article-breadcrumb__separator" aria-hidden="true">/</span>
+        <span class="article-breadcrumb__current" aria-current="page">{post.data.title}</span>
+    </nav>
+
     <!-- Blog Header -->
     <section class="article-header glass-panel" data-reveal>
         <div class="article-header__label">SEC // BLOG VIEWER</div>
@@ -106,7 +114,7 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
     <!-- Back to blogs link -->
     <div class="article-footer">
         <a
-            href="/blogs"
+            href="/blogs/"
             class="article-back-link"
         >
             ← BACK TO BROWSER

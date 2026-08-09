@@ -58,5 +58,10 @@ const structuredData = [
     description="Explore Alejandro Castro's software projects in reinforcement learning, search algorithms, C++, Python, robotics, and physics simulation."
     structuredData={structuredData}
 >
+    <nav class="mb-8 flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--ink-muted)]" aria-label="Breadcrumb">
+        <a href="/" class="focus-ring hover:text-[var(--ink-accent)]">Home</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Projects</span>
+    </nav>
     <ProjectsBrowser projects={projectsData} client:load />
 </Layout>

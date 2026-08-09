@@ -35,7 +35,7 @@ const structuredData = [
             '@type': 'ListItem',
             position: index + 1,
             name: blog.title,
-            url: `${SITE.url}/blog/${blog.slug}`,
+            url: new URL(`/blog/${blog.slug}/`, SITE.url).toString(),
         })),
     },
     {
@@ -54,5 +54,10 @@ const structuredData = [
     description="Technical writing by Alejandro Castro on reinforcement learning, C++ search, algorithms, Bayesian optimization, and systems engineering."
     structuredData={structuredData}
 >
+    <nav class="mb-8 flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--ink-muted)]" aria-label="Breadcrumb">
+        <a href="/" class="focus-ring hover:text-[var(--ink-accent)]">Home</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Blogs</span>
+    </nav>
     <BlogsBrowser blogs={blogsData} client:load />
 </Layout>
