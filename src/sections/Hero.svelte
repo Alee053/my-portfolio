@@ -27,14 +27,14 @@
 
         gsap.set(lineInners, { yPercent: 110 });
         gsap.set(subtitleEl, { opacity: 0, y: 12 });
-        gsap.set(actions, { opacity: 0, y: 8 });
+        gsap.set(actions, { autoAlpha: 0, y: 8 });
         gsap.set(profileEl, { opacity: 0, y: 16 });
         gsap.set(cueEl, { opacity: 0 });
 
         tl = gsap.timeline({ paused: true });
         tl.to(lineInners, { yPercent: 0, duration: 0.7, stagger: 0.14, ease: 'power3.out' })
             .to(subtitleEl, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, '-=0.32')
-            .to(actions, { opacity: 1, y: 0, duration: 0.3, stagger: 0.08, ease: 'power2.out' }, '-=0.2')
+            .to(actions, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.08, ease: 'power2.out' }, '-=0.2')
             .to(profileEl, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, '-=0.3')
             .to(cueEl, { opacity: 1, duration: 0.35 }, '<');
 
@@ -53,6 +53,11 @@
 </script>
 
 <style>
+    .hero-name {
+        max-width: 100%;
+        font-size: clamp(2rem, 13.5vw, 9.5rem);
+    }
+
     .line-mask {
         display: block;
         overflow: hidden;
@@ -60,7 +65,7 @@
 
     .line-inner {
         display: block;
-        will-change: transform;
+        white-space: nowrap;
     }
 
     .hero-cursor {
@@ -69,6 +74,33 @@
 
     .hero-cue {
         display: inline-block;
+    }
+
+    .hero-action {
+        display: inline-flex;
+        min-height: 2.75rem;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--ink-line);
+        border-radius: 999px;
+        background: var(--ink-900);
+        color: var(--ink-text);
+        font-family: var(--font-mono);
+        font-size: 0.6875rem;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+    }
+
+    .hero-action:hover {
+        border-color: var(--ink-accent);
+        color: var(--ink-accent);
+    }
+
+    .hero-action:focus-visible {
+        outline: 2px solid var(--ink-accent);
+        outline-offset: 4px;
+        box-shadow: 0 0 0 4px rgba(101, 231, 189, 0.16);
     }
 
     .hero-profile {
@@ -127,19 +159,19 @@
     <div class="grid grid-cols-1 items-end gap-14 lg:grid-cols-[minmax(0,1.2fr)_minmax(20rem,0.8fr)] lg:gap-16">
         <div>
             <SectionLabel number="01" label="HERO" />
-            <h1 class="hero-name mb-6 text-[clamp(3.75rem,10vw,9.5rem)] font-bold uppercase leading-[0.86] tracking-tighter font-sans">
+            <h1 class="hero-name mb-6 font-bold uppercase leading-[0.86] tracking-tighter font-sans">
                 <span class="line-mask"><span class="line-inner">ALEJANDRO</span></span>
                 <span class="line-mask"><span class="line-inner">CASTRO<span class="hero-cursor" aria-hidden="true">_</span></span></span>
             </h1>
             <p class="description max-w-xl font-mono text-xs leading-relaxed text-[var(--ink-muted)] md:text-sm" bind:this={subtitleEl}>{SUBTITLE}</p>
             <nav class="mt-8 flex flex-wrap gap-3" bind:this={actionsEl} aria-label="Profile links">
-                <a href={SITE.github} target="_blank" rel="noopener noreferrer" class="tag-chip focus-ring min-h-11 gap-2 px-4 py-2 text-[var(--ink-text)] hover:border-[var(--ink-accent)] hover:text-[var(--ink-accent)]">
+                <a href={SITE.github} target="_blank" rel="noopener noreferrer" class="hero-action">
                     GitHub <span aria-hidden="true">↗</span>
                 </a>
-                <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer" class="tag-chip focus-ring min-h-11 gap-2 px-4 py-2 text-[var(--ink-text)] hover:border-[var(--ink-accent)] hover:text-[var(--ink-accent)]">
+                <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer" class="hero-action">
                     LinkedIn <span aria-hidden="true">↗</span>
                 </a>
-                <a href="mailto:{SITE.email}" class="tag-chip focus-ring min-h-11 gap-2 px-4 py-2 text-[var(--ink-text)] hover:border-[var(--ink-accent)] hover:text-[var(--ink-accent)]">
+                <a href="mailto:{SITE.email}" class="hero-action">
                     Email <span aria-hidden="true">↗</span>
                 </a>
             </nav>
