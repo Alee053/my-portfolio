@@ -94,8 +94,11 @@
     </div>
 
     {#if uniqueTags.length > 0}
-        <div class="browser-filters" role="group" aria-label="Filter blogs by tag">
-            <span class="browser-filters__label">Filter by tag</span>
+        <details class="browser-filters">
+            <summary class="browser-filters__summary">
+                <span class="browser-filters__label">Filter by tag</span>
+                <span class="browser-filters__value">{activeTags.length > 0 ? `${activeTags.length} selected` : 'All tags'}</span>
+            </summary>
             <div class="browser-filters__chips">
                 {#each uniqueTags as tag}
                     <button
@@ -108,7 +111,7 @@
                     </button>
                 {/each}
             </div>
-        </div>
+        </details>
     {/if}
 
     <div class="browser-card-list">
@@ -227,6 +230,7 @@
     }
 
     .search-control input:focus-visible,
+    .browser-filters__summary:focus-visible,
     .filter-chip:focus-visible,
     .sort-control:focus-visible,
     .clear-control:focus-visible {
@@ -315,16 +319,51 @@
     }
 
     .browser-filters {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 0.75rem;
         min-width: 0;
         margin-bottom: 2rem;
     }
 
+    .browser-filters__summary {
+        display: flex;
+        min-width: 0;
+        min-height: 2.75rem;
+        width: min(100%, 18rem);
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border: 1px solid var(--ink-line);
+        border-radius: 0.75rem;
+        background: var(--ink-900);
+        color: var(--ink-muted);
+        corner-shape: squircle;
+        cursor: pointer;
+        list-style: none;
+        padding: 0.5rem 0.875rem;
+        transition: border-color 180ms ease, background-color 180ms ease;
+    }
+
+    .browser-filters__summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .browser-filters__summary::after {
+        color: var(--ink-accent);
+        content: "+";
+        font-family: var(--font-mono);
+        font-size: 1rem;
+        line-height: 1;
+    }
+
+    .browser-filters[open] .browser-filters__summary::after {
+        content: "−";
+    }
+
+    .browser-filters__summary:hover {
+        border-color: var(--ink-accent);
+        background: rgba(101, 231, 189, 0.08);
+    }
+
     .browser-filters__label {
-        flex: none;
         color: var(--ink-muted);
         font-family: var(--font-mono);
         font-size: 0.6875rem;
@@ -332,12 +371,25 @@
         text-transform: uppercase;
     }
 
+    .browser-filters__value {
+        margin-left: auto;
+        color: var(--ink-text);
+        font-family: var(--font-mono);
+        font-size: 0.6875rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
     .browser-filters__chips {
-        display: flex;
+        display: grid;
         min-width: 0;
-        flex: 1 1 12rem;
-        flex-wrap: wrap;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 8rem), 1fr));
         gap: 0.5rem;
+        margin-top: 0.5rem;
+        border: 1px solid var(--ink-line);
+        border-radius: 1rem;
+        background: var(--ink-surface-strong);
+        padding: 0.75rem;
     }
 
     .filter-chip {
@@ -345,6 +397,7 @@
         min-width: 0;
         max-width: 100%;
         min-height: 2.75rem;
+        width: 100%;
         align-items: center;
         justify-content: center;
         border: 1px solid var(--ink-line);
@@ -406,6 +459,8 @@
         .search-control,
         .sort-control,
         .clear-control,
+        .browser-filters__summary,
+        .browser-filters__chips,
         .browser-empty {
             background: var(--ink-surface);
             backdrop-filter: blur(14px);
@@ -427,14 +482,18 @@
             flex: 1 1 auto;
         }
 
-        .browser-filters__label,
         .browser-filters__chips {
-            flex-basis: 100%;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .browser-filters__summary {
+            width: 100%;
         }
     }
 
     @media (prefers-reduced-motion: reduce) {
         .search-control,
+        .browser-filters__summary,
         .sort-control,
         .clear-control,
         .filter-chip {
