@@ -189,7 +189,7 @@
     @media (min-width: 64rem) {
         .project-card__content {
             grid-template-columns: minmax(0, 1fr) minmax(10rem, 18rem);
-            align-items: end;
+            align-items: start;
         }
 
         .project-card__meta,
