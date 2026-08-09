@@ -117,24 +117,36 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
             status.setAttribute('role', 'status');
             status.setAttribute('aria-live', 'polite');
             status.setAttribute('aria-atomic', 'true');
+            let resetTimer: number | null = null;
+            let copyVersion = 0;
             btn.addEventListener('click', async () => {
+                const requestVersion = ++copyVersion;
+                if (resetTimer !== null) {
+                    window.clearTimeout(resetTimer);
+                    resetTimer = null;
+                }
                 const code = pre.querySelector('code')?.textContent ?? '';
                 try {
                     await navigator.clipboard.writeText(code);
+                    if (requestVersion !== copyVersion) return;
                     btn.textContent = '[COPIED]';
                     btn.setAttribute('aria-label', copiedCopyLabel);
                     status.textContent = copiedCopyLabel;
                     btn.classList.add('copied');
                 } catch {
+                    if (requestVersion !== copyVersion) return;
+                    btn.classList.remove('copied');
                     btn.textContent = '[ERROR]';
                     btn.setAttribute('aria-label', errorCopyLabel);
                     status.textContent = errorCopyLabel;
                 }
-                setTimeout(() => {
+                resetTimer = window.setTimeout(() => {
+                    if (requestVersion !== copyVersion) return;
                     btn.textContent = '[COPY]';
                     btn.setAttribute('aria-label', defaultCopyLabel);
                     status.textContent = '';
                     btn.classList.remove('copied');
+                    resetTimer = null;
                 }, 1500);
             });
             pre.appendChild(btn);
