@@ -10,6 +10,7 @@
     let closeButton;
     let desktopIdentity;
     let sidebarTrigger;
+    const drawerFocusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
     function syncDrawerAccessibility(open) {
         if (sidebarElement) {
@@ -26,6 +27,36 @@
         return element instanceof HTMLElement
             && element.isConnected
             && element.getClientRects().length > 0;
+    }
+
+    function getDrawerFocusables() {
+        if (!sidebarElement) return [];
+
+        return Array.from(sidebarElement.querySelectorAll(drawerFocusableSelector))
+            .filter(canReceiveFocus);
+    }
+
+    function trapFocus(event) {
+        const focusables = getDrawerFocusables();
+        if (focusables.length === 0) {
+            event.preventDefault();
+            closeButton?.focus();
+            return;
+        }
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (!sidebarElement.contains(document.activeElement)) {
+            event.preventDefault();
+            (event.shiftKey ? last : first).focus();
+        } else if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
     }
 
     function restoreSidebarFocus() {
@@ -177,8 +208,12 @@
     }
     
     function handleKeydown(event) {
-        if (event.key === 'Escape' && sidebarOpen) {
+        if (!sidebarOpen) return;
+
+        if (event.key === 'Escape') {
             closeSidebar();
+        } else if (event.key === 'Tab') {
+            trapFocus(event);
         }
     }
 </script>
@@ -363,7 +398,7 @@
     .nav-backdrop {
         position: fixed;
         inset: 0;
-        z-index: 40;
+        z-index: 45;
         background: #030d10;
     }
 

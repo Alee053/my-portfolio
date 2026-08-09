@@ -53,9 +53,15 @@
 </script>
 
 <style>
+    .hero-copy {
+        min-width: 0;
+        container-type: inline-size;
+    }
+
     .hero-name {
         max-width: 100%;
         font-size: clamp(2rem, 13.5vw, 9.5rem);
+        font-size: clamp(2rem, 14cqw, 9.5rem);
     }
 
     .line-mask {
@@ -157,7 +163,7 @@
 
 <section id="hero-section" bind:this={sectionEl}>
     <div class="grid grid-cols-1 items-end gap-14 lg:grid-cols-[minmax(0,1.2fr)_minmax(20rem,0.8fr)] lg:gap-16">
-        <div>
+        <div class="hero-copy">
             <SectionLabel number="01" label="HERO" />
             <h1 class="hero-name mb-6 font-bold uppercase leading-[0.86] tracking-tighter font-sans">
                 <span class="line-mask"><span class="line-inner">ALEJANDRO</span></span>
