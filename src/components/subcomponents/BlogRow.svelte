@@ -14,7 +14,7 @@
             <h3 class="blog-card__title text-base font-bold uppercase transition-colors md:text-lg group-hover:text-[var(--ink-accent)]">
                 <a href={`/blog/${slug}`} class="stretched-link focus-ring">{title}</a>
             </h3>
-            <p class="blog-card__description mt-1 max-w-2xl text-xs font-mono text-[var(--ink-muted)]">{description.length > 100 ? `${description.slice(0, 100)}...` : description}</p>
+            <p class="blog-card__description mt-1 max-w-2xl text-xs font-mono text-[var(--ink-muted)]">{description.length > 100 ? `${description.slice(0, 100)}…` : description}</p>
         </div>
     </div>
 </article>

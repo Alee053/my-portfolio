@@ -52,6 +52,10 @@
     background: #0a1c20;
     color: var(--ink-text);
     corner-shape: squircle;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     padding: 0.25rem 0.625rem;
 }
 
@@ -64,7 +68,11 @@
     border-radius: 0.75rem;
     color: var(--ink-accent);
     corner-shape: squircle;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
     padding: 0.375rem 0.75rem;
+    text-transform: uppercase;
     text-decoration: none;
 }
 
@@ -293,7 +301,7 @@
 }
 
 .article-content figcaption::before {
-    content: "[FIG] ";
+    content: "FIG · ";
     color: var(--ink-accent);
 }
 

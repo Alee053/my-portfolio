@@ -45,7 +45,7 @@
             <div class="project-card__tags flex flex-wrap gap-1.5 font-mono text-[10px]">
                 {#if tags.length > 0}
                     {#each tags as tag}
-                        <span class="tag-chip project-card__tag">[ {tag.toUpperCase()} ]</span>
+                        <span class="tag-chip project-card__tag">{tag.toUpperCase()}</span>
                     {/each}
                 {/if}
             </div>

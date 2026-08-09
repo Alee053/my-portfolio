@@ -43,7 +43,7 @@
     <section class="modal-section">
         <h3 class="modal-kicker modal-section__heading">System status</h3>
         <div class="status-list">
-            <p>&gt; Connection ready...</p>
+            <p>&gt; Connection ready…</p>
             <p>&gt; Channels verified</p>
             <p>&gt; Awaiting transmission</p>
         </div>

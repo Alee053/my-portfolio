@@ -28,18 +28,18 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
 >
     <!-- Blog Header -->
     <section class="article-header glass-panel" data-reveal>
-        <div class="article-header__label">[SEC // BLOG VIEWER]</div>
+        <div class="article-header__label">SEC // BLOG VIEWER</div>
         <h1>
             {post.data.title}
         </h1>
         <div class="article-meta">
-            <time datetime={new Date(post.data.date).toISOString()}>[{formatDate(post.data.date)}]</time>
+            <time datetime={new Date(post.data.date).toISOString()}>{formatDate(post.data.date)}</time>
             {post.data.tags?.map((tag) => (
-                <span class="article-tag">[ {tag} ]</span>
+                <span class="article-tag">{tag}</span>
             ))}
             {post.data.repo_url && (
                 <a href={post.data.repo_url} target="_blank" rel="noopener noreferrer" class="article-meta__repo">
-                    [REPO] ↗
+                    REPO ↗
                 </a>
             )}
         </div>
@@ -48,7 +48,7 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
     <!-- Mobile TOC - inline at top -->
     {toc.length > 0 && (
         <nav class="article-toc article-toc--mobile" aria-label="Table of contents">
-            <div class="article-toc__label">[TABLE_OF_CONTENTS]</div>
+            <div class="article-toc__label">TABLE OF CONTENTS</div>
             <div class="article-toc__links">
                     {toc.map((h) => (
                         <a
@@ -74,7 +74,7 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
         <!-- TOC Sidebar - right side on desktop -->
         {toc.length > 0 && (
             <aside class="article-toc article-toc--desktop" aria-label="Table of contents">
-                <div class="article-toc__label">[TABLE_OF_CONTENTS]</div>
+                <div class="article-toc__label">TABLE OF CONTENTS</div>
                 <nav class="article-toc__links">
                             {toc.map((h) => (
                                 <a
@@ -95,7 +95,7 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
             href="/blogs"
             class="article-back-link"
         >
-            ← [BACK TO BROWSER]
+            ← BACK TO BROWSER
         </a>
     </div>
 </Layout>
@@ -110,7 +110,7 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
             const errorCopyLabel = 'Unable to copy code';
             btn.type = 'button';
             btn.className = 'copy-btn';
-            btn.textContent = '[COPY]';
+            btn.textContent = 'COPY';
             btn.setAttribute('aria-label', defaultCopyLabel);
             const status = document.createElement('span');
             status.className = 'copy-status';
@@ -129,20 +129,20 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
                 try {
                     await navigator.clipboard.writeText(code);
                     if (requestVersion !== copyVersion) return;
-                    btn.textContent = '[COPIED]';
+                    btn.textContent = 'COPIED';
                     btn.setAttribute('aria-label', copiedCopyLabel);
                     status.textContent = copiedCopyLabel;
                     btn.classList.add('copied');
                 } catch {
                     if (requestVersion !== copyVersion) return;
                     btn.classList.remove('copied');
-                    btn.textContent = '[ERROR]';
+                    btn.textContent = 'ERROR';
                     btn.setAttribute('aria-label', errorCopyLabel);
                     status.textContent = errorCopyLabel;
                 }
                 resetTimer = window.setTimeout(() => {
                     if (requestVersion !== copyVersion) return;
-                    btn.textContent = '[COPY]';
+                    btn.textContent = 'COPY';
                     btn.setAttribute('aria-label', defaultCopyLabel);
                     status.textContent = '';
                     btn.classList.remove('copied');
