@@ -507,14 +507,6 @@
     font-size: 0.8125rem;
 }
 
-.article-content .footnotes h2::before {
-    content: "[";
-}
-
-.article-content .footnotes h2::after {
-    content: "]";
-}
-
 .article-content [data-footnote-backref] {
     font-family: 'Space Grotesk', sans-serif;
     text-decoration: none;
