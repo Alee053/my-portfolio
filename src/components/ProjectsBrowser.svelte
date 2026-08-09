@@ -77,10 +77,12 @@
             <span class="search-control__label">Search</span>
             <input
                 id="projects-browser-search"
+                name="project-search"
                 type="text"
                 bind:value={searchQuery}
                 placeholder="Search by name or tag"
                 aria-label="Search projects by name or tag"
+                autocomplete="off"
             />
         </label>
 
@@ -88,7 +90,7 @@
             type="button"
             on:click={cycleSort}
             class="sort-control {sortMode === 'featured' ? 'is-active' : ''}"
-            aria-label="Cycle project sort order"
+            aria-label="Sort projects: {sortLabels[sortMode]}"
         >
             <span>Sort:</span>
             <strong>{sortLabels[sortMode]}</strong>

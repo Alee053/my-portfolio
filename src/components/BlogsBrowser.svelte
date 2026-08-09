@@ -61,10 +61,12 @@
             <span class="search-control__label">Search</span>
             <input
                 id="blogs-browser-search"
+                name="blog-search"
                 type="text"
                 bind:value={searchQuery}
                 placeholder="Search by title or tag"
                 aria-label="Search blogs by title or tag"
+                autocomplete="off"
             />
         </label>
 
@@ -72,7 +74,7 @@
             type="button"
             on:click={toggleSort}
             class="sort-control {sortDirection === 'desc' ? 'is-active' : ''}"
-            aria-label="Toggle blog date order"
+            aria-label="Sort blog posts by date: {sortDirection === 'desc' ? 'newest first' : 'oldest first'}"
         >
             <span>Sort by date:</span>
             <strong>{sortDirection === 'desc' ? 'Newest first' : 'Oldest first'}</strong>
