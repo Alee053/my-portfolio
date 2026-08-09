@@ -169,7 +169,7 @@
 
     @media (min-width: 64rem) {
         .project-card__content {
-            grid-template-columns: minmax(0, 1fr) auto;
+            grid-template-columns: minmax(0, 1fr) minmax(10rem, 18rem);
             align-items: end;
         }
 
@@ -177,6 +177,12 @@
         .project-card__tags,
         .project-card__actions {
             text-align: right;
+        }
+
+        .project-card__meta {
+            width: 100%;
+            max-width: 18rem;
+            justify-self: end;
         }
 
         .project-card__tags,

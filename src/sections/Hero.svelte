@@ -121,7 +121,7 @@
     }
 
     .hero-profile {
-        min-height: 24rem;
+        min-height: 20rem;
     }
 
     .hero-profile__dot {
@@ -206,9 +206,9 @@
                 <p class="mt-5 max-w-xs text-2xl font-medium leading-tight tracking-tight text-[var(--ink-text)]">SYSTEMS ENGINEERING STUDENT</p>
             </div>
 
-            <div class="mt-12">
+            <div class="mt-8">
                 <span class="hero-profile__rule block" aria-hidden="true"></span>
-                <ul class="mt-5 space-y-4 font-mono text-[11px] tracking-[0.08em] text-[var(--ink-muted)]">
+                <ul class="mt-5 space-y-3 font-mono text-[11px] tracking-[0.08em] text-[var(--ink-muted)]">
                     <li class="flex items-center gap-3">
                         <span class="hero-profile__signal" aria-hidden="true"></span>
                         <span>REINFORCEMENT LEARNING</span>
