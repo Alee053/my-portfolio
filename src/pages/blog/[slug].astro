@@ -27,18 +27,18 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
     publishDate={new Date(post.data.date)}
 >
     <!-- Blog Header -->
-    <section class="pt-8 md:pt-32 pb-0 px-4 md:px-8" data-reveal>
-        <div class="mb-4 text-[10px] font-mono text-brutalist-line">[SEC // BLOG VIEWER]</div>
-        <h1 class="text-4xl md:text-5xl font-bold text-brutalist-text leading-none tracking-tighter mb-6 uppercase">
+    <section class="article-header glass-panel" data-reveal>
+        <div class="article-header__label">[SEC // BLOG VIEWER]</div>
+        <h1>
             {post.data.title}
         </h1>
-        <div class="flex flex-wrap gap-4 text-xs text-brutalist-line font-mono border-t border-brutalist-line pt-4 pb-8 items-center">
-            <span>[{formatDate(post.data.date)}]</span>
+        <div class="article-meta">
+            <time datetime={new Date(post.data.date).toISOString()}>[{formatDate(post.data.date)}]</time>
             {post.data.tags?.map((tag) => (
-                <span class="px-2 py-0.5 border text-brutalist-text border-brutalist-line uppercase">[ {tag} ]</span>
+                <span class="article-tag">[ {tag} ]</span>
             ))}
             {post.data.repo_url && (
-                <a href={post.data.repo_url} target="_blank" rel="noopener noreferrer" class="ml-auto px-3 py-1 border border-brutalist-accent text-brutalist-accent hover:bg-brutalist-accent hover:text-black transition-colors uppercase font-mono text-xs">
+                <a href={post.data.repo_url} target="_blank" rel="noopener noreferrer" class="article-meta__repo">
                     [REPO] ↗
                 </a>
             )}
@@ -47,60 +47,53 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 4);
 
     <!-- Mobile TOC - inline at top -->
     {toc.length > 0 && (
-        <div class="lg:hidden px-4 py-4 border-b border-brutalist-line">
-            <div class="border border-brutalist-line p-3">
-                <div class="text-[10px] font-mono text-brutalist-line mb-2">[TABLE_OF_CONTENTS]</div>
-                <div class="flex flex-col gap-2">
+        <nav class="article-toc article-toc--mobile" aria-label="Table of contents">
+            <div class="article-toc__label">[TABLE_OF_CONTENTS]</div>
+            <div class="article-toc__links">
                     {toc.map((h) => (
                         <a
                             href={`#${h.slug}`}
-                            class={`text-xs font-mono hover:text-brutalist-accent transition-colors break-words ${h.depth === 4 ? 'pl-8 text-zinc-500' : h.depth === 3 ? 'pl-4 text-zinc-400' : 'text-zinc-300'}`}
+                            class={`article-toc__link ${h.depth === 4 ? 'article-toc__link--depth-4' : h.depth === 3 ? 'article-toc__link--depth-3' : ''}`}
                         >
                             {h.depth >= 3 ? '└ ' : ''}{h.text}
                         </a>
                     ))}
-                </div>
             </div>
-        </div>
+        </nav>
     )}
 
     <!-- Content with TOC on desktop -->
-    <div class="bg-brutalist-bg border-t border-b border-brutalist-line">
-        <!-- TOC and Content as flex row -->
-        <div class="flex flex-col xl:flex-row xl:items-start">
-            <!-- Article Content -->
-            <div class="overflow-x-auto px-4 md:px-8 pb-8 flex-1 min-w-0">
-                <article class="article-content">
-                    <Content />
-                </article>
-            </div>
+    <div class="article-shell">
+        <!-- Article Content -->
+        <div class="article-reading-surface overflow-x-auto">
+            <article class="article-content">
+                <Content />
+            </article>
+        </div>
 
-            <!-- TOC Sidebar - right side on desktop -->
-            {toc.length > 0 && (
-                <aside class="hidden xl:block w-96 shrink-0 p-8">
-                    <div class="sticky top-32 border border-brutalist-line p-4">
-                        <div class="text-sm font-mono text-brutalist-line mb-3">[TABLE_OF_CONTENTS]</div>
-                        <nav class="flex flex-col gap-2">
+        <!-- TOC Sidebar - right side on desktop -->
+        {toc.length > 0 && (
+            <aside class="article-toc article-toc--desktop" aria-label="Table of contents">
+                <div class="article-toc__label">[TABLE_OF_CONTENTS]</div>
+                <nav class="article-toc__links">
                             {toc.map((h) => (
                                 <a
                                     href={`#${h.slug}`}
-                                    class={`font-mono text-sm hover:text-brutalist-accent transition-colors ${h.depth === 4 ? 'pl-8 text-zinc-600' : h.depth === 3 ? 'pl-4 text-zinc-500' : 'text-zinc-300'}`}
+                                    class={`article-toc__link ${h.depth === 4 ? 'article-toc__link--depth-4' : h.depth === 3 ? 'article-toc__link--depth-3' : ''}`}
                                 >
                                     {h.depth >= 3 ? '└ ' : ''}{h.text}
                                 </a>
                             ))}
-                        </nav>
-                    </div>
-                </aside>
-            )}
-        </div>
+                </nav>
+            </aside>
+        )}
     </div>
 
     <!-- Back to blogs link -->
-    <div class="px-4 md:px-8 py-8">
+    <div class="article-footer">
         <a
             href="/blogs"
-            class="inline-flex items-center gap-2 px-4 py-2 border border-brutalist-line hover:bg-brutalist-accent hover:text-black hover:border-brutalist-accent transition-colors text-sm font-mono uppercase tracking-wider"
+            class="article-back-link"
         >
             ← [BACK TO BROWSER]
         </a>

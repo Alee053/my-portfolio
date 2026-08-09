@@ -1,114 +1,273 @@
-/* Article Typography - Technical Brutalist / MIT Academic Whitepaper */
-/* Split typography: Serif body, Mono headers */
+/* Article typography and the Glass Lab reading surfaces. */
 
-/* Import IBM Plex Serif for body text */
+/* Keep the long-form reading face local to article content. */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&display=swap');
 
+.article-header {
+    margin-bottom: 1rem;
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.article-header__label {
+    margin-bottom: 1.25rem;
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+}
+
+.article-header h1 {
+    max-width: 60rem;
+    margin: 0 0 2rem;
+    color: var(--ink-text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.25rem, 5.5vw, 5rem);
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    line-height: 0.98;
+    overflow-wrap: anywhere;
+    text-transform: none;
+}
+
+.article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    border-top: 1px solid var(--ink-line);
+    padding-top: 1rem;
+    color: var(--ink-muted);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    line-height: 1.4;
+}
+
+.article-tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    border: 1px solid var(--ink-line);
+    border-radius: 999px;
+    background: #0a1c20;
+    color: var(--ink-text);
+    padding: 0.25rem 0.625rem;
+}
+
+.article-meta__repo {
+    display: inline-flex;
+    min-height: 2.25rem;
+    align-items: center;
+    margin-left: auto;
+    border: 1px solid var(--ink-accent);
+    border-radius: 999px;
+    color: var(--ink-accent);
+    padding: 0.375rem 0.75rem;
+    text-decoration: none;
+}
+
+.article-meta__repo:hover {
+    background: var(--ink-accent);
+    color: var(--ink-950);
+}
+
+.article-shell {
+    display: grid;
+    min-width: 0;
+    gap: 1rem;
+}
+
+.article-reading-surface {
+    min-width: 0;
+    overflow-x: auto;
+    border: 1px solid var(--ink-line);
+    border-radius: 1.25rem;
+    background: #08191c;
+    box-shadow: var(--ink-shadow);
+    padding: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+.article-toc {
+    min-width: 0;
+    border: 1px solid var(--ink-line);
+    border-radius: 1.25rem;
+    background: #0a1c20;
+    color: var(--ink-muted);
+    font-family: 'Space Grotesk', sans-serif;
+    padding: 1rem;
+}
+
+.article-toc--mobile {
+    margin-bottom: 1rem;
+}
+
+.article-toc--desktop {
+    display: none;
+}
+
+.article-toc__label {
+    margin-bottom: 0.75rem;
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+}
+
+.article-toc__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.article-toc__link {
+    display: block;
+    min-height: 2.25rem;
+    border-radius: 0.5rem;
+    color: var(--ink-muted);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+    padding: 0.5rem 0.625rem;
+    text-decoration: none;
+}
+
+.article-toc__link--depth-3 {
+    padding-left: 1.25rem;
+}
+
+.article-toc__link--depth-4 {
+    padding-left: 2rem;
+}
+
+.article-toc__link:hover {
+    background: rgba(101, 231, 189, 0.08);
+    color: var(--ink-accent);
+}
+
+.article-footer {
+    padding-top: 1.5rem;
+}
+
+.article-back-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--ink-line);
+    border-radius: 999px;
+    background: #0a1c20;
+    color: var(--ink-text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+}
+
+.article-back-link:hover {
+    border-color: var(--ink-accent);
+    color: var(--ink-accent);
+}
+
 .article-content {
-    /* Container constraint - wider for desktop readability */
-    max-width: 64rem; /* max-w-5xl */
+    max-width: 64rem;
     margin-left: auto;
     margin-right: auto;
+    color: var(--ink-text);
     font-family: 'IBM Plex Serif', Georgia, 'Times New Roman', serif;
-    color: #E2E8F0;
     line-height: 1.8;
     position: relative;
     z-index: 1;
 }
 
-/* Article Headers - Monospace, Uppercase */
+/* Article headings use the interface face without forcing a terminal casing. */
 .article-content h1,
 .article-content h2,
-.article-content h3 {
-    font-family: 'JetBrains Mono', 'Liberation Mono', 'Fira Code', monospace;
-    text-transform: uppercase;
-    font-weight: 400; /* normal weight */
-    color: #FFFFFF;
-    letter-spacing: 0.05em;
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6 {
+    color: var(--ink-text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    text-transform: none;
 }
 
 .article-content h1 {
     font-size: 2.25rem;
     margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
 }
 
-.article-content h4,
-.article-content h5,
-.article-content h6 {
-    font-family: 'JetBrains Mono', 'Liberation Mono', 'Fira Code', monospace;
-    text-transform: uppercase;
-    font-weight: 400;
-    color: #FFFFFF;
-    letter-spacing: 0.05em;
-}
-
-/* Anchored headings must clear the sticky navbar (h-20 = 5rem) */
+/* Anchored headings must clear the sticky navbar. */
 .article-content :is(h1, h2, h3, h4, h5, h6) {
     scroll-margin-top: 6.5rem;
 }
 
 .article-content h2 {
-    font-size: 1.75rem;
-    margin-top: 2rem;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    margin-top: 2.5rem;
     margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px dashed #333333;
+    padding-bottom: 0.625rem;
+    border-bottom: 1px solid var(--ink-line);
 }
 
 .article-content h3 {
-    font-size: 1.375rem;
-    margin-top: 1.5rem;
+    font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    margin-top: 2rem;
     margin-bottom: 0.75rem;
-    padding-bottom: 0.25rem;
-    border-bottom: 1px dashed #333333;
+    padding-bottom: 0.375rem;
+    border-bottom: 1px solid var(--ink-line);
 }
 
 .article-content h4 {
-    font-size: 1.125rem;
-    margin-top: 1.5rem;
+    font-size: 1.25rem;
+    margin-top: 1.75rem;
     margin-bottom: 0.75rem;
-    border-bottom: 1px dashed #333333;
     padding-bottom: 0.25rem;
+    border-bottom: 1px solid var(--ink-line);
 }
 
 .article-content h5 {
-    font-size: 1rem;
-    margin-top: 1.25rem;
+    font-size: 1.0625rem;
+    margin-top: 1.5rem;
     margin-bottom: 0.5rem;
-    color: #CCCCCC;
 }
 
 .article-content h6 {
-    font-size: 0.875rem;
-    margin-top: 1.25rem;
+    color: var(--ink-muted);
+    font-size: 0.9375rem;
+    margin-top: 1.5rem;
     margin-bottom: 0.5rem;
-    color: #999999;
 }
 
-/* Body Paragraphs */
+/* Body paragraphs */
 .article-content p {
     margin-bottom: 1.25rem;
 }
 
-/* Links */
+/* Links stay bright enough to scan against the opaque reading surface. */
 .article-content a {
-    color: #13ecaf;
+    color: var(--ink-accent);
     text-decoration: underline;
-    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
 }
 
 .article-content a:hover {
-    color: #34f7c3;
+    color: var(--ink-text);
 }
 
-/* Images - Sharp edges, bordered */
+/* Images */
 .article-content img {
     width: 100%;
     max-width: 100%;
-    height: auto; /* keep aspect ratio when width/height attributes reserve space */
-    border-radius: 0;
-    border: 1px solid #333333;
+    height: auto;
+    border: 1px solid var(--ink-line);
+    border-radius: 0.75rem;
     margin: 1.5rem auto;
 }
 
@@ -122,55 +281,54 @@
 }
 
 .article-content figcaption {
-    font-family: 'JetBrains Mono', 'Liberation Mono', monospace;
+    margin-top: 0.5rem;
+    color: var(--ink-muted);
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 0.75rem;
-    color: #888888;
-    text-transform: uppercase;
     letter-spacing: 0.05em;
     text-align: center;
-    margin-top: 0.5rem;
 }
 
 .article-content figcaption::before {
     content: "[FIG] ";
-    color: #13ecaf;
+    color: var(--ink-accent);
 }
 
-/* Blockquotes - Terminal system output style */
+/* Blockquotes use a restrained teal signal rather than a full panel. */
 .article-content blockquote {
-    font-style: italic;
-    color: #888888;
-    border-left: 2px solid #13ecaf;
-    padding: 0.5rem 1rem;
     margin: 1.5rem 0;
-    border-radius: 0;
-    background-color: transparent;
+    border-left: 3px solid var(--ink-accent);
+    border-radius: 0 0.5rem 0.5rem 0;
+    background: #10272b;
+    color: var(--ink-text);
+    font-style: italic;
+    padding: 0.75rem 1.25rem;
 }
 
 .article-content blockquote p {
     margin-bottom: 0;
 }
 
-/* Code - Inline */
+/* Inline code */
 .article-content code:not(pre code) {
+    border: 1px solid rgba(148, 231, 220, 0.16);
+    border-radius: 0.25rem;
+    background: #10272b;
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
     font-size: 0.875em;
-    background-color: rgba(255, 255, 255, 0.1);
     padding: 0.125rem 0.375rem;
-    border-radius: 0;
 }
 
-/* Code - Blocks */
+/* Code blocks remain opaque so ambient decoration cannot reduce contrast. */
 .article-content pre {
-    /* !important beats Shiki's inline background so the block matches the design */
-    background-color: #0d1117 !important;
-    border: 1px solid #333333;
-    border-radius: 0;
-    padding: 1rem 1.25rem;
-    overflow-x: auto;
-    margin: 1.5rem 0;
+    position: relative;
     max-width: 100%;
-    position: relative; /* anchor for the copy button */
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    border: 1px solid var(--ink-line);
+    border-radius: 0.75rem;
+    background: #07171a !important;
+    padding: 1rem 1.25rem;
 }
 
 /* Copy button on code blocks */
@@ -178,32 +336,29 @@
     position: absolute;
     top: 0;
     right: 0;
-    font-family: 'JetBrains Mono', 'Liberation Mono', monospace;
-    font-size: 10px;
+    min-height: 2.25rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.6875rem;
     letter-spacing: 0.05em;
-    color: #5e5e5e;
-    background: #0d1117;
+    color: var(--ink-muted);
+    background: #07171a;
     border: none;
-    border-left: 1px solid #333333;
-    border-bottom: 1px solid #333333;
-    padding: 0.25rem 0.5rem;
+    border-left: 1px solid var(--ink-line);
+    border-bottom: 1px solid var(--ink-line);
+    padding: 0.375rem 0.625rem;
     cursor: pointer;
-    transition: color 0.15s ease;
 }
 
-.article-content .copy-btn:hover {
-    color: #13ecaf;
-}
-
+.article-content .copy-btn:hover,
 .article-content .copy-btn.copied {
-    color: #13ecaf;
+    color: var(--ink-accent);
 }
 
 .article-content pre code {
+    background: transparent;
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
     font-size: 0.875rem;
     line-height: 1.6;
-    background: transparent;
     padding: 0;
 }
 
@@ -218,20 +373,23 @@
     margin-bottom: 0.5rem;
 }
 
-/* Horizontal Rule */
+/* Horizontal rule */
 .article-content hr {
-    border-color: #333333;
+    border: 0;
+    border-top: 1px solid var(--ink-line);
     margin: 2rem 0;
 }
 
-/* Tables - wide tables scroll inside their own wrapper */
+/* Wide tables scroll inside the rehype-generated wrapper. */
 .article-content .table-wrap {
-    overflow-x: auto;
     margin: 1.5rem 0;
+    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
 
 .article-content table {
+    width: max-content;
+    min-width: 100%;
     border-collapse: collapse;
     margin: 0 auto;
 }
@@ -243,45 +401,41 @@
 
 .article-content th,
 .article-content td {
+    border: 1px solid var(--ink-line);
+    padding: 0.75rem;
+    text-align: left;
     word-break: break-word;
     overflow-wrap: break-word;
 }
 
-.article-content th,
-.article-content td {
-    border: 1px solid #333333;
-    padding: 0.75rem;
-    text-align: left;
-}
-
 .article-content th {
-    font-family: 'JetBrains Mono', monospace;
-    text-transform: uppercase;
-    font-weight: 400;
-    background-color: rgba(51, 51, 51, 0.3);
+    background: #10272b;
+    color: var(--ink-text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
 }
 
-/* KaTeX Math */
+/* KaTeX math keeps its own horizontal scroll boundary. */
 .article-content .katex {
-    font-size: 1.1em;
     display: inline-block;
-    min-width: 0 !important;
     max-width: 100%;
+    min-width: 0 !important;
     overflow-x: auto;
+    font-size: 1.1em;
 }
 
 .article-content .katex-display {
     display: block;
+    max-width: 100%;
+    min-width: 0 !important;
     margin: 1.5rem 0;
     overflow-x: auto;
     padding: 1rem 0;
-    min-width: 0 !important;
-    max-width: 100%;
 }
 
 /* Strong text */
 .article-content strong {
-    color: #FFFFFF;
+    color: var(--ink-text);
     font-weight: 600;
 }
 
@@ -292,7 +446,7 @@
 
 /* Strikethrough (GFM) */
 .article-content del {
-    color: #4a4a4a;
+    color: var(--ink-muted);
 }
 
 /* Task lists (GFM) */
@@ -301,33 +455,33 @@
     list-style: none;
 }
 
-.article-content li.task-list-item input[type="checkbox"] {
+.article-content li.task-list-item input[type='checkbox'] {
     appearance: none;
     width: 0.85em;
     height: 0.85em;
-    border: 1px solid #5e5e5e;
+    border: 1px solid var(--ink-muted);
     margin-right: 0.5em;
     vertical-align: -0.05em;
 }
 
-.article-content li.task-list-item input[type="checkbox"]:checked {
-    background-color: #13ecaf;
-    border-color: #13ecaf;
+.article-content li.task-list-item input[type='checkbox']:checked {
+    border-color: var(--ink-accent);
+    background-color: var(--ink-accent);
 }
 
 /* Footnotes (GFM) */
 .article-content .footnotes {
     margin-top: 3rem;
-    border-top: 1px dashed #333333;
+    border-top: 1px solid var(--ink-line);
     padding-top: 1rem;
+    color: var(--ink-muted);
     font-size: 0.8125rem;
-    color: #999999;
 }
 
 .article-content .footnotes h2 {
-    font-size: 0.75rem;
     border-bottom: none;
-    color: #5e5e5e;
+    color: var(--ink-muted);
+    font-size: 0.8125rem;
 }
 
 .article-content .footnotes h2::before {
@@ -339,18 +493,53 @@
 }
 
 .article-content [data-footnote-backref] {
+    font-family: 'Space Grotesk', sans-serif;
     text-decoration: none;
-    font-family: 'JetBrains Mono', monospace;
 }
 
 .article-content sup a {
-    text-decoration: none;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Grotesk', sans-serif;
     padding: 0 0.125rem;
+    text-decoration: none;
 }
 
-/* Mobile reading adjustments */
-@media (max-width: 640px) {
+@media (min-width: 80rem) {
+    .article-shell {
+        grid-template-columns: minmax(0, 1fr) minmax(15rem, 18rem);
+        align-items: start;
+    }
+
+    .article-toc--mobile {
+        display: none;
+    }
+
+    .article-toc--desktop {
+        display: block;
+        position: sticky;
+        top: 6.5rem;
+        max-height: calc(100vh - 8rem);
+        overflow-y: auto;
+    }
+}
+
+@media (max-width: 40rem) {
+    .article-header {
+        padding: 1.25rem;
+    }
+
+    .article-header h1 {
+        margin-bottom: 1.5rem;
+        font-size: clamp(2rem, 10vw, 3rem);
+    }
+
+    .article-meta__repo {
+        margin-left: 0;
+    }
+
+    .article-reading-surface {
+        padding: 1rem;
+    }
+
     .article-content {
         font-size: 0.9375rem;
         line-height: 1.7;
