@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
-Disallow: /admin
+Allow: /llms.txt
+Disallow: /admin/
 
 Sitemap: https://alecastro.dev/sitemap-index.xml

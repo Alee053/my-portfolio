@@ -14,7 +14,7 @@ const blogsData = (await getCollection('blog'))
         date: blog.data.date
     }));
 
-const blogsUrl = `${SITE.url}/blogs`;
+const blogsUrl = new URL('/blogs/', SITE.url).toString();
 const structuredData = [
     {
         '@type': 'CollectionPage',

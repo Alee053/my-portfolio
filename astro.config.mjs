@@ -22,7 +22,7 @@ export default defineConfig({
     integrations: [
         svelte(),
         sitemap({
-            filter: (page) => !page.includes('/admin'),
+            filter: (page) => !page.includes('/admin') && !page.endsWith('/llms.txt'),
         }),
         decapCmsOauth(),
     ],
