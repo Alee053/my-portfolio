@@ -22,67 +22,157 @@
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div
-    class="relative grid grid-cols-1 md:grid-cols-12 py-4 md:py-6 border-b border-dashed border-brutalist-line group hover:bg-zinc-900/50 transition-colors gap-3 md:gap-0"
+<article
+    class="glass-card project-card group"
     onmouseenter={() => rowHovered = true}
     onmouseleave={() => { rowHovered = false; hoveredBtn = null; }}
 >
-    <div class="font-mono text-xs text-brutalist-line md:col-span-1 mb-1 md:mb-0">{String(index + 1).padStart(2, '0')}.</div>
-    <div class="md:col-span-7">
-        <h3 class="text-lg md:text-xl font-bold uppercase group-hover:text-brutalist-accent transition-colors">
-            {#if primaryUrl}
-                <a href={primaryUrl} target="_blank" rel="noopener noreferrer" class="stretched-link">{name}</a>
-            {:else}
-                {name}
-            {/if}
-        </h3>
-        <p class="text-xs font-mono text-zinc-500 mt-1">{subtitle}</p>
-    </div>
-    <div class="md:col-span-4 md:text-right">
-        <div class="flex flex-wrap md:justify-end gap-1 mb-2 font-mono text-[10px]">
+    <div class="project-card__content">
+        <div class="project-card__main">
+            <div class="project-card__index font-mono">{String(index + 1).padStart(2, '0')}.</div>
+            <div class="min-w-0">
+                <h3 class="project-card__title text-lg font-bold uppercase transition-colors md:text-xl group-hover:text-[var(--ink-accent)]">
+                    {#if primaryUrl}
+                        <a href={primaryUrl} target="_blank" rel="noopener noreferrer" class="stretched-link focus-ring">{name}</a>
+                    {:else}
+                        {name}
+                    {/if}
+                </h3>
+                <p class="mt-1 text-xs font-mono text-[var(--ink-muted)]">{subtitle}</p>
+            </div>
+        </div>
+        <div class="project-card__meta">
+            <div class="project-card__tags flex flex-wrap gap-2 font-mono text-[10px]">
             {#if tags}
                 {#each tags as tag}
-                    <span class="px-2 py-0.5 border border-brutalist-line group-hover:border-brutalist-accent">[ {tag.toUpperCase()} ]</span>
+                    <span class="tag-chip">[ {tag.toUpperCase()} ]</span>
                 {/each}
             {/if}
-        </div>
-        {#if hasLinks}
-            <div class="relative z-10 flex flex-wrap md:justify-end gap-2 font-mono text-[10px]">
-                {#if repo_url}
-                    <a
-                        href={repo_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onmouseenter={() => hoveredBtn = 'github'}
-                        onmouseleave={() => hoveredBtn = null}
-                        class="px-2 py-1 transition-colors min-h-[44px] md:min-h-0 flex items-center {githubHighlighted ? 'bg-brutalist-accent text-black' : 'bg-brutalist-line/20 text-brutalist-accent hover:bg-brutalist-accent hover:text-black'}"
-                    >
-                        GITHUB ↗
-                    </a>
-                {/if}
-                {#if blog_slug}
-                    <a
-                        href="/blog/{blog_slug}"
-                        onmouseenter={() => hoveredBtn = 'blog'}
-                        onmouseleave={() => hoveredBtn = null}
-                        class="px-2 py-1 transition-colors min-h-[44px] md:min-h-0 flex items-center {hoveredBtn === 'blog' ? 'bg-brutalist-accent text-black' : 'bg-brutalist-line/20 text-brutalist-accent hover:bg-brutalist-accent hover:text-black'}"
-                    >
-                        ARTICLE
-                    </a>
-                {/if}
-                {#if demo_url}
-                    <a
-                        href={demo_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onmouseenter={() => hoveredBtn = 'demo'}
-                        onmouseleave={() => hoveredBtn = null}
-                        class="px-2 py-1 transition-colors min-h-[44px] md:min-h-0 flex items-center {demoHighlighted ? 'bg-brutalist-accent text-black' : 'bg-brutalist-line/20 text-brutalist-accent hover:bg-brutalist-accent hover:text-black'}"
-                    >
-                        LIVE_DEMO ↗
-                    </a>
-                {/if}
             </div>
-        {/if}
+            {#if hasLinks}
+                <div class="project-card__actions row-action flex flex-wrap gap-2 font-mono text-[10px]">
+                    {#if repo_url}
+                        <a
+                            href={repo_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onmouseenter={() => hoveredBtn = 'github'}
+                            onmouseleave={() => hoveredBtn = null}
+                            class="project-card__action focus-ring {githubHighlighted ? 'is-highlighted' : ''}"
+                        >
+                            GITHUB ↗
+                        </a>
+                    {/if}
+                    {#if blog_slug}
+                        <a
+                            href="/blog/{blog_slug}"
+                            onmouseenter={() => hoveredBtn = 'blog'}
+                            onmouseleave={() => hoveredBtn = null}
+                            class="project-card__action focus-ring {hoveredBtn === 'blog' ? 'is-highlighted' : ''}"
+                        >
+                            ARTICLE
+                        </a>
+                    {/if}
+                    {#if demo_url}
+                        <a
+                            href={demo_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onmouseenter={() => hoveredBtn = 'demo'}
+                            onmouseleave={() => hoveredBtn = null}
+                            class="project-card__action focus-ring {demoHighlighted ? 'is-highlighted' : ''}"
+                        >
+                            LIVE_DEMO ↗
+                        </a>
+                    {/if}
+                </div>
+            {/if}
+        </div>
     </div>
-</div>
+</article>
+
+<style>
+    .project-card {
+        min-width: 0;
+        min-height: 11rem;
+    }
+
+    .project-card__content {
+        display: grid;
+        min-width: 0;
+        height: 100%;
+        gap: 1.5rem;
+    }
+
+    .project-card__main {
+        display: flex;
+        min-width: 0;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .project-card__index {
+        flex: none;
+        padding-top: 0.25rem;
+        color: var(--ink-muted);
+        font-size: 0.6875rem;
+        letter-spacing: 0.08em;
+    }
+
+    .project-card__title {
+        overflow-wrap: anywhere;
+    }
+
+    .project-card__meta {
+        min-width: 0;
+    }
+
+    .project-card__tags {
+        min-height: 2rem;
+    }
+
+    .project-card__action {
+        display: inline-flex;
+        min-height: 2.75rem;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--ink-line);
+        border-radius: 999px;
+        background: rgba(14, 47, 52, 0.54);
+        color: var(--ink-accent);
+        padding: 0.5rem 0.75rem;
+        text-decoration: none;
+        transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+    }
+
+    .project-card__action:hover,
+    .project-card__action.is-highlighted {
+        border-color: var(--ink-accent);
+        background: var(--ink-accent);
+        color: var(--ink-950);
+    }
+
+    @media (min-width: 64rem) {
+        .project-card__content {
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: end;
+        }
+
+        .project-card__meta,
+        .project-card__tags,
+        .project-card__actions {
+            text-align: right;
+        }
+
+        .project-card__tags,
+        .project-card__actions {
+            justify-content: flex-end;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .project-card__action {
+            transition: none;
+        }
+    }
+</style>
