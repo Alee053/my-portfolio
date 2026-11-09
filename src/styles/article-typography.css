@@ -1,11 +1,10 @@
-/* Article typography and the Glass Lab reading surfaces. */
-
-/* Keep the long-form reading face local to article content. */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&display=swap');
+/* Monospace article reading, code, math, and table layouts. */
 
 .article-header {
     margin-bottom: 1rem;
-    padding: clamp(1.5rem, 4vw, 3.5rem);
+    padding: 0 0 2rem;
+    border: 0;
+    border-bottom: 1px solid var(--ink-line);
 }
 
 .article-header__label {
@@ -21,11 +20,11 @@
     max-width: 60rem;
     margin: 0 0 2rem;
     color: var(--ink-text);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(2.25rem, 5.5vw, 5rem);
+    font-family: var(--font-mono);
+    font-size: clamp(1.75rem, 3.5vw, 3rem);
     font-weight: 600;
-    letter-spacing: -0.06em;
-    line-height: 0.98;
+    letter-spacing: -0.065em;
+    line-height: 1.25;
     overflow-wrap: anywhere;
     text-transform: none;
 }
@@ -38,7 +37,7 @@
     border-top: 1px solid var(--ink-line);
     padding-top: 1rem;
     color: var(--ink-muted);
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-mono);
     font-size: 0.75rem;
     line-height: 1.4;
 }
@@ -89,10 +88,9 @@
     align-items: center;
     min-height: 2rem;
     border: 1px solid var(--ink-line);
-    border-radius: 0.5rem;
-    background: #0a1c20;
+    border-radius: 0;
+    background: var(--ink-900);
     color: var(--ink-text);
-    corner-shape: squircle;
     font-family: var(--font-mono);
     font-size: 0.6875rem;
     letter-spacing: 0.04em;
@@ -106,9 +104,8 @@
     align-items: center;
     margin-left: auto;
     border: 1px solid var(--ink-accent);
-    border-radius: 0.75rem;
+    border-radius: 0;
     color: var(--ink-accent);
-    corner-shape: squircle;
     font-family: var(--font-mono);
     font-size: 0.6875rem;
     letter-spacing: 0.06em;
@@ -131,25 +128,51 @@
 .article-reading-surface {
     min-width: 0;
     overflow-x: auto;
-    border: 1px solid var(--ink-line);
-    border-radius: 1.25rem;
-    background: #08191c;
-    box-shadow: var(--ink-shadow);
-    padding: clamp(1.25rem, 4vw, 3.5rem);
+    padding: 1.75rem 0;
+    background: #000;
 }
 
 .article-toc {
     min-width: 0;
     border: 1px solid var(--ink-line);
-    border-radius: 1.25rem;
-    background: #0a1c20;
+    border-radius: 0;
+    background: var(--ink-900);
     color: var(--ink-muted);
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-mono);
     padding: 1rem;
 }
 
 .article-toc--mobile {
     margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+.article-toc__summary {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.6875rem;
+    list-style: none;
+}
+
+.article-toc__summary::-webkit-details-marker {
+    display: none;
+}
+
+.article-toc__summary::after {
+    color: var(--ink-accent);
+    content: '+';
+}
+
+.article-toc--mobile[open] > summary::after {
+    content: '−';
+}
+
+.article-toc--mobile > nav {
+    border-top: 1px solid var(--ink-line);
+    padding-block: 0.75rem;
 }
 
 .article-toc--desktop {
@@ -174,7 +197,7 @@
 .article-toc__link {
     display: block;
     min-height: 2.25rem;
-    border-radius: 0.5rem;
+    border-radius: 0;
     color: var(--ink-muted);
     font-size: 0.8125rem;
     line-height: 1.35;
@@ -192,7 +215,7 @@
 }
 
 .article-toc__link:hover {
-    background: rgba(101, 231, 189, 0.08);
+    background: #10170d;
     color: var(--ink-accent);
 }
 
@@ -206,11 +229,10 @@
     align-items: center;
     gap: 0.5rem;
     border: 1px solid var(--ink-line);
-    border-radius: 0.75rem;
-    background: #0a1c20;
+    border-radius: 0;
+    background: var(--ink-900);
     color: var(--ink-text);
-    corner-shape: squircle;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-mono);
     font-size: 0.875rem;
     font-weight: 500;
     letter-spacing: 0.01em;
@@ -224,11 +246,12 @@
 }
 
 .article-content {
-    max-width: 64rem;
+    max-width: 72ch;
+    font-size: 0.875rem;
     margin-left: auto;
     margin-right: auto;
     color: var(--ink-text);
-    font-family: 'IBM Plex Serif', Georgia, 'Times New Roman', serif;
+    font-family: var(--font-mono);
     line-height: 1.8;
     position: relative;
     z-index: 1;
@@ -242,7 +265,7 @@
 .article-content h5,
 .article-content h6 {
     color: var(--ink-text);
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-mono);
     font-weight: 600;
     letter-spacing: -0.03em;
     line-height: 1.15;
@@ -256,11 +279,11 @@
 
 /* Anchored headings must clear the sticky navbar. */
 .article-content :is(h1, h2, h3, h4, h5, h6) {
-    scroll-margin-top: 6.5rem;
+    scroll-margin-top: 2rem;
 }
 
 .article-content h2 {
-    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-size: clamp(1.375rem, 2.3vw, 1.75rem);
     margin-top: 2.5rem;
     margin-bottom: 1rem;
     padding-bottom: 0.625rem;
@@ -268,7 +291,7 @@
 }
 
 .article-content h3 {
-    font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
     margin-top: 2rem;
     margin-bottom: 0.75rem;
     padding-bottom: 0.375rem;
@@ -319,7 +342,7 @@
     max-width: 100%;
     height: auto;
     border: 1px solid var(--ink-line);
-    border-radius: 0.75rem;
+    border-radius: 0;
     margin: 1.5rem auto;
 }
 
@@ -335,23 +358,23 @@
 .article-content figcaption {
     margin-top: 0.5rem;
     color: var(--ink-muted);
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-mono);
     font-size: 0.75rem;
     letter-spacing: 0.05em;
     text-align: center;
 }
 
 .article-content figcaption::before {
-    content: "FIG · ";
+    content: 'FIG · ';
     color: var(--ink-accent);
 }
 
-/* Blockquotes use a restrained teal signal rather than a full panel. */
+/* Keep quotations distinct from surrounding paragraphs. */
 .article-content blockquote {
     margin: 1.5rem 0;
     border-left: 3px solid var(--ink-accent);
-    border-radius: 0 0.5rem 0.5rem 0;
-    background: #10272b;
+    border-radius: 0;
+    background: var(--ink-900);
     color: var(--ink-text);
     font-style: italic;
     padding: 0.75rem 1.25rem;
@@ -363,23 +386,23 @@
 
 /* Inline code */
 .article-content code:not(pre code) {
-    border: 1px solid rgba(148, 231, 220, 0.16);
+    border: 1px solid var(--ink-line);
     border-radius: 0.25rem;
-    background: #10272b;
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    background: var(--ink-900);
+    font-family: var(--font-mono);
     font-size: 0.875em;
     padding: 0.125rem 0.375rem;
 }
 
-/* Code blocks remain opaque so ambient decoration cannot reduce contrast. */
+/* Wide code scrolls within its block. */
 .article-content pre {
     position: relative;
     max-width: 100%;
     margin: 1.5rem 0;
     overflow-x: auto;
     border: 1px solid var(--ink-line);
-    border-radius: 0.75rem;
-    background: #07171a !important;
+    border-radius: 0;
+    background: var(--ink-900) !important;
     padding: 3.25rem 1.25rem 1rem;
 }
 
@@ -389,11 +412,11 @@
     top: 0;
     right: 0;
     min-height: 2.75rem;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-mono);
     font-size: 0.6875rem;
     letter-spacing: 0.05em;
     color: var(--ink-muted);
-    background: #07171a;
+    background: var(--ink-900);
     border: none;
     border-left: 1px solid var(--ink-line);
     border-bottom: 1px solid var(--ink-line);
@@ -420,7 +443,7 @@
 
 .article-content pre code {
     background: transparent;
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-family: var(--font-mono);
     font-size: 0.875rem;
     line-height: 1.6;
     padding: 0;
@@ -473,9 +496,9 @@
 }
 
 .article-content th {
-    background: #10272b;
+    background: var(--ink-900);
     color: var(--ink-text);
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-mono);
     font-weight: 600;
 }
 
@@ -549,19 +572,20 @@
 }
 
 .article-content [data-footnote-backref] {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-mono);
     text-decoration: none;
 }
 
 .article-content sup a {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-mono);
     padding: 0 0.125rem;
     text-decoration: none;
 }
 
 @media (min-width: 80rem) {
     .article-shell {
-        grid-template-columns: minmax(0, 1fr) minmax(15rem, 18rem);
+        grid-template-columns: minmax(0, 1fr) minmax(11rem, 13rem);
+        gap: 2rem;
         align-items: start;
     }
 
@@ -572,20 +596,20 @@
     .article-toc--desktop {
         display: block;
         position: sticky;
-        top: 6.5rem;
-        max-height: calc(100vh - 8rem);
+        top: 2rem;
+        max-height: calc(100vh - 4rem);
         overflow-y: auto;
     }
 }
 
 @media (max-width: 40rem) {
     .article-header {
-        padding: 1.25rem;
+        padding: 0 0 1.5rem;
     }
 
     .article-header h1 {
         margin-bottom: 1.5rem;
-        font-size: clamp(2rem, 10vw, 3rem);
+        font-size: clamp(1.5rem, 6vw, 2.25rem);
     }
 
     .article-meta__repo {
@@ -593,11 +617,11 @@
     }
 
     .article-reading-surface {
-        padding: 1rem;
+        padding: 1rem 0;
     }
 
     .article-content {
-        font-size: 0.9375rem;
+        font-size: 0.8125rem;
         line-height: 1.7;
     }
 

@@ -1,249 +1,257 @@
-<script>
-    import { onMount, onDestroy } from 'svelte';
-    import { gsap } from 'gsap';
+<script lang="ts">
     import SectionLabel from '../components/subcomponents/SectionLabel.svelte';
-    import { prefersReducedMotion } from '../lib/motion';
     import { SITE } from '../lib/site';
-
-    const SUBTITLE = 'I lead engineering at Devs Haus, building SaaS products and custom software from idea to production.';
-
-    let sectionEl;
-    let subtitleEl;
-    let actionsEl;
-    let profileEl;
-    let cueEl;
-    let tl = null;
-    let startIntro = null;
-
-    onMount(() => {
-        // SSR markup is the final state; only animate on the first visit of the
-        // session (decided by the splash inline script) and with motion allowed.
-        if (!window.__bootRan || prefersReducedMotion()) return;
-        // Consume the flag so view-transition re-mounts don't replay the intro
-        window.__bootRan = false;
-
-        const lineInners = sectionEl.querySelectorAll('.line-inner');
-        const actions = actionsEl.querySelectorAll('a');
-
-        gsap.set(lineInners, { yPercent: 110 });
-        gsap.set(subtitleEl, { opacity: 0, y: 12 });
-        gsap.set(actions, { autoAlpha: 0, y: 8 });
-        gsap.set(profileEl, { opacity: 0, y: 16 });
-        gsap.set(cueEl, { opacity: 0 });
-
-        tl = gsap.timeline({ paused: true });
-        tl.to(lineInners, { yPercent: 0, duration: 0.7, stagger: 0.14, ease: 'power3.out' })
-            .to(subtitleEl, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, '-=0.32')
-            .to(actions, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.08, ease: 'power2.out' }, '-=0.2')
-            .to(profileEl, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, '-=0.3')
-            .to(cueEl, { opacity: 1, duration: 0.35 }, '<');
-
-        if (window.__bootDone) {
-            tl.play();
-        } else {
-            startIntro = () => tl.play();
-            document.addEventListener('boot:done', startIntro, { once: true });
-        }
-    });
-
-    onDestroy(() => {
-        if (startIntro) document.removeEventListener('boot:done', startIntro);
-        tl?.kill();
-    });
 </script>
 
+<section id="hero-section" class="hero" aria-labelledby="hero-title">
+    <SectionLabel command="cat ~/readme.md" label="About me" />
+    <div class="hero-layout">
+        <div class="hero-copy">
+            <h1 id="hero-title">
+                Alejandro<br />Castro<span
+                    class="hero-cursor"
+                    aria-hidden="true">_</span
+                >
+            </h1>
+            <p class="hero-role">
+                Software engineer & CTO<span class="hero-role__company"
+                    >at <a
+                        href={SITE.companyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer">Devs Haus ↗</a
+                    ></span
+                >
+            </p>
+            <p class="hero-description">
+                I lead engineering at Devs Haus. We build SaaS products and
+                custom software, from the first idea to production.
+            </p>
+            <div class="hero-actions">
+                <a href="#projects-section" class="hero-primary"
+                    >Explore my work <span aria-hidden="true">↓</span></a
+                >
+                <a href={`mailto:${SITE.email}`} class="hero-email"
+                    >Get in touch <span aria-hidden="true">↗</span></a
+                >
+            </div>
+        </div>
+        <aside class="profile" aria-label="Profile at a glance">
+            <div class="profile-heading">
+                <span aria-hidden="true">~/profile</span><span
+                    class="profile-mark"
+                    aria-hidden="true">↳</span
+                >
+            </div>
+            <dl>
+                <div>
+                    <dt>Based in</dt>
+                    <dd>Cochabamba, Bolivia</dd>
+                </div>
+                <div>
+                    <dt>Building</dt>
+                    <dd>SaaS & business software</dd>
+                </div>
+                <div>
+                    <dt>Studying</dt>
+                    <dd>Systems Engineering at UCB San Pablo</dd>
+                </div>
+            </dl>
+            <p class="profile-note">
+                Also exploring applied AI,<br />algorithms & developer tools.
+            </p>
+        </aside>
+    </div>
+    <div class="hero-bottom">
+        <span>Represented Bolivia at IOI 2022.</span><span aria-hidden="true"
+            >Scroll to explore ↓</span
+        >
+    </div>
+</section>
+
 <style>
+    .hero {
+        padding-top: 0.25rem;
+    }
+    .hero-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.6fr) minmax(11rem, 0.8fr);
+        align-items: end;
+        gap: 2rem;
+    }
     .hero-copy {
         min-width: 0;
-        container-type: inline-size;
     }
-
-    .hero-name {
-        max-width: 100%;
-        font-size: clamp(2rem, 13.5vw, 9.5rem);
+    h1 {
+        margin: 0 0 1.75rem;
+        font-family: var(--font-display);
+        font-size: clamp(2.75rem, 6.5vw, 6.25rem);
+        font-weight: 500;
+        letter-spacing: -0.08em;
+        line-height: 1.08;
     }
-
-    @media (min-width: 1024px) {
-        .hero-name {
-            font-size: clamp(2rem, 8vw, 7rem);
-        }
-    }
-
-    @supports (font-size: 1cqw) {
-        .hero-name {
-            font-size: clamp(2rem, 14cqw, 9.5rem);
-        }
-    }
-
-    .line-mask {
-        display: block;
-        overflow: hidden;
-    }
-
-    .line-inner {
-        display: block;
-        white-space: nowrap;
-    }
-
     .hero-cursor {
         color: var(--ink-accent);
     }
-
-    .hero-cue {
-        display: inline-block;
+    .hero-role {
+        margin: 0 0 1.25rem;
+        font-size: clamp(0.875rem, 1.4vw, 1rem);
+        line-height: 1.7;
     }
-
-    .hero-action {
+    .hero-role__company {
+        display: block;
+        color: var(--ink-muted);
+    }
+    .hero-role a {
+        color: var(--ink-accent);
+        text-decoration: none;
+    }
+    .hero-role a:hover {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+    }
+    .hero-description {
+        max-width: 44ch;
+        margin: 0;
+        color: var(--ink-muted);
+        font-size: 0.8125rem;
+        line-height: 1.9;
+    }
+    .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem 1.5rem;
+        margin-top: 2rem;
+    }
+    .hero-actions a {
         display: inline-flex;
         min-height: 2.75rem;
         align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        border: 1px solid var(--ink-line);
-        border-radius: 0.75rem;
-        background: var(--ink-900);
-        color: var(--ink-text);
-        corner-shape: squircle;
-        font-family: var(--font-mono);
-        font-size: 0.6875rem;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
+        justify-content: space-between;
+        gap: 1.25rem;
+        font-size: 0.75rem;
         text-decoration: none;
     }
-
-    .hero-action:hover {
-        border-color: var(--ink-accent);
+    .hero-primary {
+        border: 1px solid var(--ink-accent);
+        background: var(--ink-accent);
+        padding: 0.625rem 1rem;
+        color: #000;
+    }
+    .hero-primary:hover {
+        background: #d1edbf;
+    }
+    .hero-email {
+        color: var(--ink-muted);
+    }
+    .hero-email:hover {
         color: var(--ink-accent);
     }
-
-    .hero-action--primary {
-        border-color: var(--ink-accent);
-        background: var(--ink-accent);
-        color: var(--ink-950);
+    .profile {
+        margin-bottom: 0.25rem;
+        border-left: 1px solid var(--ink-line);
+        padding-left: 1.5rem;
     }
-
-    .hero-action--primary:hover {
-        background: var(--ink-900);
+    .profile-heading {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.75rem;
+        color: var(--ink-muted);
+        font-size: 0.6875rem;
     }
-
-    .hero-action:focus-visible {
-        outline: 2px solid var(--ink-accent);
-        outline-offset: 4px;
-        box-shadow: 0 0 0 4px rgba(101, 231, 189, 0.16);
+    .profile-mark {
+        color: var(--ink-accent);
     }
-
-    .hero-profile {
-        min-height: 20rem;
+    dl {
+        display: grid;
+        gap: 1.5rem;
+        margin: 0;
     }
-
-    .hero-profile__dot {
-        display: inline-block;
-        width: 0.45rem;
-        height: 0.45rem;
-        flex: none;
-        border-radius: 999px;
-        background: var(--ink-accent);
-        box-shadow: 0 0 0 0.25rem rgba(101, 231, 189, 0.1);
+    dt {
+        margin-bottom: 0.375rem;
+        color: var(--ink-muted);
+        font-size: 0.625rem;
     }
-
-    .hero-profile__rule {
-        height: 1px;
-        background: linear-gradient(90deg, var(--ink-accent), var(--ink-cyan), transparent);
-        opacity: 0.6;
+    dd {
+        margin: 0;
+        font-size: 0.75rem;
+        line-height: 1.8;
     }
-
-    .hero-profile__signal {
-        display: inline-block;
-        width: 1.5rem;
-        height: 1px;
-        flex: none;
-        background: var(--ink-line);
+    .profile-note {
+        margin: 1.75rem 0 0;
+        border-top: 1px solid var(--ink-line);
+        padding-top: 1.25rem;
+        color: var(--ink-muted);
+        font-size: 0.625rem;
+        line-height: 1.9;
     }
-
+    .hero-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-top: 3.5rem;
+        border-top: 1px solid var(--ink-line);
+        padding-top: 1rem;
+        color: var(--ink-muted);
+        font-size: 0.625rem;
+    }
+    @media (max-width: 68rem) {
+        .hero-layout {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 2.5rem;
+        }
+        h1 {
+            font-size: clamp(2.75rem, 8.5vw, 5.5rem);
+        }
+        .profile {
+            border-top: 1px solid var(--ink-line);
+            border-left: 0;
+            padding: 1.25rem 0 0;
+        }
+        .profile-heading {
+            margin-bottom: 1.25rem;
+        }
+        dl {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+        }
+        .profile-note {
+            display: none;
+        }
+    }
+    @media (max-width: 30rem) {
+        h1 {
+            font-size: clamp(2.75rem, 11.8vw, 4rem);
+        }
+        dl {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 1rem;
+        }
+        dl > div {
+            display: grid;
+            grid-template-columns: 5.5rem minmax(0, 1fr);
+            gap: 1rem;
+        }
+        dt {
+            padding-top: 0.125rem;
+        }
+        .hero-bottom {
+            margin-top: 2rem;
+        }
+        .hero-bottom > :last-child {
+            display: none;
+        }
+    }
     @media (prefers-reduced-motion: no-preference) {
         .hero-cursor {
-            animation: hero-blink 1s steps(1) infinite;
+            animation: cursor-blink 1.1s step-end 4;
         }
-
-        .hero-cue {
-            animation: cue-pulse 2s ease-in-out infinite;
+        @keyframes cursor-blink {
+            50% {
+                opacity: 0;
+            }
         }
-    }
-
-    @keyframes hero-blink {
-        50% { opacity: 0; }
-    }
-
-    @keyframes cue-pulse {
-        0%, 100% { opacity: 0.35; }
-        50% { opacity: 0.9; }
-    }
-
-    .description {
-        word-break: keep-all;
     }
 </style>
-
-<section id="hero-section" bind:this={sectionEl}>
-    <div class="grid grid-cols-1 items-end gap-14 lg:grid-cols-[minmax(0,1.2fr)_minmax(20rem,0.8fr)] lg:gap-16">
-        <div class="hero-copy">
-            <SectionLabel number="01" label="HERO" />
-            <h1 class="hero-name mb-6 font-bold uppercase leading-[0.86] tracking-tighter font-sans">
-                <span class="line-mask"><span class="line-inner">ALEJANDRO</span></span>
-                <span class="line-mask"><span class="line-inner">CASTRO<span class="hero-cursor" aria-hidden="true">_</span></span></span>
-            </h1>
-            <div bind:this={subtitleEl}>
-                <p class="mb-3 text-xl font-medium tracking-tight text-[var(--ink-text)] md:text-2xl">{SITE.role}</p>
-                <p class="description max-w-lg font-mono text-xs leading-relaxed text-[var(--ink-muted)] md:text-sm">{SUBTITLE}</p>
-            </div>
-            <nav class="mt-8 flex flex-wrap gap-3" bind:this={actionsEl} aria-label="Profile links">
-                <a href="#projects-section" class="hero-action hero-action--primary">
-                    View projects <span aria-hidden="true">↓</span>
-                </a>
-                <a href={SITE.github} target="_blank" rel="noopener noreferrer" class="hero-action">
-                    GitHub <span aria-hidden="true">↗</span>
-                </a>
-                <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer" class="hero-action">
-                    LinkedIn <span aria-hidden="true">↗</span>
-                </a>
-                <a href="mailto:{SITE.email}" class="hero-action">
-                    Email <span aria-hidden="true">↗</span>
-                </a>
-            </nav>
-            <div class="mt-16" bind:this={cueEl} aria-hidden="true">
-                <span class="hero-cue font-mono text-[10px] tracking-[0.2em] text-[var(--ink-muted)]">SCROLL ↓</span>
-            </div>
-        </div>
-
-        <aside class="glass-panel hero-profile flex flex-col justify-between p-6 sm:p-8" bind:this={profileEl} aria-labelledby="hero-profile-title">
-            <div>
-                <div class="flex items-center gap-3">
-                    <span class="hero-profile__dot" aria-hidden="true"></span>
-                    <h2 id="hero-profile-title" class="font-mono text-xs tracking-[0.14em] text-[var(--ink-text)]">CTO AT</h2>
-                </div>
-                <p class="mt-5 text-4xl font-medium leading-tight tracking-tight text-[var(--ink-text)]">
-                    <a href={SITE.companyUrl} target="_blank" rel="noopener noreferrer" class="focus-ring hover:text-[var(--ink-accent)]">{SITE.company} <span class="text-2xl text-[var(--ink-accent)]" aria-hidden="true">↗</span></a>
-                </p>
-                <p class="mt-3 max-w-xs text-sm leading-relaxed text-[var(--ink-muted)]">Software for businesses, built and shipped with our team.</p>
-            </div>
-
-            <div class="mt-8">
-                <span class="hero-profile__rule block" aria-hidden="true"></span>
-                <ul class="mt-5 space-y-3 font-mono text-[11px] tracking-[0.08em] text-[var(--ink-muted)]">
-                    <li class="flex items-center gap-3">
-                        <span class="hero-profile__signal" aria-hidden="true"></span>
-                        <span>FULL-STACK DEVELOPMENT</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="hero-profile__signal" aria-hidden="true"></span>
-                        <span>PRODUCT & SYSTEM DESIGN</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="hero-profile__signal" aria-hidden="true"></span>
-                        <span>APPLIED AI</span>
-                    </li>
-                </ul>
-            </div>
-        </aside>
-    </div>
-</section>

@@ -13,8 +13,6 @@ links:
     url: https://admin.webby-app.com
   - label: Live stores
     url: https://tienda.webby-app.com
-  - label: Platform admin
-    url: https://webbys.webby-app.com
 tags:
   - SaaS
   - Next.js

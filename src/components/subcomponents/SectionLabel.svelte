@@ -1,27 +1,27 @@
-<script>
-    export let label;
-    export let number = "";
+<script lang="ts">
+    export let label: string;
+    export let command = '';
 </script>
 
-<div class="section-label mb-5 flex items-center gap-3 font-mono select-none" data-purpose="section-label">
-    <span class="section-label__rule" aria-hidden="true"></span>
-    <span>{number ? `SEC ${number} // ${label}` : label}</span>
+<div class="section-label">
+    {#if command}
+        <span class="section-label__prompt" aria-hidden="true">$</span>
+        <span aria-hidden="true">{command}</span>
+        <span class="sr-only">{label}</span>
+    {:else}<span>{label}</span>{/if}
 </div>
 
 <style>
     .section-label {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
         color: var(--ink-muted);
-        font-size: 0.625rem;
-        letter-spacing: 0.14em;
-        line-height: 1.4;
-        opacity: 0.78;
+        font-size: 0.6875rem;
+        line-height: 1.5;
     }
-
-    .section-label__rule {
-        width: 2.25rem;
-        height: 1px;
-        flex: none;
-        background: linear-gradient(90deg, var(--ink-accent), transparent);
-        opacity: 0.8;
+    .section-label__prompt {
+        color: var(--ink-accent);
     }
 </style>
