@@ -45,3 +45,22 @@ pnpm dev      # local dev server
 pnpm build    # production build
 pnpm preview  # preview the build
 ```
+
+## Project showcases
+
+Project YAML files can include `company`, `category`, `status`, an `image` with
+`src` and descriptive `alt` text, and additional HTTPS `links`. These fields are
+also editable through Decap CMS. Screenshots appear on both the homepage and the
+projects browser; entries without an image keep the compact layout.
+
+The Webby and JM Repuestos screenshots were captured from their public homepages
+on November 9, 2026 and stored locally as WebP files in `public/images/projects/`.
+They do not require an external screenshot service when someone visits the site.
+Keep private source repositories out of public project links.
+
+`public/og-default.svg` is the editable source for the social preview PNG. After
+editing it, regenerate the PNG with the existing Sharp dependency:
+
+```sh
+node --input-type=module -e "import sharp from 'sharp'; await sharp('public/og-default.svg').png().toFile('public/og-default.png')"
+```

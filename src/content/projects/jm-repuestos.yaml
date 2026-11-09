@@ -1,0 +1,20 @@
+name: JM Repuestos Automotores
+subtitle: Custom software for a Bolivian auto-parts distributor, built with Devs Haus. A multilingual website with a searchable parts catalog, an embedding-powered assistant, branch discovery, and a headless CMS.
+year: 2026
+company: Devs Haus
+category: Client software
+status: In production
+demo_url: https://jm-ltda.com
+image:
+  src: /images/projects/jm-repuestos.webp
+  alt: JM Repuestos Automotores website with its parts catalog navigation and a wireframe transmission in the hero.
+links:
+  - label: Parts catalog
+    url: https://jm-ltda.com/catalogo
+tags:
+  - Astro
+  - React
+  - NestJS
+  - Embeddings
+  - Strapi
+order: 1

@@ -44,12 +44,20 @@ const person = {
     jobTitle: SITE.role,
     description: SITE.description,
     sameAs: [SITE.github, SITE.linkedin],
+    affiliation: {
+        '@type': 'Organization',
+        name: SITE.company,
+        url: SITE.companyUrl,
+    },
     knowsAbout: [
-        'Reinforcement learning',
-        'Algorithms',
-        'Search-based planning',
-        'Bayesian optimization',
+        'Software engineering',
         'Systems engineering',
+        'SaaS products',
+        'Full-stack development',
+        'Entrepreneurship',
+        'Applied AI',
+        'Algorithms',
+        'Reinforcement learning',
     ],
 };
 

@@ -8,8 +8,9 @@
 <section id="projects-section" class="content-section mt-32 pb-32" data-reveal>
     <div class="section-heading">
         <div>
-            <SectionLabel number="02" label="RECENT_WORK" />
+            <SectionLabel number="02" label="SELECTED_WORK" />
             <h2 class="section-heading__title text-4xl font-light uppercase tracking-widest">Projects</h2>
+            <p class="mt-4 max-w-xl text-sm leading-relaxed text-[var(--ink-muted)]">SaaS and custom software shipped with Devs Haus, alongside my own technical explorations.</p>
         </div>
         <a href="/projects" class="section-link focus-ring">VIEW ALL</a>
     </div>
@@ -42,6 +43,10 @@
     @media (min-width: 48rem) {
         .content-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .content-grid > :global(.project-card:last-child:nth-child(odd)) {
+            grid-column: 1 / -1;
         }
     }
 </style>

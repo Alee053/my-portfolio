@@ -15,13 +15,14 @@ const blogsData = (await getCollection('blog'))
     }));
 
 const blogsUrl = new URL('/blogs/', SITE.url).toString();
+const description = 'Technical writing by Alejandro Castro on software engineering, algorithms, applied AI, and learning and search systems.';
 const structuredData = [
     {
         '@type': 'CollectionPage',
         '@id': `${blogsUrl}#collection`,
         name: 'Blogs',
         url: blogsUrl,
-        description: 'Technical writing by Alejandro Castro on reinforcement learning, C++ search, algorithms, Bayesian optimization, and systems engineering.',
+        description,
         isPartOf: { '@id': `${SITE.url}/#website` },
         mainEntity: { '@id': `${blogsUrl}#article-list` },
     },
@@ -51,7 +52,7 @@ const structuredData = [
 
 <Layout
     title="Blogs"
-    description="Technical writing by Alejandro Castro on reinforcement learning, C++ search, algorithms, Bayesian optimization, and systems engineering."
+    description={description}
     structuredData={structuredData}
 >
     <nav class="mb-8 flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--ink-muted)]" aria-label="Breadcrumb">

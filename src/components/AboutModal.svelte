@@ -1,21 +1,21 @@
 <script>
     import BaseModal from './BaseModal.svelte';
+    import { SITE } from '../lib/site';
 
     let baseModal;
 
-    const name = "Alejandro Castro";
-    const role = "AI Researcher & Systems Engineering Student";
+    const { name, role } = SITE;
     const education = "UCB San Pablo — Systems Engineering";
     const gpa = "GPA: 3.8/4.0 (Full Scholarship)";
     const location = "Cochabamba, Bolivia";
-    const focus = "Reinforcement Learning, Algorithms, Search-Based Planning";
-    const interests = "Sequential Decision Making, Bayesian Optimization, Uncertainty";
+    const focus = "Full-stack development, SaaS products, system design";
+    const interests = "Applied AI, algorithms, and developer tools";
 </script>
 
 <BaseModal bind:this={baseModal} title="About" eventName="toggle-about-modal">
     <p class="modal-intro">
         <span class="modal-kicker">Identity</span>
-        Computer Science undergraduate focused on reinforcement learning and algorithms.
+        Software engineer, entrepreneur, and CTO at Devs Haus. I lead engineering and build SaaS products and custom business software with our team. Studying Systems Engineering at UCB San Pablo.
     </p>
 
     <div class="modal-list modal-list--facts">
@@ -26,7 +26,7 @@
 
         <div class="info-block">
             <div class="modal-kicker">Role</div>
-            <div class="info-block__value">{role}</div>
+            <div class="info-block__value">{role} at {SITE.company}</div>
         </div>
 
         <div class="info-block">
@@ -74,8 +74,16 @@
     </section>
 
     <section class="modal-section">
-        <h3 class="modal-kicker modal-section__heading">Research interests</h3>
-        <div class="research-list">
+        <h3 class="modal-kicker modal-section__heading">CTO at Devs Haus</h3>
+        <div class="work-description">
+            <p>I lead the technical direction and work with our team to take products from idea to production: Webby, a commerce SaaS platform, and custom software for clients such as JM Repuestos Automotores.</p>
+            <a href={SITE.companyUrl} target="_blank" rel="noopener noreferrer" class="company-link focus-ring">Explore Devs Haus ↗</a>
+        </div>
+    </section>
+
+    <section class="modal-section">
+        <h3 class="modal-kicker modal-section__heading">Technical interests</h3>
+        <div class="work-description">
             <p>&gt; {interests}</p>
         </div>
     </section>
@@ -122,7 +130,7 @@
 
     .info-block__note,
     .award-item__note,
-    .research-list {
+    .work-description {
         color: var(--ink-muted);
         font-size: 0.75rem;
     }
@@ -150,7 +158,15 @@
         color: var(--ink-text);
     }
 
-    .research-list p {
+    .work-description p {
         margin: 0;
+    }
+
+    .company-link {
+        display: inline-flex;
+        min-height: 2.75rem;
+        align-items: center;
+        margin-top: 0.5rem;
+        color: var(--ink-accent);
     }
 </style>

@@ -14,6 +14,8 @@
             const matchesSearch = !searchQuery || 
                 project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 (project.subtitle || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+                (project.company || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+                (project.category || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
                 (project.tags || []).some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
             
             const matchesTags = activeTags.length === 0 || 
@@ -69,6 +71,7 @@
         <div>
             <p class="browser-header__eyebrow">Projects browser</p>
             <h1 class="browser-header__title text-4xl font-light uppercase tracking-widest">Projects</h1>
+            <p class="browser-header__description">Production software built with Devs Haus and personal projects in AI, algorithms, and simulation.</p>
         </div>
     </header>
 
@@ -186,6 +189,14 @@
     .browser-header__title {
         max-width: 100%;
         overflow-wrap: anywhere;
+    }
+
+    .browser-header__description {
+        max-width: 40rem;
+        margin-top: 1rem;
+        color: var(--ink-muted);
+        font-size: 0.875rem;
+        line-height: 1.7;
     }
 
     .browser-tools {

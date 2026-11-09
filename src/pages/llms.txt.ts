@@ -23,18 +23,22 @@ export const GET: APIRoute = async () => {
         '',
         `> ${SITE.description}`,
         '',
-        'This is the canonical portfolio and writing site for Alejandro Castro. Use the linked pages and public repositories as the source of truth for his work, research interests, and technical writing.',
+        'This is the canonical portfolio and writing site for Alejandro Castro, Software Engineer and CTO at Devs Haus. Use the linked pages, live products, and public repositories as the source of truth for his work and technical writing.',
         '',
         '## Profile',
-        `- [Homepage](${SITE.url}): Profile, research focus, selected projects, recent writing, and public contact links.`,
-        `- [Projects](${projectsUrl}): Complete portfolio of software projects in AI, algorithms, simulation, robotics, and learning systems.`,
-        `- [Blogs](${blogsUrl}): Technical articles about reinforcement learning, search, optimization, and systems engineering.`,
+        `- [Homepage](${SITE.url}): Software engineering, technical leadership at Devs Haus, selected projects, recent writing, and public contact links.`,
+        `- [Projects](${projectsUrl}): SaaS products, custom business software, and personal projects in AI, algorithms, robotics, and simulation.`,
+        `- [Blogs](${blogsUrl}): Technical articles about software engineering, algorithms, applied AI, and learning and search systems.`,
+        '',
+        '## Devs Haus',
+        `- [${SITE.company}](${SITE.companyUrl}): Alejandro is CTO at Devs Haus, building SaaS products and custom software with the team. Deployed work includes Webby and JM Repuestos Automotores.`,
         '',
         '## Projects',
         ...sortedProjects.map((project) => {
-            const projectUrl = project.data.repo_url || projectsUrl;
+            const projectUrl = project.data.demo_url || project.data.repo_url || projectsUrl;
             const details = `${project.data.year} project. ${cleanText(project.data.subtitle)} Tags: ${project.data.tags.join(', ')}.`;
-            return `- [${escapeLinkLabel(project.data.name)}](${projectUrl}): ${cleanText(details)}`;
+            const links = project.data.links.map((link) => `[${escapeLinkLabel(link.label)}](${link.url})`).join(', ');
+            return `- [${escapeLinkLabel(project.data.name)}](${projectUrl}): ${cleanText(details)}${links ? ` Links: ${links}.` : ''}`;
         }),
         '',
         '## Writing',

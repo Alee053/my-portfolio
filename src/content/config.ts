@@ -18,6 +18,17 @@ const projectsCollection = defineCollection({
         repo_url: z.string().url().optional(),
         blog_slug: z.string().optional(),
         demo_url: z.string().url().optional(),
+        company: z.string().optional(),
+        category: z.string().optional(),
+        status: z.enum(['In production', 'In progress', 'Archived']).optional(),
+        image: z.object({
+            src: z.string().min(1),
+            alt: z.string().min(1),
+        }).optional(),
+        links: z.array(z.object({
+            label: z.string().min(1),
+            url: z.string().url().startsWith('https://'),
+        })).default([]),
         tags: z.array(z.string()),
         order: z.number().optional(),
     }),

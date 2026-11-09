@@ -1,0 +1,24 @@
+name: Webby
+subtitle: Multi-tenant commerce SaaS with branded storefronts, merchant and platform dashboards, inventory, point of sale, QR payments, and an AI assistant. Built with the Devs Haus team, from backend to production.
+year: 2026
+company: Devs Haus
+category: Commerce SaaS
+status: In production
+demo_url: https://webby-app.com
+image:
+  src: /images/projects/webby.webp
+  alt: Webby website showing its commerce platform and the brands using its online stores.
+links:
+  - label: Merchant admin
+    url: https://admin.webby-app.com
+  - label: Live stores
+    url: https://tienda.webby-app.com
+  - label: Platform admin
+    url: https://webbys.webby-app.com
+tags:
+  - SaaS
+  - Next.js
+  - FastAPI
+  - PostgreSQL
+  - AI
+order: 0

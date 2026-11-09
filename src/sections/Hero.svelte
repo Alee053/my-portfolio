@@ -5,7 +5,7 @@
     import { prefersReducedMotion } from '../lib/motion';
     import { SITE } from '../lib/site';
 
-    const SUBTITLE = 'AI RESEARCHER & SYSTEMS ENGINEERING STUDENT. FOCUSING ON REINFORCEMENT LEARNING, ALGORITHMS, AND SEARCH-BASED PLANNING.';
+    const SUBTITLE = 'I lead engineering at Devs Haus, building SaaS products and custom software from idea to production.';
 
     let sectionEl;
     let subtitleEl;
@@ -116,6 +116,16 @@
         color: var(--ink-accent);
     }
 
+    .hero-action--primary {
+        border-color: var(--ink-accent);
+        background: var(--ink-accent);
+        color: var(--ink-950);
+    }
+
+    .hero-action--primary:hover {
+        background: var(--ink-900);
+    }
+
     .hero-action:focus-visible {
         outline: 2px solid var(--ink-accent);
         outline-offset: 4px;
@@ -182,8 +192,14 @@
                 <span class="line-mask"><span class="line-inner">ALEJANDRO</span></span>
                 <span class="line-mask"><span class="line-inner">CASTRO<span class="hero-cursor" aria-hidden="true">_</span></span></span>
             </h1>
-            <p class="description max-w-xl font-mono text-xs leading-relaxed text-[var(--ink-muted)] md:text-sm" bind:this={subtitleEl}>{SUBTITLE}</p>
+            <div bind:this={subtitleEl}>
+                <p class="mb-3 text-xl font-medium tracking-tight text-[var(--ink-text)] md:text-2xl">{SITE.role}</p>
+                <p class="description max-w-lg font-mono text-xs leading-relaxed text-[var(--ink-muted)] md:text-sm">{SUBTITLE}</p>
+            </div>
             <nav class="mt-8 flex flex-wrap gap-3" bind:this={actionsEl} aria-label="Profile links">
+                <a href="#projects-section" class="hero-action hero-action--primary">
+                    View projects <span aria-hidden="true">↓</span>
+                </a>
                 <a href={SITE.github} target="_blank" rel="noopener noreferrer" class="hero-action">
                     GitHub <span aria-hidden="true">↗</span>
                 </a>
@@ -203,9 +219,12 @@
             <div>
                 <div class="flex items-center gap-3">
                     <span class="hero-profile__dot" aria-hidden="true"></span>
-                    <h2 id="hero-profile-title" class="font-mono text-xs tracking-[0.14em] text-[var(--ink-text)]">AI RESEARCHER</h2>
+                    <h2 id="hero-profile-title" class="font-mono text-xs tracking-[0.14em] text-[var(--ink-text)]">CTO AT</h2>
                 </div>
-                <p class="mt-5 max-w-xs text-2xl font-medium leading-tight tracking-tight text-[var(--ink-text)]">SYSTEMS ENGINEERING STUDENT</p>
+                <p class="mt-5 text-4xl font-medium leading-tight tracking-tight text-[var(--ink-text)]">
+                    <a href={SITE.companyUrl} target="_blank" rel="noopener noreferrer" class="focus-ring hover:text-[var(--ink-accent)]">{SITE.company} <span class="text-2xl text-[var(--ink-accent)]" aria-hidden="true">↗</span></a>
+                </p>
+                <p class="mt-3 max-w-xs text-sm leading-relaxed text-[var(--ink-muted)]">Software for businesses, built and shipped with our team.</p>
             </div>
 
             <div class="mt-8">
@@ -213,15 +232,15 @@
                 <ul class="mt-5 space-y-3 font-mono text-[11px] tracking-[0.08em] text-[var(--ink-muted)]">
                     <li class="flex items-center gap-3">
                         <span class="hero-profile__signal" aria-hidden="true"></span>
-                        <span>REINFORCEMENT LEARNING</span>
+                        <span>FULL-STACK DEVELOPMENT</span>
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="hero-profile__signal" aria-hidden="true"></span>
-                        <span>ALGORITHMS</span>
+                        <span>PRODUCT & SYSTEM DESIGN</span>
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="hero-profile__signal" aria-hidden="true"></span>
-                        <span>SEARCH-BASED PLANNING</span>
+                        <span>APPLIED AI</span>
                     </li>
                 </ul>
             </div>
