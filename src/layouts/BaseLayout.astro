@@ -3,7 +3,6 @@ import '../styles/globals.css';
 import Navbar from '../components/Navbar.svelte';
 import ContactModal from '../components/ContactModal.svelte';
 import AboutModal from '../components/AboutModal.svelte';
-import Splash from '../components/Splash.astro';
 import SEO from '../components/SEO.astro';
 import { SITE } from '../lib/site';
 import { ClientRouter } from 'astro:transitions';
@@ -18,7 +17,6 @@ interface Props {
     keywords?: string[];
     robots?: string;
     structuredData?: Record<string, unknown>[];
-    showSplash?: boolean;
 }
 
 const {
@@ -31,99 +29,88 @@ const {
     keywords,
     robots,
     structuredData,
-    showSplash = false,
 } = Astro.props;
 
 const fullTitle = title ? `${title} | ${SITE.name}` : SITE.defaultTitle;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang={SITE.language}>
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width" />
-  <link rel="icon" href="/logo.svg" type="image/svg+xml" />
-  <script is:inline>document.documentElement.classList.add('js');</script>
-  <title>{fullTitle}</title>
-  <SEO
-      title={fullTitle}
-      headline={title ?? SITE.name}
-      description={description}
-      image={image}
-      imageAlt={imageAlt}
-      type={type}
-      publishDate={publishDate}
-      keywords={keywords}
-      robots={robots}
-      structuredData={structuredData}
-  />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/liberation-mono" rel="stylesheet">
-  <ClientRouter />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+        <meta name="theme-color" content="#000000" />
+        <title>{fullTitle}</title>
+        <SEO
+            title={fullTitle}
+            headline={title ?? SITE.name}
+            description={description}
+            image={image}
+            imageAlt={imageAlt}
+            type={type}
+            publishDate={publishDate}
+            keywords={keywords}
+            robots={robots}
+            structuredData={structuredData}
+        />
+        <link
+            rel="preload"
+            href="/fonts/geist-mono-latin.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+        <ClientRouter />
 
-  <slot name="head" />
-</head>
-<body class="site-shell">
-  {showSplash && <Splash />}
-  <a href="#main" class="skip-link">SKIP TO CONTENT</a>
-  <div class="ambient-background" aria-hidden="true">
-    <span class="ambient-orb ambient-orb-a"></span>
-    <span class="ambient-orb ambient-orb-b"></span>
-    <span class="ambient-orb ambient-orb-c"></span>
-  </div>
+        <slot name="head" />
+    </head>
+    <body class="site-shell">
+        <a href="#main" class="skip-link">
+            Skip to content
+        </a>
+        <div class="workspace">
+            <header class="session-bar">
+                <div>
+                    <span class="session-bar__mark" aria-hidden="true">
+                        ▣
+                    </span>
+                    <span class="session-bar__identity">ale@portfolio</span>{' '}
+                    <span aria-hidden="true">: ~</span>
+                </div>
+                <div class="session-bar__location">
+                    Cochabamba, Bolivia <span aria-hidden="true">/</span> UTC−4
+                </div>
+            </header>
+            <div class="workspace-grid">
+                <Navbar
+                    initialPath={Astro.url.pathname}
+                    client:load
+                    transition:persist="navbar"
+                />
+                <main id="main" class="site-main" tabindex="-1">
+                    <div class="page-container">
+                        <slot />
+                    </div>
+                </main>
+            </div>
+            <footer class="site-footer">
+                <span>© {new Date().getFullYear()} Alejandro Castro</span>
+                <a href={`mailto:${SITE.email}`}>
+                    {SITE.email} <span aria-hidden="true">↗</span>
+                </a>
+            </footer>
+        </div>
+        <!-- About Modal -->
+        <AboutModal client:load transition:persist="about-modal" />
 
-  <!-- Navbar -->
-  <Navbar client:load transition:persist="navbar" />
-
-  <main id="main" class="site-main">
-    <div class="page-container">
-      <slot />
-    </div>
-  </main>
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="page-container site-footer__inner">
-      <div class="text-[10px] font-mono uppercase tracking-wider">
-        © {new Date().getFullYear()} ALEJANDRO CASTRO // ALL RIGHTS RESERVED
-      </div>
-    </div>
-  </footer>
-  <!-- About Modal -->
-  <AboutModal client:load transition:persist="about-modal" />
-
-  <!-- Contact Modal -->
-  <ContactModal client:load transition:persist="contact-modal" githubUrl={SITE.github} linkedInUrl={SITE.linkedin} email={SITE.email} />
-  
-  <script>
-    function toggleAboutModal() {
-      document.dispatchEvent(new CustomEvent('close-toggle-contact-modal'));
-      document.dispatchEvent(new CustomEvent('toggle-about-modal'));
-    }
-    
-    function toggleContactModal() {
-      document.dispatchEvent(new CustomEvent('close-toggle-about-modal'));
-      document.dispatchEvent(new CustomEvent('toggle-contact-modal'));
-    }
-    
-    // @ts-ignore
-    window.toggleAboutModal = toggleAboutModal;
-    // @ts-ignore
-    window.toggleContactModal = toggleContactModal;
-  </script>
-
-  <script>
-    import { initReveal } from '../lib/reveal';
-
-    function initPage() {
-      initReveal();
-    }
-
-    initPage();
-    // Re-init after client-side navigations once ClientRouter is present
-    document.addEventListener('astro:page-load', initPage);
-  </script>
-</body>
+        <!-- Contact Modal -->
+        <ContactModal
+            client:load
+            transition:persist="contact-modal"
+            githubUrl={SITE.github}
+            linkedInUrl={SITE.linkedin}
+            email={SITE.email}
+        />
+    </body>
 </html>

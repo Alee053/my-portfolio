@@ -2,20 +2,20 @@
     import BaseModal from './BaseModal.svelte';
     import { SITE } from '../lib/site';
 
-    let baseModal;
-
     const { name, role } = SITE;
-    const education = "UCB San Pablo — Systems Engineering";
-    const gpa = "GPA: 3.8/4.0 (Full Scholarship)";
-    const location = "Cochabamba, Bolivia";
-    const focus = "Full-stack development, SaaS products, system design";
-    const interests = "Applied AI, algorithms, and developer tools";
+    const education = 'UCB San Pablo, Systems Engineering';
+    const gpa = 'GPA 3.8/4.0, full scholarship';
+    const location = 'Cochabamba, Bolivia';
+    const focus = 'Full-stack development, SaaS products, system design';
+    const interests = 'Applied AI, algorithms, and developer tools';
 </script>
 
-<BaseModal bind:this={baseModal} title="About" eventName="toggle-about-modal">
+<BaseModal title="About" filename="about.md" eventName="toggle-about-modal">
     <p class="modal-intro">
         <span class="modal-kicker">Identity</span>
-        Software engineer, entrepreneur, and CTO at Devs Haus. I lead engineering and build SaaS products and custom business software with our team. Studying Systems Engineering at UCB San Pablo.
+        Software engineer, entrepreneur, and CTO at Devs Haus. I lead engineering
+        and build SaaS products and custom business software with our team. Studying
+        Systems Engineering at UCB San Pablo.
     </p>
 
     <div class="modal-list modal-list--facts">
@@ -52,22 +52,28 @@
             <div class="award-item">
                 <span class="award-item__marker" aria-hidden="true">&gt;</span>
                 <div>
-                    <div class="award-item__title">IOI 2022 Representative</div>
-                    <div class="award-item__note">Bolivia — International Olympiad in Informatics</div>
+                    <div class="award-item__title">IOI 2022 representative</div>
+                    <div class="award-item__note">
+                        Bolivia, International Olympiad in Informatics
+                    </div>
                 </div>
             </div>
             <div class="award-item">
                 <span class="award-item__marker" aria-hidden="true">&gt;</span>
                 <div>
-                    <div class="award-item__title">Conecta Mentora Fellow</div>
-                    <div class="award-item__note">U.S. Embassy — Top 6% Selection</div>
+                    <div class="award-item__title">Conecta Mentora fellow</div>
+                    <div class="award-item__note">
+                        U.S. Embassy, top 6% selection
+                    </div>
                 </div>
             </div>
             <div class="award-item">
                 <span class="award-item__marker" aria-hidden="true">&gt;</span>
                 <div>
                     <div class="award-item__title">Valedictorian</div>
-                    <div class="award-item__note">Colegio San Agustín — Rank 1/145</div>
+                    <div class="award-item__note">
+                        Colegio San Agustín, rank 1/145
+                    </div>
                 </div>
             </div>
         </div>
@@ -76,15 +82,25 @@
     <section class="modal-section">
         <h3 class="modal-kicker modal-section__heading">CTO at Devs Haus</h3>
         <div class="work-description">
-            <p>I lead the technical direction and work with our team to take products from idea to production: Webby, a commerce SaaS platform, and custom software for clients such as JM Repuestos Automotores.</p>
-            <a href={SITE.companyUrl} target="_blank" rel="noopener noreferrer" class="company-link focus-ring">Explore Devs Haus ↗</a>
+            <p>
+                I lead the technical direction and work with our team to take
+                products from idea to production: Webby, a commerce SaaS
+                platform, and custom software for clients such as JM Repuestos
+                Automotores.
+            </p>
+            <a
+                href={SITE.companyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="company-link focus-ring">Explore Devs Haus ↗</a
+            >
         </div>
     </section>
 
     <section class="modal-section">
         <h3 class="modal-kicker modal-section__heading">Technical interests</h3>
         <div class="work-description">
-            <p>&gt; {interests}</p>
+            <p>{interests}</p>
         </div>
     </section>
 </BaseModal>
@@ -98,11 +114,10 @@
     .modal-kicker {
         display: block;
         margin-bottom: 0.3rem;
-        color: var(--ink-cyan);
-        font-size: 0.625rem;
-        letter-spacing: 0.12em;
+        color: var(--ink-accent);
+        font-size: 0.6875rem;
+        letter-spacing: 0.02em;
         line-height: 1.4;
-        text-transform: uppercase;
     }
 
     .modal-list {

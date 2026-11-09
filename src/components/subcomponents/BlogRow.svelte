@@ -1,70 +1,83 @@
-<script>
+<script lang="ts">
     import { formatDate } from '../../lib/formatDate';
+    import type { BlogSummary } from '../../lib/content';
 
-    export let blog;
-    export let index;
-
-    $: ({ title, description, date, slug } = blog);
+    export let blog: BlogSummary;
 </script>
 
-<article class="glass-card blog-card group">
-    <div class="blog-card__content">
-        <time datetime={new Date(date).toISOString()} class="blog-card__date font-mono text-[10px] text-[var(--ink-muted)] md:text-[11px]">{formatDate(date)}</time>
-        <div class="blog-card__body min-w-0">
-            <h3 class="blog-card__title text-base font-bold uppercase transition-colors md:text-lg group-hover:text-[var(--ink-accent)]">
-                <a href={`/blog/${slug}`} class="stretched-link focus-ring">{title}</a>
-            </h3>
-            <p class="blog-card__description mt-1 max-w-2xl text-xs font-mono text-[var(--ink-muted)]">{description.length > 100 ? `${description.slice(0, 100)}…` : description}</p>
-        </div>
+<article class="blog-row">
+    <time datetime={new Date(blog.date).toISOString()}
+        >{formatDate(blog.date)}</time
+    >
+    <div>
+        <h3>
+            <a href={`/blog/${blog.slug}`}
+                >{blog.title}<span aria-hidden="true">↗</span></a
+            >
+        </h3>
+        {#if blog.description}<p>{blog.description}</p>{/if}
+        {#if blog.tags?.length}<div class="blog-tags">
+                {blog.tags.join(' / ')}
+            </div>{/if}
     </div>
 </article>
 
 <style>
-    .blog-card {
-        min-width: 0;
-        min-height: 10rem;
+    .blog-row {
+        display: grid;
+        grid-template-columns: 7rem minmax(0, 1fr);
+        align-items: baseline;
+        gap: 1.5rem;
+        border-block: 1px solid var(--ink-line);
+        padding-block: 1.5rem;
     }
-
-    .blog-card__content {
-        min-width: 0;
+    .blog-row + :global(.blog-row) {
+        border-top: 0;
     }
-
-    .blog-card__body {
-        min-width: 0;
+    time {
+        color: var(--ink-muted);
+        font-size: 0.625rem;
     }
-
-    .blog-card__date {
-        display: block;
-        padding-bottom: 1rem;
-        letter-spacing: 0.04em;
+    h3 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: -0.035em;
+        line-height: 1.7;
     }
-
-    .blog-card__title {
+    h3 a {
+        display: inline-flex;
+        min-height: 2.75rem;
+        align-items: baseline;
+        gap: 1rem;
+        text-decoration: none;
+    }
+    h3 a:hover {
+        color: var(--ink-accent);
+    }
+    h3 span {
+        margin-left: auto;
+        color: var(--ink-accent);
+        font-size: 0.875rem;
+    }
+    p {
+        max-width: 65ch;
+        margin: 0.5rem 0 0;
+        color: var(--ink-muted);
+        font-size: 0.8125rem;
+        line-height: 1.9;
         overflow-wrap: anywhere;
     }
-
-    .blog-card__description {
-        overflow-wrap: anywhere;
+    .blog-tags {
+        margin-top: 1rem;
+        color: var(--ink-muted);
+        font-size: 0.625rem;
     }
-
-    @media (min-width: 40rem) {
-        .blog-card__content {
-            display: grid;
-            grid-template-columns: auto minmax(0, 1fr);
-            align-items: start;
-            gap: 1rem;
-        }
-
-        .blog-card__date {
-            padding-top: 0.25rem;
-            padding-bottom: 0;
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .blog-card,
-        .blog-card__title {
-            transition: none;
+    @media (max-width: 52rem) {
+        .blog-row {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 0.5rem;
         }
     }
 </style>

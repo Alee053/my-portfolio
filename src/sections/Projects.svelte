@@ -1,52 +1,35 @@
-<script>
+<script lang="ts">
+    import type { CollectionEntry } from 'astro:content';
     import SectionLabel from '../components/subcomponents/SectionLabel.svelte';
     import ProjectRow from '../components/subcomponents/ProjectRow.svelte';
 
-    export let projects = [];
+    export let projects: CollectionEntry<'projects'>['data'][] = [];
 </script>
 
-<section id="projects-section" class="content-section mt-32 pb-32" data-reveal>
+<section
+    id="projects-section"
+    class="projects-section"
+    aria-labelledby="projects-title"
+>
     <div class="section-heading">
         <div>
-            <SectionLabel number="02" label="SELECTED_WORK" />
-            <h2 class="section-heading__title text-4xl font-light uppercase tracking-widest">Projects</h2>
-            <p class="mt-4 max-w-xl text-sm leading-relaxed text-[var(--ink-muted)]">SaaS and custom software shipped with Devs Haus, alongside my own technical explorations.</p>
+            <SectionLabel command="ls ~/projects" label="Projects" />
+            <h2 id="projects-title" class="section-heading__title">
+                Selected projects
+            </h2>
         </div>
-        <a href="/projects" class="section-link focus-ring">VIEW ALL</a>
+        <a href="/projects" class="section-link"
+            >All projects <span aria-hidden="true">↗</span></a
+        >
     </div>
-    <div class="content-grid">
-        {#each projects as project, index}
-            <ProjectRow {project} {index} />
-        {/each}
+    <div>
+        {#each projects as project}<ProjectRow {project} />{/each}
     </div>
 </section>
 
 <style>
-    .content-section .section-heading {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .content-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        gap: 1rem;
-    }
-
-    @media (min-width: 40rem) {
-        .content-section .section-heading {
-            align-items: flex-end;
-            flex-direction: row;
-        }
-    }
-
-    @media (min-width: 48rem) {
-        .content-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        .content-grid > :global(.project-card:last-child:nth-child(odd)) {
-            grid-column: 1 / -1;
-        }
+    .projects-section {
+        margin-top: 4.5rem;
+        scroll-margin-top: 2rem;
     }
 </style>

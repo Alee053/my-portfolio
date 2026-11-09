@@ -4,21 +4,58 @@ import SectionLabel from '../components/subcomponents/SectionLabel.svelte';
 ---
 
 <Layout title="404" description="Page not found." robots="noindex, nofollow">
-    <section class="flex min-h-[60vh] flex-col justify-center py-12" aria-labelledby="not-found-title">
-        <SectionLabel label="ERR 404 // ROUTE_NOT_FOUND" />
-        <div class="max-w-3xl">
-            <h1 id="not-found-title" class="mb-6 font-sans text-7xl font-bold leading-[0.88] tracking-[-0.07em] text-[var(--ink-text)] md:text-9xl">
-                404<span class="text-brutalist-accent">_</span>
-            </h1>
-            <p class="mb-10 max-w-lg font-mono text-xs leading-relaxed text-[var(--ink-muted)] md:text-sm">
-                THE REQUESTED ROUTE DOES NOT EXIST ON THIS SERVER. CHECK THE URL OR RETURN TO A KNOWN COORDINATE.
-            </p>
-            <a
-                href="/"
-                class="glass-panel inline-flex min-h-11 items-center gap-2 px-4 py-2 font-sans text-sm font-medium text-[var(--ink-text)] hover:border-[var(--ink-accent)] hover:text-[var(--ink-accent)]"
-            >
-                ← RETURN TO INDEX
-            </a>
+    <section class="not-found" aria-labelledby="not-found-title">
+        <SectionLabel command="cd /unknown" label="Page not found" />
+        <h1 id="not-found-title">
+            404<span aria-hidden="true">_</span>
+        </h1>
+        <h2>That page isn't here.</h2>
+        <p>
+            The link may have changed. You can head home or explore the
+            projects.
+        </p>
+        <div class="not-found-links">
+            <a href="/">← Back home</a>
+            <a href="/projects">View projects →</a>
         </div>
     </section>
 </Layout>
+
+<style>
+    .not-found {
+        padding-block: 2rem;
+    }
+    h1 {
+        margin: 1.5rem 0;
+        font-family: var(--font-display);
+        font-size: clamp(5rem, 14vw, 9rem);
+        font-weight: 500;
+        letter-spacing: -0.1em;
+        line-height: 1;
+    }
+    h1 span {
+        color: var(--ink-accent);
+    }
+    h2 {
+        font-size: 1.125rem;
+        font-weight: 500;
+    }
+    p {
+        max-width: 48ch;
+        margin-block: 1rem 2rem;
+        color: var(--ink-muted);
+        font-size: 0.8125rem;
+    }
+    .not-found-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 2rem;
+    }
+    .not-found-links a {
+        display: inline-flex;
+        min-height: 2.75rem;
+        align-items: center;
+        color: var(--ink-accent);
+        text-underline-offset: 4px;
+    }
+</style>

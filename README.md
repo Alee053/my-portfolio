@@ -1,65 +1,47 @@
-# Personal Portfolio
+# Personal portfolio
 
-Source code for my personal portfolio, live at [www.alecastro.dev](https://www.alecastro.dev). A brutalist, terminal-inspired site built to be fast, readable, and two clicks away from anything that matters.
+Source for [alecastro.dev](https://www.alecastro.dev), Alejandro Castro's portfolio. A black AMOLED shell with a directory sidebar, monospace typography, selected projects, and technical writing.
 
-## ✨ Features
+## Design
 
-* **Brutalist design system:** dark blueprint grid, monospace labels (`[SEC 01 // HERO]`), a single neon accent, and zero border radius — defined entirely with Tailwind v4 `@theme` tokens.
-* **GSAP-animated entry:** the hero animates in with timeline-based motion, respecting `prefers-reduced-motion`.
-* **Headless content management:** blog posts and project details are managed through Decap CMS, which commits changes directly to the GitHub repository.
-* **Type-safe content:** blog posts (`.md`) and projects (`.yaml`) are structured with Astro Content Collections and validated with Zod schemas.
-* **Math & code-friendly blog:** KaTeX for equations (remark-math + rehype-katex) and Shiki for syntax highlighting, with a generated table of contents per post.
-* **Dynamic filtering:** both the blog and projects sections feature client-side filtering by tags and years.
+The interface uses a pure `#000000` background, thin separators, and a muted phosphor-green accent. Geist Mono handles body and utility text; IBM Plex Mono handles display text. Both fonts are served locally as WOFF2 files with their OFL licenses in `public/fonts/`.
 
-## 🚀 Tech Stack & Architecture
+The home page is static HTML. Search, tag filters, sorting, and profile/contact dialogs use Svelte islands. Navigation stays visible on mobile, and content appears immediately. The only decorative animation is a short cursor blink, disabled by `prefers-reduced-motion`.
 
-Static-first architecture with interactive client-side islands.
+References and design decisions are in [the AMOLED research note](docs/design/amoled-terminal-research.md).
 
-| Category | Technology | Purpose |
-| --- | --- | --- |
-| **Core Framework** | [**Astro 5**](https://astro.build/) | Static-first rendering; UI compiled to HTML at build time, minimal client-side JavaScript. |
-| **Interactivity** | [**Svelte 5**](https://svelte.dev/) | Islands of interactivity: modals, navbar, and the blog/project browsers with filtering. |
-| **Styling** | [**Tailwind CSS v4**](https://tailwindcss.com/) | Utility-first styling; design tokens live in `src/styles/globals.css` via `@theme`. |
-| **Animation** | [**GSAP**](https://gsap.com/) | Timeline-based entry animations and modal transitions. |
-| **Content & Data** | [**Astro Content Collections**](https://docs.astro.build/en/guides/content-collections/) | Structured content (blog posts as `.md`, projects as `.yaml`) with type safety via Zod schemas. |
-| **Content Management** | [**Decap CMS**](https://decapcms.org/) | Git-based headless CMS; edits commit directly to the repository. |
-| **Image Optimization** | [**Cloudinary**](https://cloudinary.com/) | Headless DAM for media with on-the-fly optimization and a global CDN. |
-| **Deployment** | [**Vercel**](https://vercel.com/) | Hosting, CI/CD, and the serverless OAuth endpoint for CMS authentication. |
+## Stack
 
-## Headless Workflow with Decap CMS
-
-The entire content of the site is managed headlessly:
-
-1. Log in at `/admin`.
-2. Create or edit a blog post or project through the Decap CMS interface.
-3. On publish, the CMS commits the new/updated `.md` or `.yaml` file to the GitHub repository.
-4. The commit triggers an automatic rebuild and deployment on Vercel.
-
-This provides a user-friendly CMS without the cost or maintenance of a database and backend.
+| Tool | Use |
+| --- | --- |
+| Astro 5 | Pages, static rendering, content collections, and view transitions |
+| Svelte 5 | Search, filters, navigation state, and native dialogs |
+| Tailwind CSS v4 | Design tokens and utilities |
+| Markdown, KaTeX, Shiki | Articles, math, and code highlighting |
+| Decap CMS | Git-based project and article editing |
+| Cloudinary | Article media |
+| Vercel | Hosting and the CMS OAuth endpoint |
 
 ## Development
 
 ```sh
 pnpm install
-pnpm dev      # local dev server
-pnpm build    # production build
-pnpm preview  # preview the build
+pnpm dev
+pnpm astro check
+pnpm build
 ```
 
-## Project showcases
+Production builds require `OAUTH_GITHUB_CLIENT_ID` and `OAUTH_GITHUB_CLIENT_SECRET` for the existing Decap OAuth integration. Set them through your local environment or hosting provider. Local visual validation can use nonfunctional placeholder values; it does not test CMS login.
 
-Project YAML files can include `company`, `category`, `status`, an `image` with
-`src` and descriptive `alt` text, and additional HTTPS `links`. These fields are
-also editable through Decap CMS. Screenshots appear on both the homepage and the
-projects browser; entries without an image keep the compact layout.
+## Content
 
-The Webby and JM Repuestos screenshots were captured from their public homepages
-on November 9, 2026 and stored locally as WebP files in `public/images/projects/`.
-They do not require an external screenshot service when someone visits the site.
-Keep private source repositories out of public project links.
+Project YAML files in `src/content/projects/` and articles in `src/content/blog/` use Astro content collections. Projects can include a company, category, status, preview image with descriptive alt text, and additional HTTPS links. The schema is in `src/content/config.ts`.
 
-`public/og-default.svg` is the editable source for the social preview PNG. After
-editing it, regenerate the PNG with the existing Sharp dependency:
+Edit content at `/admin`. Publishing through Decap commits the content to GitHub and triggers the existing Vercel build. Keep private source repositories out of public project links.
+
+The Webby and JM Repuestos screenshots were captured from their public homepages on November 9, 2026. Local WebP files in `public/images/projects/` keep preview images independent of an external screenshot service.
+
+`public/og-default.svg` is the source for the social preview. Regenerate its PNG after edits:
 
 ```sh
 node --input-type=module -e "import sharp from 'sharp'; await sharp('public/og-default.svg').png().toFile('public/og-default.png')"

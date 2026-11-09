@@ -17,7 +17,6 @@
     "@tailwindcss/vite": "^4.1.13",
     "astro": "^5.13.7",
     "astro-decap-cms-oauth": "^0.5.1",
-    "gsap": "^3.13.0",
     "katex": "^0.17.0",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
