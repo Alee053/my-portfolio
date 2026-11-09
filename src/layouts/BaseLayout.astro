@@ -39,7 +39,18 @@ const fullTitle = title ? `${title} | ${SITE.name}` : SITE.defaultTitle;
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
-        <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+        <link
+            rel="icon"
+            href="/favicon-32.png"
+            type="image/png"
+            sizes="32x32"
+        />
+        <link
+            rel="icon"
+            href="/logo.svg?v=ac"
+            type="image/svg+xml"
+            sizes="any"
+        />
         <meta name="theme-color" content="#000000" />
         <title>{fullTitle}</title>
         <SEO
